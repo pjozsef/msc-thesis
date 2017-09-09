@@ -1,0 +1,7 @@
+apply from: 'version.gradle'
+
+allprojects {
+    repositories {
+        jcenter()
+    }
+}
