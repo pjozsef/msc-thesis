@@ -1,0 +1,21 @@
+task pdf {
+    inputs.files fileTree(new File("src")) withPropertyName 'inputFiles'
+    outputs.dir buildDir
+
+    doLast {
+        exec {
+            commandLine "mkdir", "-p", "build"
+        }
+        exec {
+            def command = [
+                    "pandoc",
+                    "--number-sections",
+                    "--template=src/template.tex",
+                    "--filter", "pandoc-citeproc",
+                    "--verbose",
+                    "-o", "build/test.pdf"]
+            def documents = fileTree("src/documents")
+            commandLine command + documents
+        }
+    }
+}

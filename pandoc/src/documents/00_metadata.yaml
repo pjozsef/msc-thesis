@@ -1,0 +1,18 @@
+
+---
+author:
+    - Pollák József
+lang: hu
+papersize: A4
+fontsize: 12pt
+linestretch: 1.5
+margin-left: 3.5cm
+margin-top: 2.5cm
+margin-right: 2.5cm
+margin-bottom: 2.5cm
+chapters: true
+toc: true
+csl: src/ieee.csl
+bibliography: src/bibliography.bib
+link-citations: true
+---

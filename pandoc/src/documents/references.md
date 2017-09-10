@@ -1,0 +1,5 @@
+\pagebreak
+
+# Irodalomjegyzék
+
+\thispagestyle{semifancy}
