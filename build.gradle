@@ -1,7 +1,13 @@
 apply from: 'version.gradle'
 
+version = ext.gitVersionName
+
 allprojects {
     repositories {
         jcenter()
+    }
+
+    task clean(type: Delete) {
+        delete project.buildDir
     }
 }
