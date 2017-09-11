@@ -6,8 +6,4 @@ allprojects {
     repositories {
         jcenter()
     }
-
-    task clean(type: Delete) {
-        delete project.buildDir
-    }
 }
