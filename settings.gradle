@@ -1,3 +1,4 @@
 rootProject.name = 'thesis-msc'
 
+include 'dsp'
 include 'pandoc'
