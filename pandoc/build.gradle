@@ -1,4 +1,4 @@
-task pdf {
+task build {
     inputs.files fileTree(new File("src")) withPropertyName 'inputFiles'
     outputs.dir buildDir
 
@@ -13,6 +13,7 @@ task pdf {
                     "--template=src/template.tex",
                     "--filter", "pandoc-citeproc",
                     "--verbose",
+                    "--include-before-body=src/before-documents/titlepage.md",
                     "-o", "build/test.pdf"]
             def documents = fileTree("src/documents")
             commandLine command + documents
