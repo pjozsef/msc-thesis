@@ -1,9 +1,23 @@
 apply from: 'version.gradle'
 
 version = ext.gitVersionName
+ext.kotlin_version = '1.1.4-3'
+ext.jcommander_version = '1.71'
+ext.spek_version = '1.1.4'
+ext.kluent_version = '1.15'
+ext.funktionale_version = '1.1'
 
 allprojects {
+    version = rootProject.version
+
+    buildscript {
+        repositories {
+            jcenter()
+        }
+    }
+
     repositories {
         jcenter()
+        maven { url "http://dl.bintray.com/jetbrains/spek" }
     }
 }
