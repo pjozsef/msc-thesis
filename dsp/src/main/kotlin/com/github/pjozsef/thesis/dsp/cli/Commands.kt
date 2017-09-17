@@ -5,13 +5,13 @@ import com.beust.jcommander.Parameters
 
 sealed class Command {
     companion object {
-        const val ID3 = "id3"
+        const val TAG = "tag"
         const val WAV = "wav"
     }
 }
 
 @Parameters(commandDescription = "List the artist, title and album tags of the MP3 file")
-class Id3Command : Command() {
+class TagCommand : Command() {
     @Parameter(required = true, description = "<input mp3 file>")
     lateinit var files: List<String>
 }
