@@ -41,6 +41,7 @@ dependencies {
     compile "org.funktionale:funktionale-all:$rootProject.funktionale_version"
     compile "com.beust:jcommander:$rootProject.jcommander_version"
     compile 'com.mpatric:mp3agic:0.9.0'
+    compile 'com.github.wendykierp:JTransforms:3.1:with-dependencies'
 
     compile 'org.apache.commons:commons-exec:1.3'
 
