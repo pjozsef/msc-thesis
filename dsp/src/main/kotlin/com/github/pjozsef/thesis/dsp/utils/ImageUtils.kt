@@ -16,7 +16,7 @@ fun spectrogramImage(magnitudes: List<DoubleArray>): BufferedImage {
             val color = Color.getHSBColor(
                     0.0f,
                     0.0f,
-                    (magnitudes[row][height - column] / max).toFloat()*5).rgb
+                    (magnitudes[row][height - column] / max).toFloat() * 5).rgb
             result.setRGB(row, column, color)
         }
     }
