@@ -7,6 +7,7 @@ sealed class Command {
     companion object {
         const val TAG = "tag"
         const val WAV = "wav"
+        const val SPECTROGRAM = "spectrogram"
     }
 }
 
@@ -20,4 +21,13 @@ class TagCommand : Command() {
 class WavCommand : Command() {
     @Parameter(required = true, description = "<input mp3 file>")
     lateinit var files: List<String>
+}
+
+@Parameters(commandDescription = "Create the spectrogram image for the given wav file")
+class SpectrogramCommand : Command() {
+    @Parameter(required = true, description = "<input wav file>")
+    lateinit var files: List<String>
+
+    @Parameter(names = arrayOf("-c", "--chunkSize"), description = "chunk size")
+    var chunkSize: Int = 8192
 }
