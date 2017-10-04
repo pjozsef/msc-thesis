@@ -32,6 +32,9 @@ class SpectrogramCommand : Command() {
 
     @Parameter(names = arrayOf("-c", "--chunkSize"), description = "chunk size")
     var chunkSize: Int = 8192
+
+    @Parameter(names = arrayOf("--colored"), description = "color based on magnitude")
+    var colored: Boolean = false
 }
 
 @Parameters(commandDescription = "Find the sections denoted by the provided percentiles")

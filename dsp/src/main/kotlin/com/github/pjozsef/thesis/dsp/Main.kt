@@ -48,7 +48,7 @@ private fun createSpectrogram(spectrogramCommand: SpectrogramCommand) {
     val magnitudes = fftMagnitudesFrom(wavPath, spectrogramCommand.chunkSize)
 
     val spectrogram = time("creating spectrogram") {
-        spectrogramImage(magnitudes)
+        spectrogramImage(magnitudes, spectrogramCommand.colored)
     }
 
     println("width: ${spectrogram.width}")
