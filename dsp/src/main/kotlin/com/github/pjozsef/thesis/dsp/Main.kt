@@ -2,10 +2,7 @@ package com.github.pjozsef.thesis.dsp
 
 import com.beust.jcommander.JCommander
 import com.beust.jcommander.ParameterException
-import com.github.pjozsef.thesis.dsp.cli.Command
-import com.github.pjozsef.thesis.dsp.cli.SpectrogramCommand
-import com.github.pjozsef.thesis.dsp.cli.TagCommand
-import com.github.pjozsef.thesis.dsp.cli.WavCommand
+import com.github.pjozsef.thesis.dsp.cli.*
 import com.github.pjozsef.thesis.dsp.utils.*
 import java.io.File
 import kotlin.system.measureTimeMillis
@@ -14,10 +11,12 @@ fun main(args: Array<String>) {
     val id3Command = TagCommand()
     val wavCommand = WavCommand()
     val spectrogramCommand = SpectrogramCommand()
+    val sectionCommand = SectionCommand()
     val jcommander = JCommander.newBuilder()
             .addCommand(Command.TAG, id3Command)
             .addCommand(Command.WAV, wavCommand)
             .addCommand(Command.SPECTROGRAM, spectrogramCommand)
+            .addCommand(Command.SECTION, sectionCommand)
             .build()
 
     try {
@@ -26,6 +25,7 @@ fun main(args: Array<String>) {
             Command.TAG -> listId3Tags(id3Command)
             Command.WAV -> convertWav(wavCommand)
             Command.SPECTROGRAM -> createSpectrogram(spectrogramCommand)
+            Command.SECTION -> createSection(sectionCommand)
             else -> jcommander.usage()
         }
     } catch (pe: ParameterException) {
@@ -45,15 +45,8 @@ private fun convertWav(wavCommand: WavCommand) {
 
 private fun createSpectrogram(spectrogramCommand: SpectrogramCommand) {
     val wavPath = spectrogramCommand.files.first()
-    val data = wavArray(wavPath)
-    //8820
-    //8192 2^13
-    val fft = time("calculating fft") {
-        fft(data, spectrogramCommand.chunkSize)
-    }
-    val magnitudes = time("converting magnitude") {
-        magnitude(fft)
-    }
+    val magnitudes = fftMagnitudesFrom(wavPath, spectrogramCommand.chunkSize)
+
     val spectrogram = time("creating spectrogram") {
         spectrogramImage(magnitudes)
     }
@@ -72,6 +65,33 @@ private fun createSpectrogram(spectrogramCommand: SpectrogramCommand) {
 
     time("image save"){
         saveImage(spectrogram, outputPath)
+    }
+}
+
+private fun createSection(sectionCommand: SectionCommand) {
+    val wavPath = sectionCommand.files.first()
+    val magnitudes = fftMagnitudesFrom(wavPath, sectionCommand.chunkSize)
+
+    val sections = time("find sections") {
+        findSections(magnitudes, sectionCommand.windowSize, sectionCommand.stepSize, sectionCommand.percentiles)
+    }
+
+    sectionCommand.percentiles.zip(sections).forEach {
+        val percentile = it.first
+        val (start, end) = it.second.asTimeInterval(sectionCommand.chunkSize)
+        println("${percentile}th percentile -> [${start.toPrettyString()}..${end.toPrettyString()}]")
+    }
+}
+
+private fun fftMagnitudesFrom(wavPath: String, chunkSize: Int): List<DoubleArray> {
+    val data = wavArray(wavPath)
+    //8820
+    //8192 2^13
+    val fft = time("calculating fft") {
+        fft(data, chunkSize)
+    }
+    return time("converting magnitude") {
+        magnitude(fft)
     }
 }
 
