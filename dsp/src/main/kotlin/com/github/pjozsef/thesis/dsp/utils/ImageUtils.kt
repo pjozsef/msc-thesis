@@ -6,20 +6,21 @@ import java.io.File
 import javax.imageio.ImageIO
 
 fun spectrogramImage(magnitudes: List<DoubleArray>, colored: Boolean): BufferedImage {
-    val result = BufferedImage(magnitudes.size, magnitudes[0].size, BufferedImage.TYPE_INT_RGB)
+    val width = magnitudes.size
+    val height = magnitudes[0].size
+    val result = BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
     val max = magnitudes.map { it.max() ?: 0.0 }.max() ?: 0.0
     require(max > 0.0)
 
     val hues = if (colored) getHues(magnitudes) else FloatArray(magnitudes.size) { 0.0f }
     val saturation = if (colored) 1.0f else 0.0f
 
-    for (row in magnitudes.indices) {
-        val height = magnitudes[row].size - 1
-        for (column in magnitudes[row].indices) {
+    for (row in 0 until width) {
+        for (column in 0 until height) {
             val color = Color.getHSBColor(
                     hues[row],
                     saturation,
-                    (magnitudes[row][height - column] / max).toFloat() * 5).rgb
+                    (magnitudes[row][height - column - 1] / max).toFloat() * 5).rgb
             result.setRGB(row, column, color)
         }
     }
