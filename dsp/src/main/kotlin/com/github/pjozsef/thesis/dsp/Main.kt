@@ -70,6 +70,8 @@ private fun createSpectrogram(spectrogramCommand: SpectrogramCommand) {
     time("image save") {
         saveImage(spectrogram, outputPath)
     }
+
+    System.exit(0)
 }
 
 private fun createSection(sectionCommand: SectionCommand) {
