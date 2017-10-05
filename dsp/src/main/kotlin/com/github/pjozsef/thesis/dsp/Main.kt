@@ -48,7 +48,8 @@ private fun createSpectrogram(spectrogramCommand: SpectrogramCommand) {
     val magnitudes = fftMagnitudesFrom(wavPath, spectrogramCommand.chunkSize, spectrogramCommand.height)
 
     val spectrogram = time("creating spectrogram") {
-        spectrogramImage(magnitudes, spectrogramCommand.colored)
+        val binSize = spectrogramCommand.chunkSize / 2
+        spectrogramImage(magnitudes, spectrogramCommand.colored, binSize, spectrogramCommand.markerLines)
     }
 
     println("width: ${spectrogram.width}")
@@ -63,7 +64,7 @@ private fun createSpectrogram(spectrogramCommand: SpectrogramCommand) {
         "$directory$sep$fileName$extension"
     }
 
-    time("image save"){
+    time("image save") {
         saveImage(spectrogram, outputPath)
     }
 }

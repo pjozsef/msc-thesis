@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
 
-fun spectrogramImage(magnitudes: List<DoubleArray>, colored: Boolean): BufferedImage {
+fun spectrogramImage(magnitudes: List<DoubleArray>, colored: Boolean, originalBinSize: Int, markerLines: List<Double>): BufferedImage {
     val width = magnitudes.size
     val height = magnitudes[0].size
     val result = BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
@@ -24,6 +24,16 @@ fun spectrogramImage(magnitudes: List<DoubleArray>, colored: Boolean): BufferedI
             result.setRGB(row, column, color)
         }
     }
+
+    markerLines.forEach { frequency ->
+        val markerHeight = frequencyToFftBin(frequency, originalBinSize)
+        println("Marker line frequency ${frequency}Hz mapped to bin $markerHeight")
+        for (row in 0 until width) {
+            val color = Color.getHSBColor(0f, 1f, 1f).rgb
+            result.setRGB(row, height - markerHeight - 1, color)
+        }
+    }
+
     return result
 }
 
