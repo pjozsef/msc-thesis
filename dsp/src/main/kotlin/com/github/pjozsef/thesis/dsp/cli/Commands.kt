@@ -10,6 +10,7 @@ sealed class Command {
         const val WAV = "wav"
         const val SPECTROGRAM = "spectrogram"
         const val SECTION = "section"
+        const val LIST = "list"
     }
 }
 
@@ -66,6 +67,12 @@ class SectionCommand : Command() {
             converter = IntListConverter::class,
             description = "percentiles, separated by a comma")
     lateinit var percentiles: List<Int>
+}
+
+@Parameters(commandDescription = "Recursively list the MP3 files in the given folders")
+class ListCommand : Command() {
+    @Parameter(required = true, description = "<input wav file>")
+    lateinit var folders: List<String>
 }
 
 private class IntListConverter : IStringConverter<Int> {

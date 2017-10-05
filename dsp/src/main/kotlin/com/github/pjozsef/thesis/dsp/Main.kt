@@ -12,11 +12,13 @@ fun main(args: Array<String>) {
     val wavCommand = WavCommand()
     val spectrogramCommand = SpectrogramCommand()
     val sectionCommand = SectionCommand()
+    val listCommand = ListCommand()
     val jcommander = JCommander.newBuilder()
             .addCommand(Command.TAG, id3Command)
             .addCommand(Command.WAV, wavCommand)
             .addCommand(Command.SPECTROGRAM, spectrogramCommand)
             .addCommand(Command.SECTION, sectionCommand)
+            .addCommand(Command.LIST, listCommand)
             .build()
 
     try {
@@ -26,6 +28,7 @@ fun main(args: Array<String>) {
             Command.WAV -> convertWav(wavCommand)
             Command.SPECTROGRAM -> createSpectrogram(spectrogramCommand)
             Command.SECTION -> createSection(sectionCommand)
+            Command.LIST -> createMp3List(listCommand)
             else -> jcommander.usage()
         }
     } catch (pe: ParameterException) {
@@ -82,6 +85,12 @@ private fun createSection(sectionCommand: SectionCommand) {
         val (start, end) = it.second.asTimeInterval(sectionCommand.chunkSize)
         println("${percentile}th percentile -> [${start.toPrettyString()}..${end.toPrettyString()}]")
     }
+}
+
+private fun createMp3List(listCommand: ListCommand) {
+    listCommand.folders.flatMap {
+        recursivelyFind(it, ".*\\.mp3")
+    }.forEach(::println)
 }
 
 private fun fftMagnitudesFrom(wavPath: String, chunkSize: Int, cropHeight: Int? = null): List<DoubleArray> {
