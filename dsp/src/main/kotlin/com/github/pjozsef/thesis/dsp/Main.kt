@@ -45,7 +45,7 @@ private fun convertWav(wavCommand: WavCommand) {
 
 private fun createSpectrogram(spectrogramCommand: SpectrogramCommand) {
     val wavPath = spectrogramCommand.files.first()
-    val magnitudes = fftMagnitudesFrom(wavPath, spectrogramCommand.chunkSize)
+    val magnitudes = fftMagnitudesFrom(wavPath, spectrogramCommand.chunkSize, spectrogramCommand.height)
 
     val spectrogram = time("creating spectrogram") {
         spectrogramImage(magnitudes, spectrogramCommand.colored)
@@ -83,16 +83,18 @@ private fun createSection(sectionCommand: SectionCommand) {
     }
 }
 
-private fun fftMagnitudesFrom(wavPath: String, chunkSize: Int): List<DoubleArray> {
+private fun fftMagnitudesFrom(wavPath: String, chunkSize: Int, cropHeight: Int? = null): List<DoubleArray> {
     val data = wavArray(wavPath)
     //8820
     //8192 2^13
     val fft = time("calculating fft") {
         fft(data, chunkSize)
     }
-    return time("converting magnitude") {
-        magnitude(fft)
+    val magnitudes = time("converting magnitude") {
+        magnitude(fft, cropHeight)
     }
+
+    return magnitudes
 }
 
 private fun <T> time(label: String, action: () -> T): T {

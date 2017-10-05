@@ -33,6 +33,15 @@ class SpectrogramCommand : Command() {
     @Parameter(names = arrayOf("-c", "--chunkSize"), description = "chunk size")
     var chunkSize: Int = 8192
 
+    @Parameter(names = arrayOf("-h", "--height"), description = "crop image height, suggested value: 800")
+    var height: Int? = null
+
+    @Parameter(
+            names = arrayOf("-m", "--markerLines"),
+            converter = DoubleListConverter::class,
+            description = "draw lines at the given frequencies")
+    var markerLines: List<Double> = listOf()
+
     @Parameter(names = arrayOf("--colored"), description = "color based on magnitude")
     var colored: Boolean = false
 }
@@ -61,5 +70,8 @@ class SectionCommand : Command() {
 
 private class IntListConverter : IStringConverter<Int> {
     override fun convert(value: String) = Integer.parseInt(value)
+}
 
+private class DoubleListConverter : IStringConverter<Double> {
+    override fun convert(value: String) = value.toDouble()
 }
