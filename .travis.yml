@@ -11,4 +11,5 @@ cache:
   - $HOME/.gradle
 
 script:
+  - ./gradlew --version
   - ./gradlew clean build
