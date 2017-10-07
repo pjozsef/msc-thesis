@@ -12,4 +12,3 @@ cache:
 
 script:
   - ./gradlew --version
-  - ./gradlew clean build
