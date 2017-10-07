@@ -73,6 +73,27 @@ class SectionCommand : Command() {
 class ListCommand : Command() {
     @Parameter(required = true, description = "<input wav file>")
     lateinit var folders: List<String>
+
+    @Parameter(names = arrayOf("-i", "--ignoreErrors"), description = "List the path of the mp3 file")
+    var ignoreErrors: Boolean = false
+
+    @Parameter(names = arrayOf("--path"), description = "List the path of the mp3 file")
+    var listPath: Boolean = false
+
+    @Parameter(names = arrayOf("--artist"), description = "List the artist of the mp3 file")
+    var listArtist: Boolean = false
+
+    @Parameter(names = arrayOf("--album"), description = "List the album of the mp3 file")
+    var listAlbum: Boolean = false
+
+    @Parameter(names = arrayOf("--song"), description = "List the song of the mp3 file")
+    var listSong: Boolean = false
+
+    fun validate() {
+        require(listPath || listArtist || listAlbum || listSong) {
+            "At least one switch must be turned on from [path, artist, album, song]"
+        }
+    }
 }
 
 private class IntListConverter : IStringConverter<Int> {

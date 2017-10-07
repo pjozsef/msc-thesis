@@ -90,9 +90,33 @@ private fun createSection(sectionCommand: SectionCommand) {
 }
 
 private fun createMp3List(listCommand: ListCommand) {
+    fun StringBuilder.appendIfNeeded(needed: Boolean, selector: () -> String) {
+        if (needed) {
+            append(selector())
+        }
+    }
+
+    listCommand.validate()
     listCommand.folders.flatMap {
         recursivelyFind(it, ".*\\.mp3")
-    }.forEach(::println)
+    }.map {
+        getId3Tag(it.absolutePath)
+    }.forEach { id3TagDisjunction ->
+        val id3TagOrNot = id3TagDisjunction.fold({
+            if (listCommand.ignoreErrors) null else throw IllegalArgumentException("Problem with mp3: $it")
+        }, {
+            it
+        })
+        id3TagOrNot?.let { id3Tag ->
+            val output = buildString {
+                appendIfNeeded(listCommand.listPath) { id3Tag.file }
+                appendIfNeeded(listCommand.listArtist) { id3Tag.artist }
+                appendIfNeeded(listCommand.listAlbum) { id3Tag.album }
+                appendIfNeeded(listCommand.listSong) { id3Tag.title }
+            }
+            println(output)
+        }
+    }
 }
 
 private fun fftMagnitudesFrom(wavPath: String, chunkSize: Int, cropHeight: Int? = null): List<DoubleArray> {
