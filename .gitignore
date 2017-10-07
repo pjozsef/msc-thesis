@@ -2,6 +2,3 @@
 .gradle
 .DS_Store
 build
-*.mp3
-*.wav
-*.png
