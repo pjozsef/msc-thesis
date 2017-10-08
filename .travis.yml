@@ -10,5 +10,9 @@ cache:
   directories:
   - $HOME/.gradle
 
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install pandoc texlive -y
+
 script:
   - ./gradlew clean build
