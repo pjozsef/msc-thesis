@@ -15,4 +15,5 @@ before_install:
   - sudo apt-get install pandoc texlive -y
 
 script:
+  - pandoc --version
   - ./gradlew clean build
