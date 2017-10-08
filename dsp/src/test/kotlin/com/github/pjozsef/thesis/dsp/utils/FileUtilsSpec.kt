@@ -36,7 +36,7 @@ object FileUtilsSpec : Spek({
         val folder = this.javaClass.getResource("/com/github/pjozsef/thesis/dsp/utils/nestedFolder").path
 
         on("calling recursivelyFind with .mp3 pattern") {
-            val files = recursivelyFind(folder, ".*\\.mp3")
+            val files = recursivelyFind(folder, ".*\\.mp3").sorted()
 
             it("should list all the mp3 files in the folder") {
                 val folder = File(this.javaClass.getResource("/com/github/pjozsef/thesis/dsp/utils/nestedFolder").file)
@@ -45,7 +45,7 @@ object FileUtilsSpec : Spek({
                         File(folder, "/02.mp3"),
                         File(folder, "/03.mp3"),
                         File(folder, "/deeplyNested/04.mp3")
-                )
+                ).sorted()
             }
         }
     }
