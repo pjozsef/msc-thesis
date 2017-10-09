@@ -102,12 +102,15 @@ private fun createMp3List(listCommand: ListCommand) {
     }.map {
         getId3Tag(it.absolutePath)
     }.forEach { id3TagDisjunction ->
-        val id3TagOrNot = id3TagDisjunction.fold({
-            if (listCommand.ignoreErrors) null else throw IllegalArgumentException("Problem with mp3: $it")
-        }, {
-            it
-        })
-        id3TagOrNot?.let { id3Tag ->
+
+        id3TagDisjunction.fold({ problem ->
+            val message = "Problem with mp3: $problem"
+            if (!listCommand.ignoreErrors) {
+                throw IllegalArgumentException(message)
+            } else {
+                System.err.println("${id3TagDisjunction.component1()}")
+            }
+        }, { id3Tag ->
             val output = buildString {
                 appendIfNeeded(listCommand.listPath) { id3Tag.file }
                 appendIfNeeded(listCommand.listArtist) { id3Tag.artist }
@@ -115,7 +118,7 @@ private fun createMp3List(listCommand: ListCommand) {
                 appendIfNeeded(listCommand.listSong) { id3Tag.title }
             }
             println(output)
-        }
+        })
     }
 }
 
