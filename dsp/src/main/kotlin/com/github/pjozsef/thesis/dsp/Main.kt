@@ -97,7 +97,7 @@ private fun createMp3List(listCommand: ListCommand) {
     }
 
     listCommand.validate()
-    listCommand.folders.flatMap {
+    listCommand.folders.asSequence().flatMap {
         recursivelyFind(it, ".*\\.mp3")
     }.map {
         getId3Tag(it.absolutePath)
