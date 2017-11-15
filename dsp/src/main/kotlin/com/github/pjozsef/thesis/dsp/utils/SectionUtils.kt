@@ -2,7 +2,7 @@ package com.github.pjozsef.thesis.dsp.utils
 
 import java.math.BigDecimal
 
-data class Section(val start: Int, val end: Int)
+data class Section(val start: Int, val endExclusive: Int)
 
 fun findSections(input: List<DoubleArray>, windowSize: Int, stepSize: Int, percentiles: List<Int>)
         = findSections(input, windowSize, stepSize, *percentiles.toIntArray())
@@ -35,7 +35,7 @@ fun percentileToIndex(size: Int, percentile: Int)
 
 fun List<DoubleArray>.sumBy(section: Section): Double {
     var sum = 0.0
-    for (i in section.start until section.end) {
+    for (i in section.start until section.endExclusive) {
         val array = this[i]
         for (j in 0 until array.size) {
             sum += array[j]
@@ -49,7 +49,7 @@ fun Section.asTimeInterval(fftChunkSize: Int) = this.asTimeInterval(fftChunkSize
 fun Section.asTimeInterval(fftChunkSize: BigDecimal = 8192.0.bigDecimal()): Pair<BigDecimal, BigDecimal> {
     val baseSampleRate = 44100.0.bigDecimal()
     val samplesPerSecond = baseSampleRate / fftChunkSize
-    return this.start.bigDecimal() / samplesPerSecond to this.end.bigDecimal() / samplesPerSecond
+    return this.start.bigDecimal() / samplesPerSecond to this.endExclusive.bigDecimal() / samplesPerSecond
 }
 
 fun BigDecimal.toPrettyString(): String {

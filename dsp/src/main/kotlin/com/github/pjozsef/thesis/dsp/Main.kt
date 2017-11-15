@@ -4,6 +4,7 @@ import com.beust.jcommander.JCommander
 import com.beust.jcommander.ParameterException
 import com.github.pjozsef.thesis.dsp.cli.*
 import com.github.pjozsef.thesis.dsp.utils.*
+import java.awt.image.BufferedImage
 import java.io.File
 import kotlin.system.measureTimeMillis
 
@@ -35,6 +36,7 @@ fun main(args: Array<String>) {
         println(pe.message)
         pe.usage()
     }
+    System.exit(0)
 }
 
 private fun listId3Tags(tagCommand: TagCommand) {
@@ -58,34 +60,31 @@ private fun createSpectrogram(spectrogramCommand: SpectrogramCommand) {
     println("width: ${spectrogram.width}")
     println("height: ${spectrogram.height}")
 
-    val outputPath = wavPath.let {
-        val file = File(it).absoluteFile
-        val directory = file.parent
-        val sep = File.separator
-        val fileName = file.nameWithoutExtension
-        val extension = ".png"
-        "$directory$sep$fileName$extension"
-    }
+    val outputPath = outputPath(wavPath)
 
-    time("image save") {
-        saveImage(spectrogram, outputPath)
-    }
-
-    System.exit(0)
+    saveImageMeasured(spectrogram, outputPath)
 }
 
 private fun createSection(sectionCommand: SectionCommand) {
+    sectionCommand.validate()
+
     val wavPath = sectionCommand.files.first()
-    val magnitudes = fftMagnitudesFrom(wavPath, sectionCommand.chunkSize)
+    val magnitudes = fftMagnitudesFrom(wavPath, sectionCommand.chunkSize, sectionCommand.height)
 
     val sections = time("find sections") {
         findSections(magnitudes, sectionCommand.windowSize, sectionCommand.stepSize, sectionCommand.percentiles)
     }
 
-    sectionCommand.percentiles.zip(sections).forEach {
-        val percentile = it.first
-        val (start, end) = it.second.asTimeInterval(sectionCommand.chunkSize)
-        println("${percentile}th percentile -> [${start.toPrettyString()}..${end.toPrettyString()}]")
+    sectionCommand.percentiles.zip(sections).forEach { (percentile, section) ->
+        val (start, end) = section.asTimeInterval(sectionCommand.chunkSize)
+        if (sectionCommand.output) {
+            println("${percentile}th percentile -> [${start.toPrettyString()}..${end.toPrettyString()}]")
+        }
+        if (sectionCommand.export) {
+            val fileName = outputPath(wavPath, postfix = "_$percentile")
+            println(fileName)
+            saveImageMeasured(section.asImage(magnitudes), fileName)
+        }
     }
 }
 
@@ -123,17 +122,35 @@ private fun createMp3List(listCommand: ListCommand) {
 }
 
 private fun fftMagnitudesFrom(wavPath: String, chunkSize: Int, cropHeight: Int? = null): List<DoubleArray> {
+    println(wavPath)
     val data = wavArray(wavPath)
     //8820
     //8192 2^13
     val fft = time("calculating fft") {
         fft(data, chunkSize)
     }
-    val magnitudes = time("converting magnitude") {
+    val magnitudes = time("calculating magnitude") {
         magnitude(fft, cropHeight)
     }
 
     return magnitudes
+}
+
+private fun outputPath(inputPath: String, prefix: String = "", postfix: String = ""): String {
+    return inputPath.let {
+        val file = File(it).absoluteFile
+        val directory = file.parent
+        val sep = File.separator
+        val fileName = file.nameWithoutExtension
+        val extension = ".png"
+        "$directory$sep$prefix$fileName$postfix$extension"
+    }
+}
+
+private fun saveImageMeasured(image: BufferedImage, outputPath: String) {
+    time("image save") {
+        saveImage(image, outputPath)
+    }
 }
 
 private fun <T> time(label: String, action: () -> T): T {

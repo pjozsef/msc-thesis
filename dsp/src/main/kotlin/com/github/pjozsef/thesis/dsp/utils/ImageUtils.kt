@@ -8,26 +8,12 @@ import javax.imageio.ImageIO
 fun spectrogramImage(magnitudes: List<DoubleArray>, colored: Boolean, originalBinSize: Int, markerLines: List<Double>): BufferedImage {
     val width = magnitudes.size
     val height = magnitudes[0].size
-    val result = BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
-    val max = magnitudes.map { it.max() ?: 0.0 }.max() ?: 0.0
-    require(max > 0.0)
 
-    val hues = if (colored) getHues(magnitudes) else FloatArray(magnitudes.size) { 0.0f }
-    val saturation = if (colored) 1.0f else 0.0f
-
-    for (row in 0 until width) {
-        for (column in 0 until height) {
-            val color = Color.getHSBColor(
-                    hues[row],
-                    saturation,
-                    (magnitudes[row][height - column - 1] / max).toFloat() * 5).rgb
-            result.setRGB(row, column, color)
-        }
-    }
+    val result = imageFromRange(magnitudes, magnitudes.indices, colored)
 
     markerLines.forEach { frequency ->
         val markerHeight = frequencyToFftBin(frequency, originalBinSize)
-        println("Marker line frequency ${frequency}Hz mapped to bin $markerHeight")
+        println("marker line frequency ${frequency}Hz mapped to bin $markerHeight")
         for (row in 0 until width) {
             val color = Color.getHSBColor(0f, 1f, 1f).rgb
             result.setRGB(row, height - markerHeight - 1, color)
@@ -36,6 +22,30 @@ fun spectrogramImage(magnitudes: List<DoubleArray>, colored: Boolean, originalBi
 
     return result
 }
+
+fun imageFromRange(magnitudes: List<DoubleArray>, range: IntRange, colored: Boolean = false): BufferedImage {
+    val height = magnitudes[0].size
+    val hues = if (colored) getHues(magnitudes) else FloatArray(magnitudes.size) { 0.0f }
+    val saturation = if (colored) 1.0f else 0.0f
+    val result = BufferedImage(range.count(), height, BufferedImage.TYPE_INT_RGB)
+    val max = magnitudes.map { it.max() ?: 0.0 }.max() ?: 0.0
+    require(max > 0.0)
+
+    for (row in range) {
+        val rowIndex = row - range.first
+        for (column in 0 until height) {
+            val color = Color.getHSBColor(
+                    hues[row],
+                    saturation,
+                    (magnitudes[row][height - column - 1] / max).toFloat() * 5).rgb
+            result.setRGB(rowIndex, column, color)
+        }
+    }
+
+    return result
+}
+
+fun Section.asImage(magnitudes: List<DoubleArray>): BufferedImage = imageFromRange(magnitudes, start until endExclusive)
 
 private fun getHues(input: List<DoubleArray>): FloatArray {
     val size = input.size

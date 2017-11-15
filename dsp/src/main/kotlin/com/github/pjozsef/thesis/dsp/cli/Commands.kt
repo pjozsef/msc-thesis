@@ -49,17 +49,33 @@ class SpectrogramCommand : Command() {
 
 @Parameters(commandDescription = "Find the sections denoted by the provided percentiles")
 class SectionCommand : Command() {
+    private val samplesPerSecond = 5
+
+    fun validate() {
+        require(export || output) { "Either export or print must be turned on! (-e -p)" }
+    }
+
     @Parameter(required = true, description = "<input wav file>")
     lateinit var files: List<String>
 
     @Parameter(names = arrayOf("-c", "--chunkSize"), description = "chunk size")
     var chunkSize: Int = 8192
 
-    @Parameter(names = arrayOf("-w", "--windowSize"), description = "window size")
-    var windowSize: Int = 5 * 30
+    @Parameter(names = arrayOf("-h", "--height"), description = "crop image height, suggested value: 800")
+    var height: Int? = null
+
+    @Parameter(names = arrayOf("-w", "--windowSize"), description = "window size in seconds")
+    var windowSize: Int = 30
+        get() = field * samplesPerSecond
 
     @Parameter(names = arrayOf("-s", "--stepSize"), description = "step size")
     var stepSize: Int = 1
+
+    @Parameter(names = arrayOf("-e", "--export"), description = "export the sections as png images")
+    var export: Boolean = false
+
+    @Parameter(names = arrayOf("-o", "--output"), description = "print the sections to the console")
+    var output: Boolean = false
 
     @Parameter(
             names = arrayOf("-p", "--percentiles"),
