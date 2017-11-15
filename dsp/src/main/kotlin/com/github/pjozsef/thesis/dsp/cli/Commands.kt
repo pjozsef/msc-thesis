@@ -3,6 +3,8 @@ package com.github.pjozsef.thesis.dsp.cli
 import com.beust.jcommander.IStringConverter
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.Parameters
+import java.io.File
+
 
 sealed class Command {
     companion object {
@@ -11,6 +13,7 @@ sealed class Command {
         const val SPECTROGRAM = "spectrogram"
         const val SECTION = "section"
         const val LIST = "list"
+        const val EXPORT = "export"
     }
 }
 
@@ -65,7 +68,7 @@ class SectionCommand : Command() {
     var height: Int? = null
 
     @Parameter(names = arrayOf("-w", "--windowSize"), description = "window size in seconds")
-    var windowSize: Int = 30
+    var windowSize: Int = 20
         get() = field * samplesPerSecond
 
     @Parameter(names = arrayOf("-s", "--stepSize"), description = "step size")
@@ -83,6 +86,27 @@ class SectionCommand : Command() {
             converter = IntListConverter::class,
             description = "percentiles, separated by a comma")
     lateinit var percentiles: List<Int>
+}
+
+
+@Parameters(commandDescription = "Export data from wav file. Chunk size: 8192, height: 800, window size: 20, step size: 1, percentiles: 20,40,60,80,100")
+class ExportCommand : Command() {
+    @Parameter(required = true, description = "<input wav file>")
+    lateinit var files: List<String>
+
+    @Parameter(
+            names = arrayOf("-o, --outputDirectory"),
+            description = "Output folder, defaults to current working directory",
+            converter = FileConverter::class)
+    var outputDirectory = File(".").absoluteFile.normalize()
+
+    val chunkSize = 8192
+    val height = 800
+    val windowSize = 20
+    val stepSize = 1
+    val export = true
+    val output = false
+    val percentiles = listOf(20, 40, 60, 80, 100)
 }
 
 @Parameters(commandDescription = "Recursively list the MP3 files in the given folders")
@@ -118,4 +142,8 @@ private class IntListConverter : IStringConverter<Int> {
 
 private class DoubleListConverter : IStringConverter<Double> {
     override fun convert(value: String) = value.toDouble()
+}
+
+private class FileConverter : IStringConverter<File> {
+    override fun convert(value: String) = File(value)
 }

@@ -14,12 +14,14 @@ fun main(args: Array<String>) {
     val spectrogramCommand = SpectrogramCommand()
     val sectionCommand = SectionCommand()
     val listCommand = ListCommand()
+    val exportCommand = ExportCommand()
     val jcommander = JCommander.newBuilder()
             .addCommand(Command.TAG, id3Command)
             .addCommand(Command.WAV, wavCommand)
             .addCommand(Command.SPECTROGRAM, spectrogramCommand)
             .addCommand(Command.SECTION, sectionCommand)
             .addCommand(Command.LIST, listCommand)
+            .addCommand(Command.EXPORT, exportCommand)
             .build()
 
     try {
@@ -30,6 +32,7 @@ fun main(args: Array<String>) {
             Command.SPECTROGRAM -> createSpectrogram(spectrogramCommand)
             Command.SECTION -> createSection(sectionCommand)
             Command.LIST -> createMp3List(listCommand)
+            Command.EXPORT -> exportData(exportCommand)
             else -> jcommander.usage()
         }
     } catch (pe: ParameterException) {
@@ -68,20 +71,52 @@ private fun createSpectrogram(spectrogramCommand: SpectrogramCommand) {
 private fun createSection(sectionCommand: SectionCommand) {
     sectionCommand.validate()
 
-    val wavPath = sectionCommand.files.first()
-    val magnitudes = fftMagnitudesFrom(wavPath, sectionCommand.chunkSize, sectionCommand.height)
+    export(sectionCommand.files.first(),
+            sectionCommand.chunkSize,
+            sectionCommand.height,
+            sectionCommand.windowSize,
+            sectionCommand.stepSize,
+            sectionCommand.percentiles,
+            sectionCommand.output,
+            sectionCommand.export)
+}
+
+private fun exportData(exportCommand: ExportCommand) {
+    export(exportCommand.files.first(),
+            exportCommand.chunkSize,
+            exportCommand.height,
+            exportCommand.windowSize,
+            exportCommand.stepSize,
+            exportCommand.percentiles,
+            exportCommand.output,
+            exportCommand.export,
+            exportCommand.outputDirectory)
+}
+
+private fun export(
+        wavPath: String,
+        chunkSize: Int,
+        height: Int?,
+        windowSize: Int,
+        stepSize: Int,
+        percentiles: List<Int>,
+        output: Boolean,
+        export: Boolean,
+        outputDirectory: File? = null
+) {
+    val magnitudes = fftMagnitudesFrom(wavPath, chunkSize, height)
 
     val sections = time("find sections") {
-        findSections(magnitudes, sectionCommand.windowSize, sectionCommand.stepSize, sectionCommand.percentiles)
+        findSections(magnitudes, windowSize, stepSize, percentiles)
     }
 
-    sectionCommand.percentiles.zip(sections).forEach { (percentile, section) ->
-        val (start, end) = section.asTimeInterval(sectionCommand.chunkSize)
-        if (sectionCommand.output) {
+    percentiles.zip(sections).forEach { (percentile, section) ->
+        val (start, end) = section.asTimeInterval(chunkSize)
+        if (output) {
             println("${percentile}th percentile -> [${start.toPrettyString()}..${end.toPrettyString()}]")
         }
-        if (sectionCommand.export) {
-            val fileName = outputPath(wavPath, postfix = "_$percentile")
+        if (export) {
+            val fileName = outputPath(wavPath, outputDirectory, postfix = "_$percentile")
             println(fileName)
             saveImageMeasured(section.asImage(magnitudes), fileName)
         }
@@ -136,10 +171,10 @@ private fun fftMagnitudesFrom(wavPath: String, chunkSize: Int, cropHeight: Int? 
     return magnitudes
 }
 
-private fun outputPath(inputPath: String, prefix: String = "", postfix: String = ""): String {
+private fun outputPath(inputPath: String, outputDirectory: File? = null, prefix: String = "", postfix: String = ""): String {
     return inputPath.let {
         val file = File(it).absoluteFile
-        val directory = file.parent
+        val directory = outputDirectory ?: file.parent
         val sep = File.separator
         val fileName = file.nameWithoutExtension
         val extension = ".png"
