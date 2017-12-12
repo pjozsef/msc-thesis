@@ -28,6 +28,21 @@ jar {
     }
 }
 
+task renameJar(type: Copy) {
+    def folder = "$buildDir/libs/"
+    def oldName = shadowJar.archiveName
+    def newName = "$shadowJar.baseName-$shadowJar.classifier.$shadowJar.extension"
+
+    from "$folder$oldName"
+    into folder
+    rename oldName, newName
+    doLast {
+        println("Renamed $shadowJar.archiveName")
+    }
+}
+
+shadowJar.finalizedBy renameJar
+
 buildscript {
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$rootProject.kotlin_version"
