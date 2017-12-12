@@ -90,7 +90,8 @@ private fun exportData(exportCommand: ExportCommand) {
             exportCommand.percentiles,
             exportCommand.output,
             exportCommand.export,
-            exportCommand.outputDirectory)
+            exportCommand.outputDirectory,
+            true)
 }
 
 private fun export(
@@ -102,7 +103,8 @@ private fun export(
         percentiles: List<Int>,
         output: Boolean,
         export: Boolean,
-        outputDirectory: File? = null
+        outputDirectory: File? = null,
+        fileNameFromTags: Boolean = false
 ) {
     val magnitudes = fftMagnitudesFrom(wavPath, chunkSize, height)
 
@@ -116,7 +118,7 @@ private fun export(
             println("${percentile}th percentile -> [${start.toPrettyString()}..${end.toPrettyString()}]")
         }
         if (export) {
-            val fileName = outputPath(wavPath, outputDirectory, postfix = "_$percentile")
+            val fileName = outputPath(wavPath, outputDirectory, postfix = "_$percentile", fileNameFromTags = fileNameFromTags)
             println(fileName)
             saveImageMeasured(section.asImage(magnitudes), fileName)
         }
@@ -171,12 +173,24 @@ private fun fftMagnitudesFrom(wavPath: String, chunkSize: Int, cropHeight: Int? 
     return magnitudes
 }
 
-private fun outputPath(inputPath: String, outputDirectory: File? = null, prefix: String = "", postfix: String = ""): String {
+private fun outputPath(
+        inputPath: String,
+        outputDirectory: File? = null,
+        prefix: String = "",
+        postfix: String = "",
+        fileNameFromTags: Boolean = false): String {
     return inputPath.let {
         val file = File(it).absoluteFile
         val directory = outputDirectory ?: file.parent
         val sep = File.separator
-        val fileName = file.nameWithoutExtension
+
+        val fileName = if (fileNameFromTags) {
+            val mp3Path = inputPath.replace(".wav", ".mp3")
+            getId3Tag(mp3Path).fold(
+                    { problem -> throw IllegalArgumentException(problem.toString()) },
+                    { tag -> "${tag.artist}__${tag.album}__${tag.title}" })
+        } else file.nameWithoutExtension
+
         val extension = ".png"
         "$directory$sep$prefix$fileName$postfix$extension"
     }
