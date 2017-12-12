@@ -88,17 +88,19 @@ class SectionCommand : Command() {
     lateinit var percentiles: List<Int>
 }
 
-
 @Parameters(commandDescription = "Export data from wav file. Chunk size: 8192, height: 800, window size: 20, step size: 1, percentiles: 20,40,60,80,100")
 class ExportCommand : Command() {
     @Parameter(required = true, description = "<input wav file>")
     lateinit var files: List<String>
 
     @Parameter(
-            names = arrayOf("-o, --outputDirectory"),
+            names = arrayOf("-o", "--outputDirectory"),
             description = "Output folder, defaults to current working directory",
             converter = FileConverter::class)
-    var outputDirectory = File(".").absoluteFile.normalize()
+    var outputDirectory = File(".")
+        set(value) {
+            field = value.absoluteFile.normalize()
+        }
 
     val chunkSize = 8192
     val height = 800
