@@ -35,14 +35,14 @@ class SpectrogramCommand : Command() {
     @Parameter(required = true, description = "<input wav file>")
     lateinit var files: List<String>
 
-    @Parameter(names = arrayOf("-c", "--chunkSize"), description = "chunk size")
+    @Parameter(names = ["-c", "--chunkSize"], description = "chunk size")
     var chunkSize: Int = 8192
 
-    @Parameter(names = arrayOf("-h", "--height"), description = "crop image height, suggested value: 800")
+    @Parameter(names = ["-h", "--height"], description = "crop image height, suggested value: 800")
     var height: Int? = null
 
     @Parameter(
-            names = arrayOf("-m", "--markerLines"),
+            names = ["-m", "--markerLines"],
             converter = DoubleListConverter::class,
             description = "draw lines at the given frequencies")
     var markerLines: List<Double> = listOf()
@@ -62,27 +62,27 @@ class SectionCommand : Command() {
     @Parameter(required = true, description = "<input wav file>")
     lateinit var files: List<String>
 
-    @Parameter(names = arrayOf("-c", "--chunkSize"), description = "chunk size")
+    @Parameter(names = ["-c", "--chunkSize"], description = "chunk size")
     var chunkSize: Int = 8192
 
-    @Parameter(names = arrayOf("-h", "--height"), description = "crop image height, suggested value: 800")
+    @Parameter(names = ["-h", "--height"], description = "crop image height, suggested value: 800")
     var height: Int? = null
 
-    @Parameter(names = arrayOf("-w", "--windowSize"), description = "window size in seconds")
+    @Parameter(names = ["-w", "--windowSize"], description = "window size in seconds")
     var windowSize: Int = 20
         get() = field * samplesPerSecond
 
-    @Parameter(names = arrayOf("-s", "--stepSize"), description = "step size")
+    @Parameter(names = ["-s", "--stepSize"], description = "step size")
     var stepSize: Int = 1
 
-    @Parameter(names = arrayOf("-e", "--export"), description = "export the sections as png images")
+    @Parameter(names = ["-e", "--export"], description = "export the sections as png images")
     var export: Boolean = false
 
-    @Parameter(names = arrayOf("-o", "--output"), description = "print the sections to the console")
+    @Parameter(names = ["-o", "--output"], description = "print the sections to the console")
     var output: Boolean = false
 
     @Parameter(
-            names = arrayOf("-p", "--percentiles"),
+            names = ["-p", "--percentiles"],
             required = true,
             converter = IntListConverter::class,
             description = "percentiles, separated by a comma")
@@ -95,7 +95,7 @@ class ExportCommand : Command() {
     lateinit var files: List<String>
 
     @Parameter(
-            names = arrayOf("-o", "--outputDirectory"),
+            names = ["-o", "--outputDirectory"],
             description = "Output folder, defaults to current working directory",
             converter = FileConverter::class)
     var outputDirectory = File(".")
@@ -118,12 +118,12 @@ class ExportListCommand : Command() {
     lateinit var files: List<String>
 
     @Parameter(
-            names = arrayOf("-p", "--previousProgress"),
+            names = ["-p", "--previousProgress"],
             description = "<previousProgress of previous command run>")
     var previousProgress: String? = null
 
     @Parameter(
-            names = arrayOf("-o", "--outputDirectory"),
+            names = ["-o", "--outputDirectory"],
             description = "Output folder, defaults to current working directory",
             converter = FileConverter::class)
     var outputDirectory = File(".")
@@ -141,19 +141,19 @@ class ListCommand : Command() {
     @Parameter(required = true, description = "<input folders>")
     lateinit var folders: List<String>
 
-    @Parameter(names = arrayOf("-i", "--ignoreErrors"), description = "List the path of the mp3 file")
+    @Parameter(names = ["-i", "--ignoreErrors"], description = "List the path of the mp3 file")
     var ignoreErrors: Boolean = false
 
-    @Parameter(names = arrayOf("--path"), description = "List the path of the mp3 file")
+    @Parameter(names = ["--path"], description = "List the path of the mp3 file")
     var listPath: Boolean = false
 
-    @Parameter(names = arrayOf("--artist"), description = "List the artist of the mp3 file")
+    @Parameter(names = ["--artist"], description = "List the artist of the mp3 file")
     var listArtist: Boolean = false
 
-    @Parameter(names = arrayOf("--album"), description = "List the album of the mp3 file")
+    @Parameter(names = ["--album"], description = "List the album of the mp3 file")
     var listAlbum: Boolean = false
 
-    @Parameter(names = arrayOf("--song"), description = "List the song of the mp3 file")
+    @Parameter(names = ["--song"], description = "List the song of the mp3 file")
     var listSong: Boolean = false
 
     fun validate() {
