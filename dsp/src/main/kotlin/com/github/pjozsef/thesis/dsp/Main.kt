@@ -6,6 +6,8 @@ import com.github.pjozsef.thesis.dsp.cli.*
 import com.github.pjozsef.thesis.dsp.utils.*
 import java.awt.image.BufferedImage
 import java.io.File
+import java.nio.file.Files
+import java.nio.file.Paths
 import kotlin.system.measureTimeMillis
 
 fun main(args: Array<String>) {
@@ -82,7 +84,18 @@ private fun createSection(sectionCommand: SectionCommand) {
 }
 
 private fun exportData(exportCommand: ExportCommand) {
-    export(exportCommand.files.first(),
+    val inputFile = exportCommand.files.first()
+
+    val isMp3 = exportCommand.files.first().endsWith(".mp3")
+
+    val fileName = if (isMp3) {
+        convertToWav(inputFile)
+        inputFile.replace(".mp3", ".wav")
+    } else {
+        inputFile
+    }
+
+    export(fileName,
             exportCommand.chunkSize,
             exportCommand.height,
             exportCommand.windowSize,
@@ -92,6 +105,10 @@ private fun exportData(exportCommand: ExportCommand) {
             exportCommand.export,
             exportCommand.outputDirectory,
             true)
+
+    if (isMp3) {
+        Files.delete(Paths.get(fileName))
+    }
 }
 
 private fun export(

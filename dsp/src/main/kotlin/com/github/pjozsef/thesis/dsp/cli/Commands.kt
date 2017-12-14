@@ -88,7 +88,7 @@ class SectionCommand : Command() {
     lateinit var percentiles: List<Int>
 }
 
-@Parameters(commandDescription = "Export data from wav file. Chunk size: 8192, height: 800, window size: 20, step size: 1, percentiles: 20,40,60,80,100")
+@Parameters(commandDescription = "Export data from wav/mp3 file. Chunk size: 8192, height: 800, window size: 20, step size: 1, percentiles: 20,40,60,80,100")
 class ExportCommand : Command() {
     @Parameter(required = true, description = "<input wav file>")
     lateinit var files: List<String>
