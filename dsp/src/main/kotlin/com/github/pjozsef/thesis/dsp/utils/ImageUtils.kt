@@ -47,6 +47,17 @@ fun imageFromRange(magnitudes: List<DoubleArray>, range: IntRange, colored: Bool
 
 fun Section.asImage(magnitudes: List<DoubleArray>): BufferedImage = imageFromRange(magnitudes, start until endExclusive)
 
+fun BufferedImage.asBlackAndWhite(): BufferedImage {
+    val bw = BufferedImage(
+            this.width,
+            this.height,
+            BufferedImage.TYPE_BYTE_GRAY)
+    val g = bw.createGraphics()
+    g.drawImage(this, 0, 0, null)
+    g.dispose()
+    return bw
+}
+
 private fun getHues(input: List<DoubleArray>): FloatArray {
     val size = input.size
     val result = FloatArray(size)

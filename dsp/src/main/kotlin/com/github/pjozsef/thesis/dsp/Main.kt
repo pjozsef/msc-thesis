@@ -120,7 +120,7 @@ private fun export(
         if (export) {
             val fileName = outputPath(wavPath, outputDirectory, postfix = "_$percentile", fileNameFromTags = fileNameFromTags)
             println(fileName)
-            saveImageMeasured(section.asImage(magnitudes), fileName)
+            saveImageMeasured(section.asImage(magnitudes).asBlackAndWhite(), fileName)
         }
     }
 }
