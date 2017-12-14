@@ -8,11 +8,6 @@ from skimage import io
 print(sys.executable)
 
 
-# hello = tf.constant('Hello, TensorFlow!')
-# sess = tf.Session(config=tf.ConfigProto(log_device_placement=True))
-# print(sess.run(hello))
-
-
 def print_info(arr):
     print(arr.dtype)
     print(type(arr))
@@ -25,13 +20,7 @@ def print_img(img):
     io.show()
 
 
-baseDir = '/Users/jpollak/ppp/thesis-msc/*__*.png'
-# io.imshow(img)
-# io.show()
-
-# images = io.imread_collection('/Users/jpollak/ppp/thesis-msc/*.png')
-# for i in images:
-#     print_info(i)
+baseDir = '/Users/jpollak/Desktop/train_data/*__*.png'
 
 for path in glob.glob(baseDir):
     print(path)
@@ -43,14 +32,9 @@ images = np.empty([size, 800, 20])
 
 for i in range(0, size):
     images[i] = imgs[i]
-    # io.imshow(container[i])
-    # io.show()
 
-subset = images[:, :200, :]
-mean = subset.mean(0)
-variance = subset.std(0)
+mean = images.mean(0)
+variance = images.std(0)
 
-print_info(mean)
-print_img(mean)
-print_info(variance)
-print_img(variance)
+io.imsave("mean.png", mean)
+io.imsave("std.png", variance)
