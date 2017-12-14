@@ -113,7 +113,7 @@ class ExportCommand : Command() {
 
 @Parameters(commandDescription = "Recursively list the MP3 files in the given folders")
 class ListCommand : Command() {
-    @Parameter(required = true, description = "<input wav file>")
+    @Parameter(required = true, description = "<input folders>")
     lateinit var folders: List<String>
 
     @Parameter(names = arrayOf("-i", "--ignoreErrors"), description = "List the path of the mp3 file")
