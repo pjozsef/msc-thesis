@@ -17,6 +17,7 @@ fun main(args: Array<String>) {
     val sectionCommand = SectionCommand()
     val listCommand = ListCommand()
     val exportCommand = ExportCommand()
+    val exportListCommand = ExportListCommand()
     val jcommander = JCommander.newBuilder()
             .addCommand(Command.TAG, id3Command)
             .addCommand(Command.WAV, wavCommand)
@@ -24,6 +25,7 @@ fun main(args: Array<String>) {
             .addCommand(Command.SECTION, sectionCommand)
             .addCommand(Command.LIST, listCommand)
             .addCommand(Command.EXPORT, exportCommand)
+            .addCommand(Command.EXPORT_LIST, exportListCommand)
             .build()
 
     try {
@@ -35,6 +37,7 @@ fun main(args: Array<String>) {
             Command.SECTION -> createSection(sectionCommand)
             Command.LIST -> createMp3List(listCommand)
             Command.EXPORT -> exportData(exportCommand)
+            Command.EXPORT_LIST -> exportList(exportListCommand)
             else -> jcommander.usage()
         }
     } catch (pe: ParameterException) {
@@ -83,14 +86,35 @@ private fun createSection(sectionCommand: SectionCommand) {
             sectionCommand.export)
 }
 
+private fun exportList(exportListCommand: ExportListCommand) {
+    time("complete operation") {
+        exportListCommand.files
+                .asSequence()
+                .flatMap {
+                    File(it).readText()
+                            .split(Regex("\\n"))
+                            .asSequence()
+                }
+                .forEach {
+                    val exportCommand = ExportCommand().apply {
+                        files = listOf(it)
+                        outputDirectory = exportListCommand.outputDirectory
+                    }
+                    exportData(exportCommand)
+                }
+    }
+}
+
 private fun exportData(exportCommand: ExportCommand) {
     val inputFile = exportCommand.files.first()
 
     val isMp3 = exportCommand.files.first().endsWith(".mp3")
 
     val fileName = if (isMp3) {
-        convertToWav(inputFile)
-        inputFile.replace(".mp3", ".wav")
+        time("converting to wav") {
+            convertToWav(inputFile)
+            inputFile.replace(".mp3", ".wav")
+        }
     } else {
         inputFile
     }
@@ -107,7 +131,9 @@ private fun exportData(exportCommand: ExportCommand) {
             true)
 
     if (isMp3) {
-        Files.delete(Paths.get(fileName))
+        time("deleting temporary wav file") {
+            Files.delete(Paths.get(fileName))
+        }
     }
 }
 
@@ -135,7 +161,7 @@ private fun export(
             println("${percentile}th percentile -> [${start.toPrettyString()}..${end.toPrettyString()}]")
         }
         if (export) {
-            val fileName = outputPath(wavPath, outputDirectory, postfix = "_$percentile", fileNameFromTags = fileNameFromTags)
+            val fileName = outputPath(wavPath, outputDirectory, postfix = "__$percentile", fileNameFromTags = fileNameFromTags)
             println(fileName)
             saveImageMeasured(section.asImage(magnitudes).asBlackAndWhite(), fileName)
         }

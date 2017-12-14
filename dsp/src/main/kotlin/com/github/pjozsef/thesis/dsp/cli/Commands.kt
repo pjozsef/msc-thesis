@@ -14,6 +14,7 @@ sealed class Command {
         const val SECTION = "section"
         const val LIST = "list"
         const val EXPORT = "export"
+        const val EXPORT_LIST = "exportlist"
     }
 }
 
@@ -109,6 +110,24 @@ class ExportCommand : Command() {
     val export = true
     val output = false
     val percentiles = listOf(20, 40, 60, 80, 100)
+}
+
+@Parameters(commandDescription = "Export all data defined in txt files. Calls export for each of them.")
+class ExportListCommand : Command() {
+    @Parameter(required = true, description = "<input txt files>")
+    lateinit var files: List<String>
+
+    @Parameter(description = "<progress of previous command run>")
+    var progress: String? = null
+
+    @Parameter(
+            names = arrayOf("-o", "--outputDirectory"),
+            description = "Output folder, defaults to current working directory",
+            converter = FileConverter::class)
+    var outputDirectory = File(".")
+        set(value) {
+            field = value.absoluteFile.normalize()
+        }
 }
 
 @Parameters(commandDescription = "Recursively list the MP3 files in the given folders")
