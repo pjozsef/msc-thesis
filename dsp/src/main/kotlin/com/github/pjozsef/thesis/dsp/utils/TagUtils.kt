@@ -22,7 +22,9 @@ fun getId3Tag(filePath: String): Disjunction<Problem, Id3Tag> = when {
 
 private fun extractTag(filePath: String): Disjunction<Problem, Id3Tag> {
     fun String?.asDisjunction(type: Id3Tag.Type) = if (this == null || this.isBlank()) Disjunction.left(type) else Disjunction.right(this)
-    val mp3 = Mp3File(filePath)
+
+    val normalizedFilePath = File(filePath).normalize().absolutePath
+    val mp3 = Mp3File(normalizedFilePath)
 
     val artist = (mp3.id3v2Tag?.artist ?: mp3.id3v1Tag?.artist).asDisjunction(Id3Tag.Type.ARTIST)
     val title = (mp3.id3v2Tag?.title ?: mp3.id3v1Tag?.title).asDisjunction(Id3Tag.Type.TITLE)
@@ -32,13 +34,13 @@ private fun extractTag(filePath: String): Disjunction<Problem, Id3Tag> {
     val validation = Validation(*tags)
 
     return if (validation.hasFailures) {
-        Disjunction.left(MissingTagsProblem(filePath, validation.failures))
+        Disjunction.left(MissingTagsProblem(normalizedFilePath, validation.failures))
     } else {
         Disjunction.right(Id3Tag(
                 artist.get(),
                 title.get(),
                 album.get(),
-                filePath
+                File(normalizedFilePath).normalize().absolutePath
         ))
     }
 }
