@@ -11,3 +11,13 @@ fun recursivelyFind(folderPath: String, regexString: String): Sequence<File> {
 
     return folder.walk().filter { regex.matches(it.absolutePath) }
 }
+
+fun File.appendOrCreate(content: String) {
+    if (!this.exists()) {
+        this.parentFile.mkdirs()
+        this.createNewFile()
+        this.writeText(content)
+    } else {
+        this.appendText("\n$content")
+    }
+}

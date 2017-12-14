@@ -88,6 +88,11 @@ private fun createSection(sectionCommand: SectionCommand) {
 
 private fun exportList(exportListCommand: ExportListCommand) {
     time("complete operation") {
+        val finishedTracks = exportListCommand.previousProgress?.let {
+            val file = File(it)
+            if (file.exists()) file.readText().split(Regex("\\n")) else null
+        } ?: listOf()
+
         exportListCommand.files
                 .asSequence()
                 .flatMap {
@@ -95,12 +100,17 @@ private fun exportList(exportListCommand: ExportListCommand) {
                             .split(Regex("\\n"))
                             .asSequence()
                 }
+                .filter {
+                    !finishedTracks.contains(it)
+                }
                 .forEach {
                     val exportCommand = ExportCommand().apply {
                         files = listOf(it)
                         outputDirectory = exportListCommand.outputDirectory
                     }
                     exportData(exportCommand)
+
+                    exportListCommand.currentProgress.appendOrCreate(it)
                 }
     }
 }

@@ -117,8 +117,10 @@ class ExportListCommand : Command() {
     @Parameter(required = true, description = "<input txt files>")
     lateinit var files: List<String>
 
-    @Parameter(description = "<progress of previous command run>")
-    var progress: String? = null
+    @Parameter(
+            names = arrayOf("-p", "--previousProgress"),
+            description = "<previousProgress of previous command run>")
+    var previousProgress: String? = null
 
     @Parameter(
             names = arrayOf("-o", "--outputDirectory"),
@@ -128,6 +130,10 @@ class ExportListCommand : Command() {
         set(value) {
             field = value.absoluteFile.normalize()
         }
+
+    val currentProgress: File by lazy {
+        outputDirectory.resolve("previousProgress")
+    }
 }
 
 @Parameters(commandDescription = "Recursively list the MP3 files in the given folders")
