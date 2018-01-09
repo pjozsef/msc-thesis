@@ -118,11 +118,6 @@ class ExportListCommand : Command() {
     lateinit var files: List<String>
 
     @Parameter(
-            names = ["-p", "--previousProgress"],
-            description = "<previousProgress of previous command run>")
-    var previousProgress: String? = null
-
-    @Parameter(
             names = ["-o", "--outputDirectory"],
             description = "Output folder, defaults to current working directory",
             converter = FileConverter::class)

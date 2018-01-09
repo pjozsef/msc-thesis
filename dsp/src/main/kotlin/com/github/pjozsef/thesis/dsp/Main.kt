@@ -88,10 +88,10 @@ private fun createSection(sectionCommand: SectionCommand) {
 
 private fun exportList(exportListCommand: ExportListCommand) {
     time("complete operation") {
-        val finishedTracks = exportListCommand.previousProgress?.let {
-            val file = File(it)
-            if (file.exists()) file.readText().split(Regex("\\n")) else null
-        } ?: listOf()
+        val finishedTracks = exportListCommand
+                .currentProgress
+                .readText()
+                .split(Regex("\\n"))
 
         exportListCommand.files
                 .asSequence()
