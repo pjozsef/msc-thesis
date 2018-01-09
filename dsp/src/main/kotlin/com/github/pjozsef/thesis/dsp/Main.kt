@@ -104,7 +104,8 @@ private fun exportList(exportListCommand: ExportListCommand) {
                     !finishedTracks.contains(it)
                 }
                 .forEach {
-                    val exportCommand = ExportCommand().apply {
+                    val customPercentiles = (15..100 step 5).toList()
+                    val exportCommand = ExportCommand(customPercentiles).apply {
                         files = listOf(it)
                         outputDirectory = exportListCommand.outputDirectory
                     }
