@@ -90,7 +90,7 @@ class SectionCommand : Command() {
 }
 
 @Parameters(commandDescription = "Export data from wav/mp3 file. Chunk size: 8192, height: 800, window size: 20, step size: 1, percentiles: 20,40,60,80,100")
-class ExportCommand : Command() {
+class ExportCommand(customPercentiles: List<Int>? = null) : Command() {
     @Parameter(required = true, description = "<input wav file>")
     lateinit var files: List<String>
 
@@ -109,7 +109,7 @@ class ExportCommand : Command() {
     val stepSize = 1
     val export = true
     val output = false
-    val percentiles = listOf(20, 40, 60, 80, 100)
+    val percentiles = customPercentiles ?: listOf(20, 40, 60, 80, 100)
 }
 
 @Parameters(commandDescription = "Export all data defined in txt files. Calls export for each of them.")
