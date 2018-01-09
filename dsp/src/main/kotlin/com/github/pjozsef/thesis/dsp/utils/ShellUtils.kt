@@ -16,7 +16,7 @@ fun execute(vararg commands: String): CommandLineOutput {
     val sout = process.inputStream
     val serr = process.errorStream
 
-    process.waitFor(180, TimeUnit.SECONDS)
+    process.waitFor(10, TimeUnit.MINUTES)
 
     val exitValue = process.exitValue()
 
