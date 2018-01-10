@@ -104,14 +104,18 @@ private fun exportList(exportListCommand: ExportListCommand) {
                     !finishedTracks.contains(it)
                 }
                 .forEach {
-                    val customPercentiles = (15..100 step 5).toList()
-                    val exportCommand = ExportCommand(customPercentiles).apply {
-                        files = listOf(it)
-                        outputDirectory = exportListCommand.outputDirectory
-                    }
-                    exportData(exportCommand)
+                    try {
+                        val customPercentiles = (15..100 step 5).toList()
+                        val exportCommand = ExportCommand(customPercentiles).apply {
+                            files = listOf(it)
+                            outputDirectory = exportListCommand.outputDirectory
+                        }
+                        exportData(exportCommand)
 
-                    exportListCommand.currentProgress.appendOrCreate(it)
+                        exportListCommand.currentProgress.appendOrCreate(it)
+                    } catch (exception: Exception) {
+                        System.err.println(exception)
+                    }
                 }
     }
 }
@@ -167,16 +171,16 @@ private fun export(
     }
 
     percentiles.zip(sections).forEach { (percentile, section) ->
-        val (start, end) = section.asTimeInterval(chunkSize)
-        if (output) {
-            println("${percentile}th percentile -> [${start.toPrettyString()}..${end.toPrettyString()}]")
-        }
-        if (export) {
-            val fileName = outputPath(wavPath, outputDirectory, postfix = "__$percentile", fileNameFromTags = fileNameFromTags)
-            println(fileName)
-            saveImageMeasured(section.asImage(magnitudes).asBlackAndWhite(), fileName)
-        }
-    }
+                val (start, end) = section.asTimeInterval(chunkSize)
+                if (output) {
+                    println("${percentile}th percentile -> [${start.toPrettyString()}..${end.toPrettyString()}]")
+                }
+                if (export) {
+                    val fileName = outputPath(wavPath, outputDirectory, postfix = "__$percentile", fileNameFromTags = fileNameFromTags)
+                    println(fileName)
+                    saveImageMeasured(section.asImage(magnitudes).asBlackAndWhite(), fileName)
+                }
+            }
 }
 
 private fun createMp3List(listCommand: ListCommand) {
@@ -188,28 +192,28 @@ private fun createMp3List(listCommand: ListCommand) {
 
     listCommand.validate()
     listCommand.folders.asSequence().flatMap {
-        recursivelyFind(it, ".*\\.mp3")
-    }.map {
-        getId3Tag(it.absolutePath)
-    }.forEach { id3TagDisjunction ->
+                recursivelyFind(it, ".*\\.mp3")
+            }.map {
+                getId3Tag(it.absolutePath)
+            }.forEach { id3TagDisjunction ->
 
-        id3TagDisjunction.fold({ problem ->
-            val message = "Problem with mp3: $problem"
-            if (!listCommand.ignoreErrors) {
-                throw IllegalArgumentException(message)
-            } else {
-                System.err.println("${id3TagDisjunction.component1()}")
+                id3TagDisjunction.fold({ problem ->
+                    val message = "Problem with mp3: $problem"
+                    if (!listCommand.ignoreErrors) {
+                        throw IllegalArgumentException(message)
+                    } else {
+                        System.err.println("${id3TagDisjunction.component1()}")
+                    }
+                }, { id3Tag ->
+                    val output = buildString {
+                        appendIfNeeded(listCommand.listPath) { id3Tag.file }
+                        appendIfNeeded(listCommand.listArtist) { id3Tag.artist }
+                        appendIfNeeded(listCommand.listAlbum) { id3Tag.album }
+                        appendIfNeeded(listCommand.listSong) { id3Tag.title }
+                    }
+                    println(output)
+                })
             }
-        }, { id3Tag ->
-            val output = buildString {
-                appendIfNeeded(listCommand.listPath) { id3Tag.file }
-                appendIfNeeded(listCommand.listArtist) { id3Tag.artist }
-                appendIfNeeded(listCommand.listAlbum) { id3Tag.album }
-                appendIfNeeded(listCommand.listSong) { id3Tag.title }
-            }
-            println(output)
-        })
-    }
 }
 
 private fun fftMagnitudesFrom(wavPath: String, chunkSize: Int, cropHeight: Int? = null): List<DoubleArray> {
