@@ -1,40 +1,31 @@
+import argparse
 import glob
-import sys
 
 import matplotlib.image as mpimg
 import numpy as np
 from skimage import io
 
-print(sys.executable)
+parser = argparse.ArgumentParser()
+parser.add_argument('--data-glob', required=True)
+parser.add_argument('--verbose', action='store_true')
+parser.add_argument('--export')
+args = parser.parse_args()
 
+if args.verbose:
+    for path in glob.glob(args.data_glob):
+        print(path)
 
-def print_info(arr):
-    print(arr.dtype)
-    print(type(arr))
-    print(arr.shape)
-    print(arr)
+images = [mpimg.imread(p) for p in glob.glob(args.data_glob)]
 
+if args.verbose:
+    print("Read images shape:", np.shape(images))
 
-def print_img(img):
-    io.imshow(img)
-    io.show()
+mean = np.mean(images, axis=0)
+std = np.std(images, axis=0)
+if args.verbose:
+    print("Mean:", mean)
+    print("Standard deviation", std)
 
-
-baseDir = '/Users/jpollak/Desktop/train_data/*__*.png'
-
-for path in glob.glob(baseDir):
-    print(path)
-
-imgs = [mpimg.imread(p) for p in glob.glob(baseDir)]
-size = len(imgs)
-
-images = np.empty([size, 800, 20])
-
-for i in range(0, size):
-    images[i] = imgs[i]
-
-mean = images.mean(0)
-variance = images.std(0)
-
-io.imsave("mean.png", mean)
-io.imsave("std.png", variance)
+if args.export:
+    io.imsave(args.export + "/mean.png", mean)
+    io.imsave(args.export + "/std.png", std)
