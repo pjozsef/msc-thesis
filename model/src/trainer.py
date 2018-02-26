@@ -20,7 +20,8 @@ if __name__ == "__main__":
     input_records = [args.train_data_root + "/" + record for record in args.train_data_records]
     print(input_records)
 
-    BATCH_SIZE = 32
+    MODEL_NAME = "model-simple"
+    BATCH_SIZE = 128
     PREFETCH_BUFFER = 1000
     SHUFFLE_BUFFER = 1000
     TAKE = None
@@ -55,14 +56,26 @@ if __name__ == "__main__":
                        tf.local_variables_initializer())
 
     saver = tf.train.Saver()
+    savedModelBuilder = tf.saved_model.builder.SavedModelBuilder(args.job_dir + "/final_model")
 
     with tf.Session() as sess:
         print("Starting session")
         sess.run(init_op)
+
+        savedModelBuilder.add_meta_graph_and_variables(
+            sess,
+            [tf.saved_model.tag_constants.SERVING],
+            signature_def_map={
+                "model": tf.saved_model.signature_def_utils.predict_signature_def(
+                    inputs={"x": x},
+                    outputs={"encoded": encoded})
+            })
+
         next_element = iterator.get_next()
 
         for epoch in range(EPOCH):
             print("Epoch:", epoch)
+            epoch_start = time.time()
             sess.run(iterator.initializer, feed_dict={filenames: input_records})
             total_batch = 0
             total_error = 0
@@ -85,7 +98,9 @@ if __name__ == "__main__":
                 except tf.errors.OutOfRangeError:
                     if total_error:
                         print("Mean error for epoch", epoch, ":", (total_error / total_batch))
+                    print("Total epoch time:", (time.time() - epoch_start) / 60, "minutes")
                     print("Average times for minibatch: ", np.average(times_for_mini_batch))
                     print("Average times for calculation: ", np.average(times_for_optimizer))
                     break
-            saver.save(sess, args.job_dir + "/model_simple", global_step=epoch)
+            saver.save(sess, args.job_dir + '/' + MODEL_NAME + '.ckpt', global_step=epoch)
+        savedModelBuilder.save()
