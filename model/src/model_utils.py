@@ -28,7 +28,13 @@ def conv2d(previous_layer, kernel_size, layer_scope, padding="SAME"):
         convolution_with_bias = tf.nn.bias_add(
             value=convolution,
             bias=bias)
-        return tf.nn.relu(convolution_with_bias)
+        activation = tf.nn.relu(convolution_with_bias, name="activation")
+
+        tf.summary.histogram("summary_weights", kernel)
+        tf.summary.histogram("summary_biases", bias)
+        tf.summary.histogram("summary_activations", activation)
+
+        return activation
 
 
 def deconv2d(previous_layer, layer_scope, output_shape, padding="SAME"):
@@ -111,7 +117,13 @@ def fc(previous_layer, weight_size, layer_scope, layer_name=None):
             value=tf.matmul(previous_layer, weight),
             bias=bias)
 
-        return tf.nn.relu(h, name=layer_name)
+        activation = tf.nn.relu(h, name=layer_name)
+        # tf.summary.image("summary_weights_img", tf.reshape(weights, [1, weight_size[0], weight_size[1], 1]))
+        tf.summary.histogram("summary_weights", weight)
+        tf.summary.histogram("summary_biases", bias)
+        tf.summary.histogram("summary_activations", activation)
+
+        return activation
 
 
 def decode_fc(previous_layer, layer_scope):

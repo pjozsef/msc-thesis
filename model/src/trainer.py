@@ -25,8 +25,8 @@ if __name__ == "__main__":
     PREFETCH_BUFFER = 1000
     SHUFFLE_BUFFER = 1000
     TAKE = None
-    EPOCH = 30
-    LEARNING_RATE = 0.01
+    EPOCH = 200
+    LEARNING_RATE = 0.001
     print("Batch size:", BATCH_SIZE)
     print("Prefetch buffer:", PREFETCH_BUFFER)
     print("Shuffle buffer:", SHUFFLE_BUFFER)
@@ -50,17 +50,29 @@ if __name__ == "__main__":
     print("Model created")
 
     cost = tf.reduce_sum(tf.square(y - x))
+    # cost_avg = cost / x.shape[0]
     optimizer = tf.train.AdamOptimizer(LEARNING_RATE).minimize(cost)
 
     init_op = tf.group(tf.global_variables_initializer(),
                        tf.local_variables_initializer())
 
+    tf.summary.image("summary_x", x, max_outputs=5)
+    tf.summary.image("summary_y", y, max_outputs=5)
+    # tf.summary.scalar("summary_cost", cost_avg)
+    # tf.summary.histogram("summary_cost_hist", cost_avg)
+
     saver = tf.train.Saver()
     savedModelBuilder = tf.saved_model.builder.SavedModelBuilder(args.job_dir + "/final_model")
+
+    writer = tf.summary.FileWriter(args.job_dir)
 
     with tf.Session() as sess:
         print("Starting session")
         sess.run(init_op)
+
+        merged_summary = tf.summary.merge_all()
+
+        writer.add_graph(sess.graph)
 
         savedModelBuilder.add_meta_graph_and_variables(
             sess,
@@ -73,6 +85,7 @@ if __name__ == "__main__":
 
         next_element = iterator.get_next()
 
+        summary = None
         for epoch in range(EPOCH):
             print("Epoch:", epoch)
             epoch_start = time.time()
@@ -101,6 +114,7 @@ if __name__ == "__main__":
                     print("Total epoch time:", (time.time() - epoch_start) / 60, "minutes")
                     print("Average times for minibatch: ", np.average(times_for_mini_batch))
                     print("Average times for calculation: ", np.average(times_for_optimizer))
+                    # writer.add_summary(summary, epoch)
                     break
             saver.save(sess, args.job_dir + '/' + MODEL_NAME + '.ckpt', global_step=epoch)
         savedModelBuilder.save()
