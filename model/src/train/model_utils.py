@@ -7,6 +7,10 @@ def initializer():
     return tf.contrib.layers.xavier_initializer(uniform=False)
 
 
+def bias_initializer():
+    return tf.constant_initializer(0.0)
+
+
 def conv2d(previous_layer, kernel_size, layer_scope, padding="SAME"):
     with tf.variable_scope(layer_scope):
         kernel = tf.get_variable(
@@ -19,7 +23,7 @@ def conv2d(previous_layer, kernel_size, layer_scope, padding="SAME"):
         bias = tf.get_variable(
             name="bias",
             shape=[kernel_size[-1]],
-            initializer=initializer())
+            initializer=bias_initializer())
         convolution = tf.nn.conv2d(
             input=previous_layer,
             filter=kernel,
@@ -44,7 +48,7 @@ def deconv2d(previous_layer, layer_scope, output_shape, padding="SAME"):
         bias = tf.get_variable(
             name="bias",
             shape=[kernel.shape[2]],
-            initializer=initializer())
+            initializer=bias_initializer())
         deconvolution = tf.nn.conv2d_transpose(
             value=previous_layer,
             filter=kernel,
@@ -110,7 +114,7 @@ def fc(previous_layer, weight_size, layer_scope, layer_name=None):
             name='bias',
             shape=[output_size],
             dtype=tf.float32,
-            initializer=initializer())
+            initializer=bias_initializer())
 
         h = tf.nn.bias_add(
             name='h',
@@ -135,7 +139,7 @@ def decode_fc(previous_layer, layer_scope):
             name='bias',
             shape=[weight.shape[1]],
             dtype=tf.float32,
-            initializer=initializer())
+            initializer=bias_initializer())
 
         h = tf.nn.bias_add(
             name='h',
