@@ -1,4 +1,4 @@
-from src.model_utils import *
+from src.train.model_utils import *
 
 
 # def verify_sizes(session, feed_dict):

@@ -16,7 +16,6 @@ if args.verbose:
         print(path)
 
 images = [mpimg.imread(p) for p in glob.glob(args.data_glob)]
-
 if args.verbose:
     print("Read images shape:", np.shape(images))
 

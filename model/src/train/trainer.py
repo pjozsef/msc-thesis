@@ -5,8 +5,7 @@ import time
 import numpy as np
 import tensorflow as tf
 
-from src import model_simple01
-from src import proto_parser
+from src.train import model_simple01, proto_parser
 
 if __name__ == "__main__":
     print("Arguments", sys.argv)
@@ -25,7 +24,7 @@ if __name__ == "__main__":
     PREFETCH_BUFFER = 1000
     SHUFFLE_BUFFER = 1000
     TAKE = None
-    EPOCH = 200
+    EPOCH = 1
     LEARNING_RATE = 0.001
     print("Batch size:", BATCH_SIZE)
     print("Prefetch buffer:", PREFETCH_BUFFER)
