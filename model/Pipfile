@@ -7,6 +7,9 @@ name = "pypi"
 tensorflow = "*"
 scikit-image = "*"
 scipy = "*"
+sklearn = "*"
+ggplot = "*"
+matplotlib = "*"
 
 
 [dev-packages]
