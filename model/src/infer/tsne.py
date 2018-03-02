@@ -1,13 +1,18 @@
+import argparse
 import csv
 import time
 
 import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--input', required=TSNE)
+args = parser.parse_args()
+
 header = None
 infos = []
 codes = []
-with open('ultramini.csv', 'r') as csvfile:
+with open(args.input, 'r') as csvfile:
     reader = csv.reader(csvfile)
     header = next(reader)
     for row in reader:
@@ -16,7 +21,7 @@ with open('ultramini.csv', 'r') as csvfile:
             codes.append(row[5:37])
 
 start = time.time()
-tsne = TSNE(learning_rate=10)
+tsne = TSNE(learning_rate=200, n_iter=5000, perplexity=50)
 codes_2d = tsne.fit_transform(codes)
 print("Iterations:", tsne.n_iter)
 print("Iterations:", tsne.n_iter_)
