@@ -50,3 +50,5 @@ with tf.Session(graph=tf.Graph()) as sess:
             codes = np.reshape(sess.run(encoded, feed_dict={'x:0': image}), [32])
             writer.writerow(extract_info(path, info_labels, codes, encoded_dimensions))
             print("Finished", path)
+            if args.verbose:
+                print("Encoding", codes)
