@@ -99,7 +99,7 @@ def flatten(previous_layer):
     return tf.reshape(previous_layer, [-1, dim])
 
 
-def fc_relu(previous_layer, weight_size, layer_scope, layer_name=None):
+def fc(activation_function, previous_layer, weight_size, layer_scope, layer_name=None):
     with tf.variable_scope(layer_scope):
         input_size = weight_size[0]
         output_size = weight_size[1]
@@ -121,7 +121,7 @@ def fc_relu(previous_layer, weight_size, layer_scope, layer_name=None):
             value=tf.matmul(previous_layer, weight),
             bias=bias)
 
-        activation = tf.nn.relu(h, name=layer_name)
+        activation = activation_function(h, name=layer_name)
         # tf.summary.image("summary_weights_img", tf.reshape(weights, [1, weight_size[0], weight_size[1], 1]))
         tf.summary.histogram("summary_weights", weight)
         tf.summary.histogram("summary_biases", bias)
@@ -130,7 +130,15 @@ def fc_relu(previous_layer, weight_size, layer_scope, layer_name=None):
         return activation
 
 
-def decode_fc_relu(previous_layer, layer_scope):
+def fc_relu(previous_layer, weight_size, layer_scope, layer_name=None):
+    return fc(tf.nn.relu, previous_layer, weight_size, layer_scope, layer_name)
+
+
+def fc_sigmoid(previous_layer, weight_size, layer_scope, layer_name=None):
+    return fc(tf.nn.sigmoid, previous_layer, weight_size, layer_scope, layer_name)
+
+
+def decode_fc(activation_function, previous_layer, layer_scope):
     with tf.variable_scope("decode_" + layer_scope):
         global weights
         weight = tf.transpose(weights[layer_scope])
@@ -146,4 +154,12 @@ def decode_fc_relu(previous_layer, layer_scope):
             value=tf.matmul(previous_layer, weight),
             bias=bias)
 
-        return tf.nn.relu(h)
+        return activation_function(h)
+
+
+def decode_fc_relu(previous_layer, layer_scope):
+    return decode_fc(tf.nn.relu, previous_layer, layer_scope)
+
+
+def decode_fc_sigmoid(previous_layer, layer_scope):
+    return decode_fc(tf.nn.sigmoid, previous_layer, layer_scope)
