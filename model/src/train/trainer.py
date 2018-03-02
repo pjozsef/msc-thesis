@@ -84,6 +84,7 @@ if __name__ == "__main__":
         next_element = iterator.get_next()
 
         summary = None
+        step = 0
         for epoch in range(EPOCH):
             print("Epoch:", epoch)
             epoch_start = time.time()
@@ -93,7 +94,6 @@ if __name__ == "__main__":
             total_error = 0
             times_for_mini_batch = []
             times_for_optimizer = []
-            step = 0
             while True:
                 try:
                     start = time.time()
