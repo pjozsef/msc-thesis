@@ -11,7 +11,7 @@ def bias_initializer():
     return tf.constant_initializer(0.0)
 
 
-def conv2d(previous_layer, kernel_size, layer_scope, padding="SAME"):
+def conv2d(previous_layer, kernel_size, layer_scope, activation_function, padding="SAME"):
     with tf.variable_scope(layer_scope):
         kernel = tf.get_variable(
             name='kernel',
@@ -32,7 +32,7 @@ def conv2d(previous_layer, kernel_size, layer_scope, padding="SAME"):
         convolution_with_bias = tf.nn.bias_add(
             value=convolution,
             bias=bias)
-        activation = tf.nn.relu(convolution_with_bias, name="activation")
+        activation = activation_function(convolution_with_bias, name="activation")
 
         tf.summary.histogram("summary_weights", kernel)
         tf.summary.histogram("summary_biases", bias)
@@ -41,7 +41,15 @@ def conv2d(previous_layer, kernel_size, layer_scope, padding="SAME"):
         return activation
 
 
-def deconv2d(previous_layer, layer_scope, output_shape, padding="SAME"):
+def conv2d_relu(previous_layer, kernel_size, layer_scope, padding="SAME"):
+    return conv2d(previous_layer, kernel_size, layer_scope, tf.nn.relu, padding)
+
+
+def conv2d_elu(previous_layer, kernel_size, layer_scope, padding="SAME"):
+    return conv2d(previous_layer, kernel_size, layer_scope, tf.nn.elu, padding)
+
+
+def deconv2d(previous_layer, layer_scope, output_shape, activation_function, padding="SAME"):
     with tf.variable_scope("decode_" + layer_scope):
         global weights
         kernel = weights[layer_scope]
@@ -58,7 +66,15 @@ def deconv2d(previous_layer, layer_scope, output_shape, padding="SAME"):
         deconvolution_with_bias = tf.nn.bias_add(
             value=deconvolution,
             bias=bias)
-        return tf.nn.relu(deconvolution_with_bias)
+        return activation_function(deconvolution_with_bias)
+
+
+def deconv2d_relu(previous_layer, layer_scope, output_shape, padding="SAME"):
+    return deconv2d(previous_layer, layer_scope, output_shape, tf.nn.relu, padding)
+
+
+def deconv2d_elu(previous_layer, layer_scope, output_shape, padding="SAME"):
+    return deconv2d(previous_layer, layer_scope, output_shape, tf.nn.elu, padding)
 
 
 def maxpool(previous_layer, kernel_size=None):
