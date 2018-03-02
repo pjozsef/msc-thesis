@@ -2,12 +2,15 @@ import argparse
 import csv
 import time
 
+import matplotlib.colors
 import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--input', required=TSNE)
+parser.add_argument('--input', required=True)
+parser.add_argument('--percentiles', nargs='*')
 args = parser.parse_args()
+print(args)
 
 header = None
 infos = []
@@ -16,15 +19,19 @@ with open(args.input, 'r') as csvfile:
     reader = csv.reader(csvfile)
     header = next(reader)
     for row in reader:
-        if row[4] == '75':
+        if args.percentiles:
+            percentile = row[4]
+            if percentile in args.percentiles:
+                infos.append(row[0:5])
+                codes.append(row[5:37])
+        else:
             infos.append(row[0:5])
             codes.append(row[5:37])
 
 start = time.time()
-tsne = TSNE(learning_rate=200, n_iter=5000, perplexity=50)
+tsne = TSNE(learning_rate=100, n_iter=15000, perplexity=50)
 codes_2d = tsne.fit_transform(codes)
-print("Iterations:", tsne.n_iter)
-print("Iterations:", tsne.n_iter_)
+print("Iterations run:", tsne.n_iter_, "/", tsne.n_iter)
 print("Divergence:", tsne.kl_divergence_)
 print("T-SNE finished in", time.time() - start, "seconds")
 
@@ -39,10 +46,11 @@ labelMapping = {
 for info in infos:
     label.append(labelMapping[info[0]])
 
+alpha = 0.5
 colorMapping = {
-    0: 'blue',
-    1: 'orange',
-    2: 'black'
+    0: matplotlib.colors.to_rgba('blue', alpha=alpha),
+    1: matplotlib.colors.to_rgba('orange', alpha=alpha),
+    2: matplotlib.colors.to_rgba('black', alpha=alpha)
 }
 colors = [colorMapping[style] for style in label]
 fig = plt.figure(figsize=(8, 8))
