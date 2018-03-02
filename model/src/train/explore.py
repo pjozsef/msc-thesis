@@ -21,7 +21,11 @@ if args.verbose:
 
 mean = np.mean(images, axis=0)
 std = np.std(images, axis=0)
+min = np.min(images)
+max = np.max(images)
 if args.verbose:
+    print("Min:", min)
+    print("Max:", max)
     print("Mean:", mean)
     print("Standard deviation", std)
 
