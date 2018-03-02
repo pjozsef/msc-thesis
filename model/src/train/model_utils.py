@@ -99,7 +99,7 @@ def flatten(previous_layer):
     return tf.reshape(previous_layer, [-1, dim])
 
 
-def fc(previous_layer, weight_size, layer_scope, layer_name=None):
+def fc_relu(previous_layer, weight_size, layer_scope, layer_name=None):
     with tf.variable_scope(layer_scope):
         input_size = weight_size[0]
         output_size = weight_size[1]
