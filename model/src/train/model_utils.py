@@ -130,7 +130,7 @@ def fc_relu(previous_layer, weight_size, layer_scope, layer_name=None):
         return activation
 
 
-def decode_fc(previous_layer, layer_scope):
+def decode_fc_relu(previous_layer, layer_scope):
     with tf.variable_scope("decode_" + layer_scope):
         global weights
         weight = tf.transpose(weights[layer_scope])
