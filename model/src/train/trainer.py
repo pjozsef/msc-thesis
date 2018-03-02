@@ -20,11 +20,11 @@ if __name__ == "__main__":
     print(input_records)
 
     MODEL_NAME = "model-simple"
-    BATCH_SIZE = 128
+    BATCH_SIZE = 256
     PREFETCH_BUFFER = 1000
     SHUFFLE_BUFFER = 1000
     TAKE = None
-    EPOCH = 1
+    EPOCH = 30
     LEARNING_RATE = 0.001
     print("Batch size:", BATCH_SIZE)
     print("Prefetch buffer:", PREFETCH_BUFFER)
@@ -49,16 +49,15 @@ if __name__ == "__main__":
     print("Model created")
 
     cost = tf.reduce_sum(tf.square(y - x))
-    # cost_avg = cost / x.shape[0]
     optimizer = tf.train.AdamOptimizer(LEARNING_RATE).minimize(cost)
 
     init_op = tf.group(tf.global_variables_initializer(),
                        tf.local_variables_initializer())
 
-    tf.summary.image("summary_x", x, max_outputs=5)
-    tf.summary.image("summary_y", y, max_outputs=5)
-    # tf.summary.scalar("summary_cost", cost_avg)
-    # tf.summary.histogram("summary_cost_hist", cost_avg)
+    tf.summary.image("summary_x", x, max_outputs=3)
+    tf.summary.image("summary_y", y, max_outputs=3)
+    tf.summary.scalar("summary_cost", cost)
+    tf.summary.histogram("summary_cost_hist", cost)
 
     saver = tf.train.Saver()
     savedModelBuilder = tf.saved_model.builder.SavedModelBuilder(args.job_dir + "/final_model")
@@ -89,10 +88,12 @@ if __name__ == "__main__":
             print("Epoch:", epoch)
             epoch_start = time.time()
             sess.run(iterator.initializer, feed_dict={filenames: input_records})
+            summary = tf.summary.merge_all()
             total_batch = 0
             total_error = 0
             times_for_mini_batch = []
             times_for_optimizer = []
+            step = 0
             while True:
                 try:
                     start = time.time()
@@ -104,8 +105,14 @@ if __name__ == "__main__":
                         _, cost_value = sess.run([optimizer, cost], feed_dict={x: images})
                         total_error += cost_value
                         total_batch += images.shape[0]
+                        if images.shape[0] == BATCH_SIZE:
+                            all_summary = sess.run(summary, feed_dict={x: images})
+                            writer.add_summary(all_summary, step)
                     else:
                         sess.run(optimizer, feed_dict={x: images})
+
+                    if images.shape[0] == BATCH_SIZE:
+                        step += 1
                     times_for_optimizer.append(time.time() - start)
                 except tf.errors.OutOfRangeError:
                     if total_error:
@@ -113,7 +120,6 @@ if __name__ == "__main__":
                     print("Total epoch time:", (time.time() - epoch_start) / 60, "minutes")
                     print("Average times for minibatch: ", np.average(times_for_mini_batch))
                     print("Average times for calculation: ", np.average(times_for_optimizer))
-                    # writer.add_summary(summary, epoch)
                     break
             saver.save(sess, args.job_dir + '/' + MODEL_NAME + '.ckpt', global_step=epoch)
         savedModelBuilder.save()
