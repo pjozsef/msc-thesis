@@ -1,3 +1,10 @@
+# Deep learning
+[Efficient backprop Yann LeCun](http://yann.lecun.com/exdb/publis/pdf/lecun-98b.pdf)
+[squeezenet](https://arxiv.org/pdf/1602.07360.pdf)
+[inception model](https://arxiv.org/pdf/1409.4842.pdf)
+[alexnet](https://papers.nips.cc/paper/4824-imagenet-classification-with-deep-convolutional-neural-networks.pdf)
+[semantic hashing](http://www.cs.toronto.edu/~fritz/absps/sh.pdf)
+
 # Book
 [Deeplearning, a practicioner's approach](https://www.amazon.com/Deep-Learning-Practitioners-Adam-Gibson/dp/1491914254)
 [Deeplearning book](http://www.deeplearningbook.org/)
