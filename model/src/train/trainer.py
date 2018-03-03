@@ -6,7 +6,7 @@ import numpy as np
 import tensorflow as tf
 
 from src.train import proto_parser
-from src.train.model import model_simple01_elu_elu
+from src.train.model import model_simple01
 
 if __name__ == "__main__":
     print("Arguments", sys.argv)
@@ -14,6 +14,7 @@ if __name__ == "__main__":
     parser.add_argument('--train-data-root', required=True)
     parser.add_argument('--train-data-records', nargs='*', required=True)
     parser.add_argument('--job-dir', required=True)
+    parser.add_argument('--take', type=int)
     args = parser.parse_args()
     print("Parsed arguments:", args)
 
@@ -24,9 +25,9 @@ if __name__ == "__main__":
     BATCH_SIZE = 256
     PREFETCH_BUFFER = 1000
     SHUFFLE_BUFFER = 1000
-    TAKE = None
-    EPOCH = 30
-    LEARNING_RATE = 0.001
+    TAKE = args.take
+    EPOCH = 40
+    LEARNING_RATE = 0.05
     print("Batch size:", BATCH_SIZE)
     print("Prefetch buffer:", PREFETCH_BUFFER)
     print("Shuffle buffer:", SHUFFLE_BUFFER)
@@ -46,7 +47,7 @@ if __name__ == "__main__":
 
     iterator = dataset.make_initializable_iterator()
 
-    x, encoded, y = model_simple01_elu_elu.create_model()
+    x, encoded, y = model_simple01.create_model()
     print("Model created")
 
     cost = tf.reduce_sum(tf.square(y - x))
