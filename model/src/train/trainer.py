@@ -5,7 +5,8 @@ import time
 import numpy as np
 import tensorflow as tf
 
-from src.train import model_simple01, proto_parser
+from src.train import proto_parser
+from src.train.model import model_simple01_elu_elu
 
 if __name__ == "__main__":
     print("Arguments", sys.argv)
@@ -45,7 +46,7 @@ if __name__ == "__main__":
 
     iterator = dataset.make_initializable_iterator()
 
-    x, encoded, y = model_simple01.create_model()
+    x, encoded, y = model_simple01_elu_elu.create_model()
     print("Model created")
 
     cost = tf.reduce_sum(tf.square(y - x))
