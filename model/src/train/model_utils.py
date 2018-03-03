@@ -147,11 +147,11 @@ def fc(previous_layer, weight_size, activation_function, layer_scope, layer_name
 
 
 def fc_relu(previous_layer, weight_size, layer_scope, layer_name=None):
-    return fc(tf.nn.relu, previous_layer, weight_size, layer_scope, layer_name)
+    return fc(previous_layer, weight_size, tf.nn.relu, layer_scope, layer_name)
 
 
 def fc_sigmoid(previous_layer, weight_size, layer_scope, layer_name=None):
-    return fc(tf.nn.sigmoid, previous_layer, weight_size, layer_scope, layer_name)
+    return fc(previous_layer, weight_size, tf.nn.sigmoid, layer_scope, layer_name)
 
 
 def decode_fc(previous_layer, activation_function, layer_scope):
@@ -174,8 +174,8 @@ def decode_fc(previous_layer, activation_function, layer_scope):
 
 
 def decode_fc_relu(previous_layer, layer_scope):
-    return decode_fc(tf.nn.relu, previous_layer, layer_scope)
+    return decode_fc(previous_layer, tf.nn.relu, layer_scope)
 
 
 def decode_fc_sigmoid(previous_layer, layer_scope):
-    return decode_fc(tf.nn.sigmoid, previous_layer, layer_scope)
+    return decode_fc(previous_layer, tf.nn.sigmoid, layer_scope)
