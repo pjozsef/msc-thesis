@@ -2,3 +2,4 @@ build
 gcloud-train.sh
 local-gcloud.sh
 infer-and-visualize.sh
+*.csv
