@@ -115,7 +115,7 @@ def flatten(previous_layer):
     return tf.reshape(previous_layer, [-1, dim])
 
 
-def fc(activation_function, previous_layer, weight_size, layer_scope, layer_name=None):
+def fc(previous_layer, weight_size, activation_function, layer_scope, layer_name=None):
     with tf.variable_scope(layer_scope):
         input_size = weight_size[0]
         output_size = weight_size[1]
@@ -154,7 +154,7 @@ def fc_sigmoid(previous_layer, weight_size, layer_scope, layer_name=None):
     return fc(tf.nn.sigmoid, previous_layer, weight_size, layer_scope, layer_name)
 
 
-def decode_fc(activation_function, previous_layer, layer_scope):
+def decode_fc(previous_layer, activation_function, layer_scope):
     with tf.variable_scope("decode_" + layer_scope):
         global weights
         weight = tf.transpose(weights[layer_scope])
