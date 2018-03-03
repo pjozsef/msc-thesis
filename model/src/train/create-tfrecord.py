@@ -2,6 +2,7 @@ import argparse
 import glob
 
 import matplotlib.image as mpimg
+import pandas as pd
 import tensorflow as tf
 
 
@@ -49,6 +50,14 @@ def parse_proto(proto):
     return image, dim, name
 
 
+def print_summary(paths):
+    artists = [p.split("/")[-1].split("__")[1] for p in paths]
+    frame = pd.DataFrame({"artist": artists})
+    print("Summary")
+    print(frame.groupby('artist')['artist'].count())
+    print(frame.describe())
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--source', required=True)
@@ -67,6 +76,8 @@ if __name__ == '__main__':
     with tf.python_io.TFRecordWriter(args.result) as writer:
         for example in examples:
             writer.write(example.SerializeToString())
+
+    print_summary(paths)
 
     if args.validate:
         print("Validating tfrecord with original input")
