@@ -9,6 +9,7 @@ from sklearn.manifold import TSNE
 parser = argparse.ArgumentParser()
 parser.add_argument('--input', required=True)
 parser.add_argument('--percentiles', nargs='*')
+parser.add_argument('--perplexity', required=True, type=int)
 args = parser.parse_args()
 print(args)
 
@@ -29,7 +30,8 @@ with open(args.input, 'r') as csvfile:
             codes.append(row[5:37])
 
 start = time.time()
-tsne = TSNE(learning_rate=100, n_iter=15000, perplexity=50)
+# 5 30 50 100
+tsne = TSNE(learning_rate=10, n_iter=15000, perplexity=args.perplexity)
 codes_2d = tsne.fit_transform(codes)
 print("Iterations run:", tsne.n_iter_, "/", tsne.n_iter)
 print("Divergence:", tsne.kl_divergence_)
@@ -55,4 +57,5 @@ colorMapping = {
 colors = [colorMapping[style] for style in label]
 fig = plt.figure(figsize=(8, 8))
 plt.scatter(x, y, c=colors)
+plt.title("Perplexity: " + str(args.perplexity))
 plt.show()
