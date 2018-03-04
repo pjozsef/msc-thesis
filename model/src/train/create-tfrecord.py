@@ -53,9 +53,11 @@ def parse_proto(proto):
 def print_summary(paths):
     artists = [p.split("/")[-1].split("__")[1] for p in paths]
     frame = pd.DataFrame({"artist": artists})
+    pd.set_option('display.max_rows', 10000)
     print("Summary")
-    print(frame.groupby('artist')['artist'].count())
     print(frame.describe())
+    print()
+    print(frame.groupby('artist')['artist'].count())
 
 
 if __name__ == '__main__':
