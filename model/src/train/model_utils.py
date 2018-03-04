@@ -37,7 +37,6 @@ def conv2d(previous_layer, kernel_size, layer_scope, activation_function, keep_p
         activation = activation_function(convolution_with_bias, name="activation")
 
         tf.summary.histogram("summary_weights", kernel)
-        tf.summary.histogram("summary_biases", bias)
         tf.summary.histogram("summary_activations", activation)
 
         return activation
@@ -128,18 +127,9 @@ def fc(previous_layer, weight_size, activation_function, keep_prob, layer_scope,
         activation = activation_function(h, name=layer_name)
         # tf.summary.image("summary_weights_img", tf.reshape(weights, [1, weight_size[0], weight_size[1], 1]))
         tf.summary.histogram("summary_weights", weight)
-        tf.summary.histogram("summary_biases", bias)
         tf.summary.histogram("summary_activations", activation)
 
         return activation
-
-
-def fc_relu(previous_layer, weight_size, layer_scope, layer_name=None):
-    return fc(previous_layer, weight_size, tf.nn.relu, layer_scope, layer_name)
-
-
-def fc_sigmoid(previous_layer, weight_size, layer_scope, layer_name=None):
-    return fc(previous_layer, weight_size, tf.nn.sigmoid, layer_scope, layer_name)
 
 
 def decode_fc(previous_layer, activation_function, layer_scope):
@@ -159,11 +149,3 @@ def decode_fc(previous_layer, activation_function, layer_scope):
             bias=bias)
 
         return activation_function(h)
-
-
-def decode_fc_relu(previous_layer, layer_scope):
-    return decode_fc(previous_layer, tf.nn.relu, layer_scope)
-
-
-def decode_fc_sigmoid(previous_layer, layer_scope):
-    return decode_fc(previous_layer, tf.nn.sigmoid, layer_scope)
