@@ -13,7 +13,6 @@ def bias_initializer():
 
 def conv2d(previous_layer, kernel_size, layer_scope, activation_function, keep_prob, padding="SAME"):
     with tf.variable_scope(layer_scope):
-        previous_layer = tf.nn.dropout(previous_layer, keep_prob)
 
         kernel = tf.get_variable(
             name='kernel',
@@ -34,6 +33,7 @@ def conv2d(previous_layer, kernel_size, layer_scope, activation_function, keep_p
         convolution_with_bias = tf.nn.bias_add(
             value=convolution,
             bias=bias)
+        convolution_with_bias = tf.nn.dropout(convolution_with_bias, keep_prob)
         activation = activation_function(convolution_with_bias, name="activation")
 
         tf.summary.histogram("summary_weights", kernel)
@@ -102,7 +102,6 @@ def flatten(previous_layer):
 
 def fc(previous_layer, weight_size, activation_function, keep_prob, layer_scope, layer_name=None):
     with tf.variable_scope(layer_scope):
-        previous_layer = tf.nn.dropout(previous_layer, keep_prob)
 
         input_size = weight_size[0]
         output_size = weight_size[1]
@@ -123,6 +122,8 @@ def fc(previous_layer, weight_size, activation_function, keep_prob, layer_scope,
             name='h',
             value=tf.matmul(previous_layer, weight),
             bias=bias)
+
+        h = tf.nn.dropout(h, keep_prob)
 
         activation = activation_function(h, name=layer_name)
         # tf.summary.image("summary_weights_img", tf.reshape(weights, [1, weight_size[0], weight_size[1], 1]))
