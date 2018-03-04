@@ -11,8 +11,10 @@ def bias_initializer():
     return tf.constant_initializer(0.0)
 
 
-def conv2d(previous_layer, kernel_size, layer_scope, activation_function, padding="SAME"):
+def conv2d(previous_layer, kernel_size, layer_scope, activation_function, keep_prob, padding="SAME"):
     with tf.variable_scope(layer_scope):
+        previous_layer = tf.nn.dropout(previous_layer, keep_prob)
+
         kernel = tf.get_variable(
             name='kernel',
             shape=kernel_size,
@@ -41,14 +43,6 @@ def conv2d(previous_layer, kernel_size, layer_scope, activation_function, paddin
         return activation
 
 
-def conv2d_relu(previous_layer, kernel_size, layer_scope, padding="SAME"):
-    return conv2d(previous_layer, kernel_size, layer_scope, tf.nn.relu, padding)
-
-
-def conv2d_elu(previous_layer, kernel_size, layer_scope, padding="SAME"):
-    return conv2d(previous_layer, kernel_size, layer_scope, tf.nn.elu, padding)
-
-
 def deconv2d(previous_layer, layer_scope, output_shape, activation_function, padding="SAME"):
     with tf.variable_scope("decode_" + layer_scope):
         global weights
@@ -67,14 +61,6 @@ def deconv2d(previous_layer, layer_scope, output_shape, activation_function, pad
             value=deconvolution,
             bias=bias)
         return activation_function(deconvolution_with_bias)
-
-
-def deconv2d_relu(previous_layer, layer_scope, output_shape, padding="SAME"):
-    return deconv2d(previous_layer, layer_scope, output_shape, tf.nn.relu, padding)
-
-
-def deconv2d_elu(previous_layer, layer_scope, output_shape, padding="SAME"):
-    return deconv2d(previous_layer, layer_scope, output_shape, tf.nn.elu, padding)
 
 
 def maxpool(previous_layer, kernel_size=None):
@@ -115,8 +101,10 @@ def flatten(previous_layer):
     return tf.reshape(previous_layer, [-1, dim])
 
 
-def fc(previous_layer, weight_size, activation_function, layer_scope, layer_name=None):
+def fc(previous_layer, weight_size, activation_function, keep_prob, layer_scope, layer_name=None):
     with tf.variable_scope(layer_scope):
+        previous_layer = tf.nn.dropout(previous_layer, keep_prob)
+
         input_size = weight_size[0]
         output_size = weight_size[1]
         weight = tf.get_variable(

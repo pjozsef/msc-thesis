@@ -6,7 +6,7 @@ import numpy as np
 import tensorflow as tf
 
 from src.train import proto_parser
-from src.train.model import model_simple01
+from src.train.model import model02
 
 if __name__ == "__main__":
     print("Arguments", sys.argv)
@@ -27,7 +27,7 @@ if __name__ == "__main__":
     SHUFFLE_BUFFER = 1000
     TAKE = args.take
     EPOCH = 40
-    LEARNING_RATE = 0.05
+    LEARNING_RATE = 0.1
     print("Batch size:", BATCH_SIZE)
     print("Prefetch buffer:", PREFETCH_BUFFER)
     print("Shuffle buffer:", SHUFFLE_BUFFER)
@@ -47,7 +47,7 @@ if __name__ == "__main__":
 
     iterator = dataset.make_initializable_iterator()
 
-    x, encoded, y = model_simple01.create_model()
+    x, encoded, y, conv_keep_prob, fc_keep_prob = model02.create_model(tf.nn.elu, tf.nn.elu)
     print("Model created")
 
     cost = tf.reduce_sum(tf.square(y - x))
@@ -87,7 +87,7 @@ if __name__ == "__main__":
 
         summary = None
         step = 0
-        for epoch in range(EPOCH):
+        for epoch in range(EPOCH + 1):
             print("Epoch:", epoch)
             epoch_start = time.time()
             sess.run(iterator.initializer, feed_dict={filenames: input_records})
@@ -102,16 +102,18 @@ if __name__ == "__main__":
                     images, dimensions, names = sess.run(next_element)
                     times_for_mini_batch.append(time.time() - start)
 
+                    feed_dict = {x: images, conv_keep_prob: 0.1, fc_keep_prob: 0.5}
+
                     start = time.time()
                     if epoch % 5 == 0:
-                        _, cost_value = sess.run([optimizer, cost], feed_dict={x: images})
+                        _, cost_value = sess.run([optimizer, cost], feed_dict)
                         total_error += cost_value
                         total_batch += images.shape[0]
                         if images.shape[0] == BATCH_SIZE:
-                            all_summary = sess.run(summary, feed_dict={x: images})
+                            all_summary = sess.run(summary, feed_dict)
                             writer.add_summary(all_summary, step)
                     else:
-                        sess.run(optimizer, feed_dict={x: images})
+                        sess.run(optimizer, feed_dict)
 
                     if images.shape[0] == BATCH_SIZE:
                         step += 1
