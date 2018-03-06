@@ -27,7 +27,7 @@ if __name__ == "__main__":
     SHUFFLE_BUFFER = 1000
     TAKE = args.take
     EPOCH = 40
-    LEARNING_RATE = 0.1
+    LEARNING_RATE = 0.001
     print("Batch size:", BATCH_SIZE)
     print("Prefetch buffer:", PREFETCH_BUFFER)
     print("Shuffle buffer:", SHUFFLE_BUFFER)
@@ -47,7 +47,7 @@ if __name__ == "__main__":
 
     iterator = dataset.make_initializable_iterator()
 
-    x, encoded, y, conv_keep_prob, fc_keep_prob = model02.create_model(tf.nn.elu, tf.nn.elu)
+    x, encoded, y, conv_keep_prob, fc_keep_prob = model02.create_model(tf.nn.relu, tf.nn.relu)
     print("Model created")
 
     cost = tf.reduce_sum(tf.square(y - x))
@@ -79,7 +79,10 @@ if __name__ == "__main__":
             [tf.saved_model.tag_constants.SERVING],
             signature_def_map={
                 "model": tf.saved_model.signature_def_utils.predict_signature_def(
-                    inputs={"x": x},
+                    inputs={
+                        "x": x,
+                        'fc_keep_prob': fc_keep_prob,
+                        'conv_keep_prob': conv_keep_prob},
                     outputs={"encoded": encoded})
             })
 
@@ -102,7 +105,7 @@ if __name__ == "__main__":
                     images, dimensions, names = sess.run(next_element)
                     times_for_mini_batch.append(time.time() - start)
 
-                    feed_dict = {x: images, conv_keep_prob: 0.1, fc_keep_prob: 0.5}
+                    feed_dict = {x: images, conv_keep_prob: 0.95, fc_keep_prob: 0.6}
 
                     start = time.time()
                     if epoch % 5 == 0:

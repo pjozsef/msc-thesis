@@ -47,7 +47,8 @@ with tf.Session(graph=tf.Graph()) as sess:
 
         for path, image in zip(paths, images):
             image = np.array(image).reshape([-1, 800, 20, 1])
-            codes = np.reshape(sess.run(encoded, feed_dict={'x:0': image}), [32])
+            codes = np.reshape(
+                sess.run(encoded, feed_dict={'x:0': image, 'fc_keep_prob:0': 1.0, 'conv_keep_prob:0': 1.0}), [32])
             writer.writerow(extract_info(path, info_labels, codes, encoded_dimensions))
             if args.verbose:
                 print("Finished", path)

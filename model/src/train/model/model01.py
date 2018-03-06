@@ -3,8 +3,8 @@ from src.train.model_utils import *
 
 def create_model(conv_activation, fc_activation):
     x = tf.placeholder(tf.float32, [None, 800, 20, 1], name='x')
-    fc_keep_prob = tf.placeholder(tf.float32)
-    conv_keep_prob = tf.placeholder(tf.float32)
+    fc_keep_prob = tf.placeholder(tf.float32, name='fc_keep_prob')
+    conv_keep_prob = tf.placeholder(tf.float32, name='conv_keep_prob')
 
     conv1 = conv2d(x, [3, 3, 1, 16], "conv1", conv_activation, conv_keep_prob, "VALID")
     conv2 = conv2d(conv1, [3, 3, 16, 16], "conv2", conv_activation, conv_keep_prob, "VALID")
