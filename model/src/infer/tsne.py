@@ -66,6 +66,7 @@ parser.add_argument('--input', required=True)
 parser.add_argument('--percentiles')
 parser.add_argument('--title', required=True)
 parser.add_argument('--save')
+parser.add_argument('--retries', type=int)
 args = parser.parse_args()
 if args.percentiles:
     all_percentiles = []
@@ -114,5 +115,5 @@ colorMapping = {
 }
 colors = [colorMapping[style] for style in label]
 
-embeddings = create_embeddings(codes)
+embeddings = create_embeddings(codes, retries=args.retries)
 save_and_show_plot(embeddings, colors)
