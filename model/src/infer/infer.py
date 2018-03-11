@@ -45,7 +45,11 @@ with tf.Session(graph=tf.Graph()) as sess:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
 
+        progress = 0
+        max = len(paths)
         for path, image in zip(paths, images):
+            if progress % 500 == 0:
+                print(progress / float(max) * 100, "%")
             image = np.array(image).reshape([-1, 800, 20, 1])
             codes = np.reshape(
                 sess.run(encoded, feed_dict={'x:0': image, 'fc_keep_prob:0': 1.0, 'conv_keep_prob:0': 1.0}), [32])
@@ -53,3 +57,4 @@ with tf.Session(graph=tf.Graph()) as sess:
             if args.verbose:
                 print("Finished", path)
                 print("Encoding", codes)
+            progress += 1
