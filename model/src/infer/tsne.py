@@ -10,7 +10,7 @@ from sklearn.manifold import TSNE
 
 def create_embeddings(codes, perplexites=None, retries=3):
     if perplexites is None:
-        perplexites = [5, 30, 50, 100]
+        perplexites = [30, 50, 100]
     embeddings = []
     for perplexity in perplexites:
         divergence_map = {}
@@ -41,7 +41,7 @@ def save_and_show_plot(embeddings, colors):
     fig, axes = plt.subplots(
         2,
         len(embeddings),
-        gridspec_kw={'width_ratios': [1, 1, 1, 1], 'height_ratios': [0.01, 1]},
+        gridspec_kw={'width_ratios': [1, 1, 1], 'height_ratios': [0.01, 1]},
         figsize=(16, 5))
     plt.suptitle(args.title)
     for i in range(len(embeddings)):
@@ -50,7 +50,7 @@ def save_and_show_plot(embeddings, colors):
         y = embedding['embedding'][:, 1]
         axes[0, i].axis('off')
         a = axes[1, i]
-        a.scatter(x, y, c=colors)
+        a.scatter(x, y, c=colors, s=20)
         title = "Perplexity: {}\nKL Divergence: {:0.4f}".format(embedding['perplexity'], embedding['kldiv'])
         a.set_title(title)
         a.get_xaxis().set_visible(False)
@@ -107,7 +107,7 @@ labelMapping = {
 for info in infos:
     label.append(labelMapping[info[0]])
 
-alpha = 0.6
+alpha = 0.2
 colorMapping = {
     0: matplotlib.colors.to_rgba('blue', alpha=alpha),
     1: matplotlib.colors.to_rgba('orange', alpha=alpha),
