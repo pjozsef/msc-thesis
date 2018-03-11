@@ -19,6 +19,7 @@ if __name__ == "__main__":
     parser.add_argument('--test-data-records', nargs='*', required=True)
     parser.add_argument('--job-dir', required=True)
     parser.add_argument('--take', type=int)
+    parser.add_argument('--restore')
     args = parser.parse_args()
     print("Parsed arguments:", args)
 
@@ -36,7 +37,7 @@ if __name__ == "__main__":
     PREFETCH_BUFFER = 2500
     SHUFFLE_BUFFER = 2500
     TAKE = args.take
-    EPOCH = 10
+    EPOCH = 20
     LEARNING_RATE = 0.001
     CONV_KEEP_PROB = 0.95
     FC_KEEP_PROB = 0.6
@@ -80,7 +81,14 @@ if __name__ == "__main__":
 
     with tf.Session() as sess:
         print("Starting session")
-        sess.run(init_op)
+
+        if args.restore:
+            print("Restoring from", args.restore)
+            saver.restore(sess, args.restore)
+            print("Model restored")
+        else:
+            sess.run(init_op)
+            print("Model initialized from scratch")
 
         merged_summary = tf.summary.merge_all()
 
