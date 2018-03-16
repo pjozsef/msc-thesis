@@ -11,6 +11,7 @@ sklearn = "*"
 ggplot = "*"
 matplotlib = "*"
 pandas = "*"
+requests = "*"
 
 
 [dev-packages]
