@@ -107,10 +107,11 @@ $endfor$
 $endif$
 $if(natbib)$
 \usepackage{natbib}
-\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
+%\bibliographystyle{$if(biblio-style)$$biblio-style$$else$plainnat$endif$}
+
 $endif$
 $if(biblatex)$
-\usepackage[$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
+\usepackage[date=ymd,$if(biblio-style)$style=$biblio-style$,$endif$$for(biblatexoptions)$$biblatexoptions$$sep$,$endfor$]{biblatex}
 $for(bibliography)$
 \addbibresource{$bibliography$}
 $endfor$
@@ -229,6 +230,11 @@ $endif$
 \usepackage{multicol}
 \usepackage{multirow}
 \usepackage{tabularx}
+\usepackage{graphicx}
+\usepackage[style=german]{csquotes}
+\usepackage[mathscr]{eucal}
+\usepackage{esvect}
+\usepackage{subcaption}
 
 \usepackage{fancyhdr}
 \fancypagestyle{semifancy}{
@@ -242,16 +248,17 @@ $endif$
     $if(title)$
     \maketitle
     $endif$
+    \pagenumbering{gobble}
+    $for(include-before)$
+    $include-before$
+    $endfor$
+
     $if(abstract)$
     \begin{abstract}
         $abstract$
     \end{abstract}
     $endif$
-    \pagenumbering{roman}
-    $for(include-before)$
-    $include-before$
 
-    $endfor$
     $if(toc)$
     {
     $if(colorlinks)$
@@ -288,15 +295,17 @@ $endif$
     $endif$
     $endif$
     \bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+    \pagebreak
 
     $endif$
     $endif$
     $if(biblatex)$
+    \bibliographystyle{abbrv}
     \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
-
     $endif$
+    \pagebreak
+    \pagenumbering{Roman}
     $for(include-after)$
-    $include-after$
-
+    %    $include-after$
     $endfor$
 \end{document}

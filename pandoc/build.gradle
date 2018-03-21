@@ -12,11 +12,25 @@ task build {
                     "--number-sections",
                     "--template=src/template.tex",
                     "--filter", "pandoc-citeproc",
-                    "--verbose",
-                    "--include-before-body=src/before-documents/titlepage.md",
-                    "-o", "build/test.pdf"]
+//                    "--verbose",
+                    "-o", "build/pollak_jozsef_diplomamunka.pdf",
+                    ]
+            def includeInCommand = { documents, option="" ->
+                documents.each {File file ->
+                    command.add(option+file)
+                }
+            }
+            def beforeDocuments = fileTree("src/before-documents")
+            includeInCommand(beforeDocuments, "--include-before-body=")
+
+            def afterDocuments = fileTree("src/after-documents")
+            includeInCommand(afterDocuments, "--include-after-body=")
+
             def documents = fileTree("src/documents")
-            commandLine command + documents
+            includeInCommand(documents)
+
+            println(command)
+            commandLine command
         }
     }
 }

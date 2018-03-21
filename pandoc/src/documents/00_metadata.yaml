@@ -14,5 +14,9 @@ chapters: true
 toc: true
 csl: src/ieee.csl
 bibliography: src/bibliography.bib
+bibliographystyle: abbrv
 link-citations: true
+toc-depth: 2
+#lot: true
+#lof: true
 ---
