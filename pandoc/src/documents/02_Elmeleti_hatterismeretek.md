@@ -39,9 +39,57 @@ a hangszínét pedig a felhangok erősségének a variációja határozza meg.
 Hallható hangtartomány alatt a 20Hz és 20 kHz közötti frekvenciatartományt értjük.
 
 ## Jelfeldolgozás
-[@guide_to_digital_signal_processing]
-framerate, etc
-FFT - time domain-ből frekvencia domain-be mappel
+
+### Analóg jelből digitális jel
+Ahhoz, hogy a számítógépen hangfájlokkal dolgozhassunk, a folytonos analóg jelet digitalizálnunk kell. Digitalizálás során 
+a jelből azonos időközönként mintavételezünk, s ezzel a diszkretizációval próbáljuk közelíteni az eredeti jelet.
+
+Sample rate-nek (mintavételezési ráta) nevezzük azt a mennyiséget, ahányszor másodpercenként mintavételezünk, mértékegysége a Hz. 
+CD formátum esetén a mintavételezési frekvencia 44100 Hz, azaz 44.1 kHz.
+
+A bit depth (bitmélység) segítségével adjuk meg, hogy hány biten ábrázoljuk az adott mintát. A bitmélység tipikusan 8,
+16, 32 bit szokott lenni. 
+
+### MP3 formátum
+Az MP3 formátum egy veszteséges tömörítés.
+A tömörítés minősége a bit rate-től (bitráta) függ, mely azt határozza meg, hogy egy másodpercnyi digitális jelet hány biten tárolunk el.
+Minél nagyobb a bitráta, annál jobban és részletesebben tudjuk eltárolni az adott jelet, viszont annál
+több tárhelyet is foglal a fájl. Minél kisebb a bitmélység, a mintavételezett hangfájl annál kevesebbet foglal, viszont
+a minőség is annál rosszabb az eredeti jelhez viszonyítva. A bitrátát célszerű az adott feladathoz viszonítva megválasztani.
+Az emberi beszéd például alacsonyabb bitráta mellett is elkódolható, míg zeneszámok esetében célszerű magasabb rátával dolgozni.
+Néhány elterjedtebb bitráta:
+* 64 Kbps - emberi hang
+* 96 Kbps - emberi hang
+* 128 Kbps - zene
+* 256 Kbps - zene
+* 320 Kbps - zene
+
+### MP3 tag
+MP3 tag-ek, azaz címkék segítségével metaadatokat rendelhetünk az MP3-as dalokhoz. Ezek közül a leggyakoribb címkék a dal címe,
+előadója, albuma, album éve, dal stílusa.
+
+### Fourier Transzformált
+Ditigális jelfeldolgozás szemszögéből nézve a (Diszkrét) Fourier Transzformált nem más, mint egy eszköz, mely segítségével a diszkretizált
+mintavételeinket szétbonthatjuk alkotórészeire, azaz különálló frekvenciákra.
+Ezt egyfajta leképezésnek is tekinthetjük, mely során a digitális jelet az idő domain-ből a frekvencia domain-be képezzük le. 
+Az Inverz Fourier Transzformált segítségével pedig fordítva, a frekvencia domain-ből tudjuk visszaalakítani az eredeti digitális jelet.
+
+A Fourier Transzformáltat a következőképp kapjuk:
+\begin{equation}\label{fouriertransform}
+\begin{split}
+    X(k) = \sum\limits_{n=0}^{N-1}x(n)W_N^{kn}, \qquad & 0 \leqslant k \leqslant N-1 \\
+    & W^j_n=e^{-j2\pi/n}
+\end{split}
+\end{equation}
+Gyakorlati alkalmazáskor a Gyors Fourier Transzformáltat használjuk, melynek futási ideje O(n^2) helyett csupán O(n log n)
+[@guide_to_digital_signal_processing][@algterv]
+
+### Nyquist-Shannon-féle mintavételezési tétel
+A Nyquist-Shannon tétel kimondja, hogy veszteségmentes digitalizáshoz az analóg jel maximális frekvenciájának legalább kétszeresével
+kell a mintavételezést másodpercenként elvégeznünk.[@nyquist]
+
+Ezen tétel miatt lett a CD formátum mintavételezési frekvenciája 44.1 kHz, mely kicsivel több, mint az emberi hallás felső küszöbe
+(20 kHz).
 
 ## Gépi tanulás
 
@@ -287,7 +335,7 @@ szokás még filternek is nevezni. Egy konvolúciós réteg 4 dimenziós: kernel
 
 #### Konvolúció stride
 A stride segítségével definiáljuk, hogy mekkora ugrásokkal csúsztatjuk a kernelünket a bemeneten. Ha a stride 1, akkor
-a kernelt mindig eggyel toljuk el.[@cs231n]
+a kernelt mindig egy egységgel toljuk el.[@cs231n]
 
 #### Konvolúció padding
 2 dimenziós esetben, egy 10*10-es képen végigcsúsztatva egy 2*2-es kernelt 2*2es stride-dal, a kimenetünk mérete 
