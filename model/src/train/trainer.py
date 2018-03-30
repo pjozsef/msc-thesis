@@ -18,6 +18,7 @@ if __name__ == "__main__":
     parser.add_argument('--test-data-root', required=True)
     parser.add_argument('--test-data-records', nargs='*', required=True)
     parser.add_argument('--job-dir', required=True)
+    parser.add_argument('--epoch', type=int, default=20)
     parser.add_argument('--take', type=int)
     parser.add_argument('--restore')
     args = parser.parse_args()
@@ -37,7 +38,7 @@ if __name__ == "__main__":
     PREFETCH_BUFFER = 2500
     SHUFFLE_BUFFER = 2500
     TAKE = args.take
-    EPOCH = 20
+    EPOCH = args.epoch
     LEARNING_RATE = 0.001
     CONV_KEEP_PROB = 0.95
     FC_KEEP_PROB = 0.6
