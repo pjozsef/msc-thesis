@@ -29,7 +29,7 @@ fun imageFromRange(magnitudes: List<DoubleArray>, range: IntRange, colored: Bool
     val saturation = if (colored) 1.0f else 0.0f
     val result = BufferedImage(range.count(), height, BufferedImage.TYPE_INT_RGB)
     val max = magnitudes.map { it.max() ?: 0.0 }.max() ?: 0.0
-    require(max > 0.0)
+    require(max > 0.0) { "Maximum magnitude is negative in mp3 file, the file might be corrupted!" }
 
     for (row in range) {
         val rowIndex = row - range.first
