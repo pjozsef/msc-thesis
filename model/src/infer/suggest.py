@@ -2,6 +2,7 @@ import argparse
 
 import numpy as np
 import sklearn.neighbors as neighbors
+from tabulate import tabulate
 
 import src.infer.csv_parser as csv_parser
 import src.infer.percentile_parser as percentile_parser
@@ -18,12 +19,13 @@ def find_next_song(current_code, tree, topk):
 
 
 def song_info(index, infos):
-    separator = "___"
-    return infos[index]["style"] \
-           + separator + infos[index]["artist"] \
-           + separator + infos[index]["album"] \
-           + separator + infos[index]["song"] \
-           + separator + infos[index]["percentile"]
+    return [
+        infos[index]["style"],
+        infos[index]["artist"],
+        infos[index]["album"],
+        infos[index]["song"],
+        infos[index]["percentile"]
+    ]
 
 
 def matches(song1, song2):
@@ -47,12 +49,14 @@ def main():
     high = len(codes) - 1
     current_index = np.random.randint(0, high)
     current_code = codes[current_index]
-    print(song_info(current_index, infos))
+
+    header = ["style", "artist", "album", "song", "percentile"]
+    values = [song_info(current_index, infos)]
     for i in range(args.length):
         current_index = find_next_song(current_code, tree, args.topk)
         current_code = codes[current_index]
         current_info = infos[current_index]
-        print(song_info(current_index, infos))
+        values.append(song_info(current_index, infos))
 
         delete_indices = []
 
@@ -60,16 +64,11 @@ def main():
             if matches(current_info, info):
                 delete_indices.append(info_index)
 
-        # print(np.shape(codes))
-        # codes = np.delete(codes, delete_indices)
-        # infos = np.delete(infos, delete_indices)
-        # print(np.shape(codes))
-        # print(delete_indices)
         for j in delete_indices[::-1]:
             del infos[j]
             del codes[j]
-            # print(j, infos[j])
         tree = neighbors.KDTree(codes, leaf_size=32)
+    print(tabulate(values, headers=header))
 
 
 if __name__ == '__main__':
