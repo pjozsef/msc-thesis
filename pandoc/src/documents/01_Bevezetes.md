@@ -16,10 +16,10 @@ a Spotify[@url_spotify_home] vagy a Google Play Music[@url_playmusic_home] haszn
 
 Egy zeneszolgáltatás sikere nem csupán az elérhető zenekatalógus méretétől függ. Ugyanennyire fontos az is, hogy mennyire képes
 új dalokat ajánlani a felhasználóknak, amik várhatóan tetszeni is fognak neki. Ajánlórendszerek közül az egyik legelterjedtebb módszer
-a Collaborative Filtering, mely a felhasználók viselkedése alapján egy profilt épít fel róluk és a felhasználónak a vele
-hasonló érdeklődéssel rendelkező felhasználók közül ajánl kedvelt dalokat. Egy ilyen profil több részből állhat,
-a rendszer figyelheti, hogy a felhasználó melyik dalokat értékelte pozitívan, mely dalokat hallgatja sűrűn, melyeket
-mentette le egy lejátszási listába.
+a Collaborative Filtering, mely a felhasználók viselkedése alapján profilt épít fel róluk és a felhasználónak a vele
+hasonló ízléssel rendelkező felhasználók által kedvelt dalokból ajánl. Egy ilyen profil tetszőlegesen komplex lehet,
+a rendszer figyelheti, hogy a felhasználó mely dalokat értékelte pozitívan, mely dalokat hallgatja sűrűn, melyeket
+mentette lejátszási listába.
 
 Mivel a Collaborative Filtering erőteljesen támaszkodik arra a feltételezésre, hogy a felhasználónak nagy eséllyel tetszeni fognak
 azok a dalok, melyeket a hozzá hasonló ízlésű felhasználók is szeretnek, ezért sokszor pontatlan ajánlásokat tud tenni.
@@ -29,21 +29,21 @@ az még lehet teljesen irreleváns a felhasználó számára.
 
 Ezt orvosolandó, elterjedtek a hibrid ajánlórendszer megoldások, melyek a Collaborative Filteringet  más módszerekkel
 igyekeznek kiegészíteni, hogy javítsák az ajánlások minőségét. A Spotify például gépi nyelvfeldolgozással és a nyers hanganyag elemzésével igyekszik
-pontosítani.[@url_spotify_discover_weekly][@url_spotify_discover_weekly_slides]
+pontosítani az ajánlásain.[@url_spotify_discover_weekly][@url_spotify_discover_weekly_slides]
 
 ## Célkitűzés 
 
 Célom a zeneajánlás témakörének egy másik oldalról történő megközelítése. A bevezetésben említett módszerek címkézett adatokon dolgoznak,
-dolgozatomban azt szeretném megvizsgálni, hogy címkék (előadó, album, stílus, stb) nélkül, csupán a zeneszámok nyers bináris adatai
-alkothatják-e egy ajánlórendszer alapját. Arra szeretnék választ kapni, hogy egy ilyen rendszer képes-e hasonlóságok, összefüggések, 
-belső struktúrák felfedezésére, hasonló stílusú dalokat azonos klaszterekbe helyezni.
+dolgozatomban azt szeretném megvizsgálni, hogy címkék (előadó, album, stílus, stb.) nélkül, csupán a zeneszámok nyers bináris adatai
+alkothatják-e egy ajánlórendszer alapját. Arra szeretnék választ kapni, hogy egy ilyen rendszer képes-e hasonló stílusú dalokat azonos 
+klaszterekbe helyezni, illetve hasonlóságokat, összefüggéseket, belső struktúrákat felfedezni.
 
 Célom eléréséhez a magas dimenziójú frekvenciaszeleteket egy autoencodernek nevezett speciális neurális háló architektúra segítségével,
-felügyelet nélküli gépi tanulás révén egy alacsonyabb dimenziós térben fogom elkódolni. Ezt követően, ebben az alacsonyabb
-dimenziójú látens térben fogok relációkat keresni az adathalmazban, megvizsgálni, hogy hasonló zeneszámok egymáshoz közel kerülnek-e.
-Emellett, végső validációként a látens teret 2 dimenzióba ágyazva, grafikusan ábrázolni fogom. A pontokat utólag vissza fogom címkézni, 
-a diagramon stílus szerint színezve, s azt fogom vizsgálni hogy a diagramon a különböző stílusú pontok valamiféle struktúrát alkotnak-e, 
-vagy teljesen véletlenszerűen helyezkednek el.
+felügyelet nélküli gépi tanulás segítségével egy alacsonyabb dimenziós térben fogom elkódolni. Ezt követően, ebben az alacsonyabb
+dimenziójú látens térben relációkat fogok keresni az adathalmazban, megvizsgálom, hogy hasonló zeneszámok közel kerülnek-e egymáshoz.
+Emellett, végső validációként a látens teret 2 dimenzióba ágyazva, a pontokat utólag visszacímkézve, stílus szerint színezve,
+grafikusan ábrázolni fogom, s megvizsgálom hogy a diagram különböző stílusú pontjai valamilen struktúra szerint helyezkednek-e el, 
+vagy teljesen véletlenszerűen.
 
 A vizuális megjelenítés mellett, a gyakorlatban is tesztelni szeretném a rendszert. Egy részről az alacsony dimenziós 
 adathalmaz pontjait a szomszédaival fogom összehasonlítani, másrészt a szomszédsági relációk alapján, 
@@ -57,7 +57,7 @@ az elgondolásomhoz.
 
 ### Spotify - Discover Weekly
 
-A Spotify zeneajánló megoldása piacvezetőnek tekinthető a hasonló szolgáltatások körében. 
+A Spotify zeneajánló megoldása piacvezetőnek tekinthető a hasonló zenei szolgáltatások körében. 
 Szolgáltatásukban ötvözik a Collaborative Filtering-et olyan modern technológiákkal, mint a nyelvfeldolgozás (Natural Language Processing), 
 illetve a gépi mély tanulás (Deep Learning). A Spotify mérnökeinek azzal az ördögi körrel kellett megküzdeniük, 
 hogy a Collaborative Filtering nem alkalmazható új, ismeretlen dalokra, viszont pont ezek azok a dalok, amiket igazán
@@ -75,20 +75,19 @@ regressziós mélyhálóról beszélhetünk.[@url_spotify_deep_learning]
 
 A Music Information Retrieval (MIR) egy feltörőben lévő kutatási terület, mely hanganyagokból, dalokból nyer ki különböző
 adatokat, például a zenei stílust, tempót, hangszereket, zenei struktúrát. A MIR témakörébe sorolható mind a nyers hanganyagok 
-elemzése, mind pedig a szimbolikus adatok, mint például kották értelmezése is. Másik érdekes témája a "query by humming",
-azaz zeneszámok keresése dúdolás alapján.[@mir][@mir_2]
+elemzése, mind pedig a szimbolikus adatok, mint például kották értelmezése is. További érdekes kutatási területe a "query by humming",
+mely segítségével zeneszámok dúdolás alapján kereshetőek egy erre speciálisan kialakított adatbázisban.[@mir][@mir_2]
 
 ### Shazam - Audio search
-A Music Information Retrieval talán egyik legnagyobb eredményének tekinthetjük a Shazam algoritmusát, mely segítségével 
+A Music Information Retrieval egyik legnagyobb eredményének tekinthetjük a Shazam algoritmusát, mely segítségével 
 emberek milliói azonosíthatják a rádióban szóló dalt a telefonjukon lévő alkalmazás segítésével.[@url_shazam_home]
-Az algoritmus fő gondolata, hogy a nyers spektrogram adatot időszeletekre bontva, mindegyik időszelethez társítható egy
-leíró vektor, mely a meghatározott frekvenciasávok legnagyobb értékeit tartalmazza.
 
-Az algoritmus első lépésea nyers spektrogram szeletek legjellemzőbb pontjainak a detektálása. Ehhez venni kell az 
-adott frekvenciasávokban lévő legnagyobb megnitúdóju frekvenciát. Az ilyen módon kiválasztott frekvenciákból kapott vektort
-fingerprint-nek nevezzük. A zenei kereső adatbázist ilyen fingerprintekkel töltjük fel.
-Az adatbázisban való kereséshez csupán az éppen szóló dal fingerprint-jét kell összevetnünk az adatbázisban lévőkkel, s
-nagy valószínűséggel a legtöbb egyezést mutató dal lesz az, ami épp szól a rádióban.[@wang2003industrial]
+Az algoritmus első lépése a nyers spektrogram szeletek legjellemzőbb pontjainak a detektálása. Ehhez szeletenként veszi az 
+előre meghatározott frekvenciasávokban lévő legnagyobb megnitúdójú frekvencia értékeket. 
+Az ilyen módon kiválasztott értékekből kapott vektort fingerprint-nek nevezzük. 
+A zenei kereső adatbázist ilyen fingerprinteket tartalmaz. Az adatbázisban való kereséshez csupán az éppen szóló dal 
+fingerprint-jeinek a sorozatát kell összevetnünk az adatbázisban lévőkkel, s nagy bizonyossággal a legtöbb egyezést mutató dal lesz az, 
+ami épp szól a rádióban.[@wang2003industrial]
 
 Érdekesnek tartom, hogy csupán címke nélküli nyers adattal dolgozva is mennyire megbízható és jól működő rendszert lehet
 készíteni. Részben a Shazam példája inspirált arra, hogy saját témámon keresztül is azt vizsgáljam, mi mindent lehet 

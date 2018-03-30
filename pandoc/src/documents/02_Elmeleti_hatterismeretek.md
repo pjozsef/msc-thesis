@@ -10,19 +10,19 @@
 ## Zeneelméleti alapok
 
 ### Hanghullám
-A hang, fizikai tekintetben, valamilyen közegben terjedő rezgéshullám. A hangszeren egy húrt megpendítve,
+A hang, fizikai tekintetben nézve, valamilyen közegben terjedő rezgéshullám. A hangszeren egy húrt megpendítve,
 vagy amikor beszélünk, a hangszálainkkal a levegő részecskéit mozgásba hozzuk. Ezen részecskék tranzitív
-módon a velük érintkező részecskéket is mozgásba hozzák. Így terjed a hang.[@url_hangtan]
+módon a velük érintkező részecskéket is mozgásba hozzák, így terjed a hang.[@url_hangtan]
 
 ### Hang frekvenciája
-A hang frekvenciája hanghullám másodpercenkénti rezgésszámát határozza meg. Ez a periódusidő reciproka, 
-mértékegysége a Hertz (Hz). Az alacsonyabb frekvenciájú hangokat mélynek, a magasabb frekvenciájú hangokat
+A hang frekvenciája a hanghullám másodpercenkénti rezgésszámát határozza meg, mértékegysége a Hertz (Hz). 
+Az alacsonyabb frekvenciájú hangokat mélynek, a magasabb frekvenciájú hangokat
 pedig magasabb hangként érzékeljük.[@url_hangtan]
     
 ### Alaphang, felhang
 Az általunk érzékelt hang több részhangnak az együtteséből áll. A legmélyebb részhangot nevezzük alaphangnak.
 A további részhangokat felhangoknak nevezzük. Egy tetszőleges $f$ frekvencia esetén az alaphang frekvenciája $f$,
-a rákövetkező $n$ darab felhang frekvenciái pedig rendre $i*f$, ahol $i \in [2,n]$[@url_hangtan]
+a rákövetkező $n$ darab felhang frekvenciái pedig rendre $i*f$, ahol $i \in [2,n]$. [@url_hangtan]
 
 ### Hang amplitúdója
 A hang amplitudója, a hanghullám maximális eltérése az x tengelytől. 
@@ -44,20 +44,31 @@ Hallható hangtartomány alatt a 20Hz és 20 kHz közötti frekvenciatartományt
 Ahhoz, hogy a számítógépen hangfájlokkal dolgozhassunk, a folytonos analóg jelet digitalizálnunk kell. Digitalizálás során 
 a jelből azonos időközönként mintavételezünk, s ezzel a diszkretizációval próbáljuk közelíteni az eredeti jelet.
 
-Sample rate-nek (mintavételezési ráta) nevezzük azt a mennyiséget, ahányszor másodpercenként mintavételezünk, mértékegysége a Hz. 
+### Mintavételezési ráta
+Mintavételezési rátának, angolul sample rate-nek  nevezzük a másodpercenkénti mintavételezések számát, mértékegysége a Hz. 
 CD formátum esetén a mintavételezési frekvencia 44100 Hz, azaz 44.1 kHz.
 
-A bit depth (bitmélység) segítségével adjuk meg, hogy hány biten ábrázoljuk az adott mintát. A bitmélység tipikusan 8,
+### Bitmélység
+A bitmélység, angolul bit depth adja meg, hogy hány biten ábrázoljuk az adott mintát. A bitmélység tipikusan 8,
 16, 32 bit szokott lenni. 
+
+### Nyquist-Shannon-féle mintavételezési tétel
+A Nyquist-Shannon tétel kimondja, az analóg jel maximális frekvenciájának legalább kétszeresével
+kell a mintavételezést másodpercenként elvégeznünk annak érdekében, hogy a digitális jel veszteségmentesen visszaalakítható
+legyen analóg jellé.[@nyquist]
+
+Ezen tétel miatt lett a CD formátum mintavételezési frekvenciája 44.1 kHz, mely kicsivel több, mint az emberi hallás felső küszöbe
+(20 kHz).
 
 ### MP3 formátum
 Az MP3 formátum egy veszteséges tömörítés.
 A tömörítés minősége a bit rate-től (bitráta) függ, mely azt határozza meg, hogy egy másodpercnyi digitális jelet hány biten tárolunk el.
-Minél nagyobb a bitráta, annál jobban és részletesebben tudjuk eltárolni az adott jelet, viszont annál
-több tárhelyet is foglal a fájl. Minél kisebb a bitmélység, a mintavételezett hangfájl annál kevesebbet foglal, viszont
-a minőség is annál rosszabb az eredeti jelhez viszonyítva. A bitrátát célszerű az adott feladathoz viszonítva megválasztani.
+Minél nagyobb a bitráta, annál jobb minőségben és részletgazdagabban tudjuk eltárolni az adott jelet, viszont annál
+több tárhelyet is foglal a fájl. Minél kisebb a bitráta, a mintavételezett hangfájl annál kevesebbet foglal, viszont
+a minőség is annál rosszabb az eredeti jelhez viszonyítva. A bitrátát célszerű az adott feladathoz mérten megválasztani.
 Az emberi beszéd például alacsonyabb bitráta mellett is elkódolható, míg zeneszámok esetében célszerű magasabb rátával dolgozni.
 Néhány elterjedtebb bitráta:
+
 * 64 Kbps - emberi hang
 * 96 Kbps - emberi hang
 * 128 Kbps - zene
@@ -65,14 +76,14 @@ Néhány elterjedtebb bitráta:
 * 320 Kbps - zene
 
 ### MP3 tag
-MP3 tag-ek, azaz címkék segítségével metaadatokat rendelhetünk az MP3-as dalokhoz. Ezek közül a leggyakoribb címkék a dal címe,
-előadója, albuma, album éve, dal stílusa.
+MP3 tag-ek, azaz címkék segítségével metaadatokat rendelhetünk az MP3-as dalokhoz. Leggyakoribb címkék közé tartozik a dal címe,
+előadója, albuma, album éve és a stílusa.
 
 ### Fourier Transzformált
-Ditigális jelfeldolgozás szemszögéből nézve a (Diszkrét) Fourier Transzformált nem más, mint egy eszköz, mely segítségével a diszkretizált
-mintavételeinket szétbonthatjuk alkotórészeire, azaz különálló frekvenciákra.
-Ezt egyfajta leképezésnek is tekinthetjük, mely során a digitális jelet az idő domain-ből a frekvencia domain-be képezzük le. 
-Az Inverz Fourier Transzformált segítségével pedig fordítva, a frekvencia domain-ből tudjuk visszaalakítani az eredeti digitális jelet.
+Ditigális jelfeldolgozás szemszögéből nézve a (Diszkrét) Fourier Transzformált nem más, mint egy módszer, mely segítségével a diszkretizált
+mintavételeinket szétbonthatjuk alkotórészeire, különálló frekvenciákra.
+Ez a leképezés a digitális jelet az idő domain-ből a frekvencia domain-be képezi le. 
+Az Inverz Fourier Transzformált segítségével pedig fordítva, a frekvencia domain-ből idő domain-be tudjuk visszaalakítani a digitális jelet.
 
 A Fourier Transzformáltat a következőképp kapjuk:
 \begin{equation}\label{fouriertransform}
@@ -81,34 +92,24 @@ A Fourier Transzformáltat a következőképp kapjuk:
     & W^j_n=e^{-j2\pi/n}
 \end{split}
 \end{equation}
-Gyakorlati alkalmazáskor a Gyors Fourier Transzformáltat használjuk, melynek futási ideje O(n^2) helyett csupán O(n log n)
+Gyakorlati alkalmazáskor a Gyors Fourier Transzformáltat használjuk, melynek futási ideje O($n^2$) helyett csupán O(n log n)
 [@guide_to_digital_signal_processing][@algterv]
 
-### Nyquist-Shannon-féle mintavételezési tétel
-A Nyquist-Shannon tétel kimondja, hogy veszteségmentes digitalizáshoz az analóg jel maximális frekvenciájának legalább kétszeresével
-kell a mintavételezést másodpercenként elvégeznünk.[@nyquist]
-
-Ezen tétel miatt lett a CD formátum mintavételezési frekvenciája 44.1 kHz, mely kicsivel több, mint az emberi hallás felső küszöbe
-(20 kHz).
-
 ## Gépi tanulás
-
-A gépi tanulás a mesterséges intelligenciának egy olyan ága, mely során az algoritmsnak az úgy nevezett
-tanítási fázisban példaadatokat mutatunk, s elvárjuk hogy a bemenetekre adott
-kimenete és a ténylegesen elvárt kimenet közötti különbség minimális legyen. [@book_deeplearning]
 
 ### Felügyelt tanulás
 Angolul supervised learning. Felügyelt tanulásról akkor beszélünk, ha megcímkézett adathalmazzal dolgozunk.
 Ilyen esetben tanulás során a modellnek megadjuk a bemenetet, s a modell kimenetét összevetjük a bemenő adathoz
-tartozó eredeti címkével. Felügyelt tanulás például az osztályozás, illetve a regresszió.
-  
+tartozó eredeti címkével. Célunk, hogy a modell kimenete megközelítse az elvárt kimenetet.
+Felügyelt tanulás például az osztályozás, illetve a regresszió.
+
 ### Felügyelet nélküli tanulás
 Angolul unsupervised learning. Felügyelet nélküli tanulás esetén csupán a nyers adathalmazzal dolgozunk,
 nem áll rendelkezésünkre címke az adott elemekhez. Felügyelet nélküli tanulás körébe tartozik például a 
 klaszterezés, dimenzió csökkentés és az anomália detektálás is.
   
 ### Hibafüggvény
-Hibafüggvénynek nevezzük azt a függvényt, mely az elvárt és kapott kimeneteket egy valós számra
+Hibafüggvénynek nevezzük azt a függvényt, mely az elvárt és kapott kimenetet egy valós számra
 képezi le.
 \begin{center}
      $C:Y \times \hat{Y} \rightarrow \mathbb{R}$, ahol 
@@ -124,8 +125,8 @@ Angolul quadratic loss function, gyakran használt hibafüggvény:
 \end{equation}
 
 ### Hiperparaméter
-Egy adott algoritmusnak több olyan "paramétere" lehet, melyek nem közvetlenül, hanem közvetve
-befolyásolják a teljesítményét. Ezen paramétereket nevezzük az algoritmus hiperparamétereinek. 
+Egy adott algoritmusnak több olyan "paramétere" lehet, mely nem közvetlenül, hanem közvetve
+befolyásola a teljesítményét. Ezen paramétereket nevezzük az algoritmus hiperparamétereinek. 
 Hiperparaméter például, hogy az algoritmust hány iteráción keresztül tanítjuk. Random forest esetén
 hiperparaméternek tekinthetjük a döntési fák számát, illetve azok mélységét. Support Vector Machine (SVM) esetén
 pedig a modell által használt kernel is hiperparaméter. 
@@ -162,8 +163,8 @@ ellenőrző halmazt, mert ahogy a modell paraméterei túlilleszkedhetnek a tanu
 A perceptron egy bináris mesterséges neuron, melyet az 1950-es, 60-as években dolgozott ki Frank Rosenblatt[@perceptron_rosenblatt].
 Manapság csupán historikus jelentősége van, viszont a perceptronon keresztül könnyű szemléltetni magának
 a neuronhálónak, illetve a modern neuron típusoknak a működését is.\newline
-A perceptron bemenetül egy tetszőleges $n$ hosszúságú bináris $x \in \mathbb{B}^n$ vektort vár. Minden perceptronnak 
-rendelkezik egy saját $w \in \mathbb{R}^n$ súlyvektorral, melyek az egyes bemenetek "fontosságát" határozzák meg.
+A perceptron bemenetül egy tetszőleges $n$ hosszúságú bináris $x \in \mathbb{B}^n$ vektort vár. Minden perceptron 
+rendelkezik egy saját $w \in \mathbb{R}^n$ súlyvektorral, mely elemei a neuron adott bemeneteinek a "fontosságát" határozzák meg.
 A neuron $a \in \mathbb{B}$ bináris kimenete attól függően 1, vagy 0, hogy a bemeneti vektor és a súlyvektor skalárszorzata egy adott 
 $t \in \mathbb{R}$ küszöbértéknél nagyobb-e vagy sem.[@nn_and_deeplearning] Matematikailag formalizálva:
 \begin{equation}\label{perceptron1}
@@ -174,13 +175,13 @@ $t \in \mathbb{R}$ küszöbértéknél nagyobb-e vagy sem.[@nn_and_deeplearning]
   \end{cases}
 \end{equation}
   
-![Példa egy három bemenetet váró perceptronra. Forrás:[@nn_and_deeplearning]](src/images/perceptron.png){width=50%}
+![Példa egy három bemenettel rendelkező perceptronra. Forrás:[@nn_and_deeplearning]](src/images/perceptron.png){width=50%}
 
 ### Bias
 A \ref{perceptron1}. egyenlet könnyebb kezelhetősége érdekében vezessük be a bias fogalmát, mely definíció szerint
-$b \equiv -1 * t, b \in \mathbb{R}$. A bias azt jelöli, hogy a perceptron mennyire könnyen tud aktiválódni.
+$b \equiv -1 * t,\; b \in \mathbb{R}$. A bias azt jelöli, hogy a perceptron mennyire könnyen tud aktiválódni.
 Negatív, kicsi bias esetén a perceptron ritkábban; pozitív, nagy bias esetén sűrűbben aktiválódik. A \ref{perceptron1}.
-egyenletet egyszerűsítve, s a bias-t bevezetve a következő egyenletet kapjuk:
+egyenletet egyszerűsítve, s a bias-t használva a következő egyenletet kapjuk:
 \begin{equation}
     a =
     \begin{cases}
@@ -190,10 +191,10 @@ egyenletet egyszerűsítve, s a bias-t bevezetve a következő egyenletet kapjuk
 \end{equation}
     
 ### Sigmoid neuron
-Egy neuronháló betanítása során azt szeretnénk, hogy a súlyokban, illetve bias-okban történő kis változás a neuronháló
+Egy neuronháló betanítása során a célunk, hogy a súlyokban, illetve bias-okban történő kis változás a neuronháló
 kimenetében is csupán kis változást okozzon. Perceptronok esetében ez nem teljesül, hiszen a kimenetük diszkrét érték.
 A sigmoid neuron kimenete ezzel ellentétben egy 0 és 1 közötti valós szám: $a \in \mathbb{R}|_{0 \, \leqslant \, a \, \leqslant \, 1}$.
-A perceptronhoz hasonlóan, a sigmoid neuron is rendelkezik súlyokkal és bias értékkel, viszont a kimenet számítása az
+A perceptronhoz hasonlóan, a sigmoid neuron is rendelkezik súlyvektorokkal és bias értékkel, viszont a kimenet kiszámítása az
 alábbiak szerint változik:
 \begin{equation}\label{sigmoid-neuron}
       a = \sigma(x \cdot w + b)
@@ -202,7 +203,7 @@ A klasszikus sigmoid neuron esetén $\sigma$-t sigmoid függvénynek hívjuk:
 \begin{equation}
       \sigma(z) \equiv \frac{1}{1+e^{-z}}
 \end{equation}
-Megfigyelhető, hogy $\sigma$-t a fentebbi lépcsős függvénynek választva visszakapjuk a perceptron neuront. Az $a$ értéket
+Megfigyelhető, hogy $\sigma$-t egy 0 és 1 közötti lépcsős függvénynek választva visszakapjuk az eredeti perceptron neuront. Az $a$ értéket
 kimenet mellett szokás még a neuron aktivációjának is nevezni.
 
 ### Aktivációs függvény
@@ -218,7 +219,7 @@ ami a rákövetkező réteg inputjaként fog szolgálni. A 0-hoz közeli input g
 \end{equation}
 
 #### RELU
-A sigmoid, tanh aktivációs függvények esetén fenn áll a probléma, hogy nagyon nagy bemenetre a derivált
+A sigmoid és tanh aktivációs függvények esetén fenn áll a probléma, hogy nagyon nagy bemenetre a derivált
 értéke a 0-hoz közelít. A [[Gradient Descent]] és [[Backpropagation]] szekciónál látni fogjuk, hogy a neuronháló annál
 gyorsabban tanul, minél nagyobb a gradiens. Nullához közeli gradiens esetén a háló szinte semmit sem fog tanulni. Ezt a problémát Vanishing
 Gradient problémának nevezik.
@@ -242,7 +243,7 @@ a függvény átlagos értéke nincs közel a 0-hoz. Az ELU függvény segítsé
 ![Aktivációs függvények a [-10, +10] intervallumon ábrázolva.](src/images/activations.png)
   
 ### Súlyozott bemenet
-Angolul weighted input. A neuron súlyozott bemenete nem más, mint a (\ref{sigmoid-neuron}) egyenlet azon része, 
+Angolul weighted input. A neuron súlyozott bemenete nem más, mint az (\ref{sigmoid-neuron}) egyenlet azon része, 
 melyet $\sigma$-nak paraméterül átadunk, azaz:
 \begin{equation}
       z \equiv x \cdot w + b
@@ -264,24 +265,25 @@ számolható ki:
 ![Példa egy rejtett réteget tartalmazó neuronhálóra. Forrás:[@nn_and_deeplearning]](src/images/nn.png){width=75%}
 
 ### Neuronháló hiperparaméterei
-Egy neuronhálónak rengeteg hiperparamétere lehet:
-* Hány epoch-on keresztül tanítjuk a hálót.
-* Mekkora learning rate-tel.
-* Milyen hibafüggvényt használunk.
-* Rétegek száma a neuronhálóban.
-* Egyes rétegek hány neuronból állnak.
-* Használunk-e regularizációt. És ha igen, akkor milyen mértékben.
-* Milyen aktivációs függvényeket használunk.
-* A kezdeti súlyokat hogyan inicializáljuk.
+Egy neuronhálónak számos hiperparaméterrel rendelkezik:
+
+* Hány epoch-on keresztül tanítjuk a hálót
+* Mekkora learning rate-et használunk
+* Milyen hibafüggvényt használunk
+* Hány réteg van a neuronhálóban
+* Az egyes rétegek hány neuronból állnak
+* Használunk-e regularizációt, és ha igen, akkor milyen mértékben
+* Milyen aktivációs függvényeket használunk
+* A kezdeti súlyokat hogyan inicializáljuk
 
 ### Regularizáció
 A regularizáció a túlilleszkedés ellen nyújt hatékony megoldást. Alkalmazásával a hibafüggvény mellé további megkötéseket 
-tehetünk a neuronhálóra, például büntetjük a nagyon nagy súlyokat, mely segítségével a hálót a generalizálás irányába tereljük,
-mintsem afelé, hogy a különálló bemenetek zajaira illeszkedjen. Egy súlyt csak akkor tud nagyra nőni, ha a regularizáció büntetést
+tehetünk a neuronhálóra, például büntethetjük a nagyon nagy súlyokat, mely segítségével a hálót a generalizálás irányába tereljük,
+mintsem afelé, hogy a különálló bemenetek zajaira illeszkedjen. Egy súly csak akkor tud nagyra nőni, ha a regularizációs büntetés
 ellenére is nagy mértékben javít a modell pontosságán.
 
 #### L2 regularizáció
-L2 regularizáció esetén a súlyok ($w \in \mathbb{R}$) négyzetnét összegezzük. A bias-okat nem regularizáljuk.
+L2 regularizáció esetén a súlyok ($w \in \mathbb{R}$) négyzetét összegezzük. A bias-okat nem regularizáljuk.
 \begin{equation}
       C_{reg} = C(y, \hat{y}) + \lambda \sum\limits_w w^2
 \end{equation}
@@ -296,71 +298,66 @@ L1 regularizáció esetén a súlyok ($w \in \mathbb{R}$) abszolútértékét ö
 
 #### Dropout
 Dropout esetén nem a súlyokat regularizáljuk, hanem tanítás alatt magát a neuronhálót módosítjuk, pontosabban véve
-azt, ahogyon a $\hat{y}$ kimenetet megkapjuk. A tanítás során, minden példa adat esetén véletlenszerűen "kikapcsoljuk"
+azt, ahogyan az $\hat{y}$ kimenetet megkapjuk. A tanítás során, minden példa adat esetén véletlenszerűen "kikapcsoljuk"
 a neuronháló rejtett rétegeiben lévő neuronok bizonyos részét. A 0.5 például tipikus dropout érték[@hinton_dropout], mely azt
-jelenti, hogy 50% eséllyel hagyjuk csak meg az adott neuront. A "kikapcsolt" neuronok aktivációját 0-nak tekintjük.
+jelenti, hogy csupán 50% eséllyel hagyjuk "aktívan" az adott neuront. A "kikapcsolt" neuronok aktivációját 0-nak tekintjük.
 
-A dropout segítségével a neuronhálóból kikényszerítjük, hogy fele annyi neuronnal rendelkezve, előbb az adathalmaz legrobosztusabb
-tulajdonságait tanulja meg modellezni, azaz kikényszerítjük, hogy a generalizáljon. Másik oldalról nézve, a neuronok 
+A dropout segítségével a neuronhálóból kikényszerítjük, hogy (0.5-ös esetben) fele annyi neuronnal rendelkezve, előbb az adathalmaz legrobosztusabb
+tulajdonságait tanulja meg, azaz kikényszerítjük, hogy a generalizáljon. Másik oldalról nézve, a neuronok 
 folyamatos ki-be kapcsolgatásával úgy is tekinthetjük, hogy nem egy, hanem több, különböző neuronokkal rendelkező hálót tanítunk be, 
-melyek nagy eséllyel az adathalmaz más és más részhalmazaira fognak túlilleszkedni, így a neuronhálót egészben nézve, a túlilleszkedés
+melyek nagy eséllyel az adathalmaz más és más részhalmazaira fognak túlilleszkedni, így a neuronháló egészét nézve, a túlilleszkedés
 kevésbé lesz számottevő.[@nn_and_deeplearning][@understanding_dropout]
 
 ![Neuronháló dropout regularizáció nélkül, illetve dropout regularizációval. Forrás:[@nn_and_deeplearning]](src/images/dropout.png){width=75%}
 
 ### Deep learning
-A Deep Learning alapvető elgondolása az, hogy összetett koncepciókat egyszerűbb koncepciók hierarchiájával
-tudunk lemodellezni. Deep learningről tipikusan neurális hálók kapcsán beszélhetünk. Ilyenkor azt értjük alatta,
+A Deep Learning mögötti elgondolás az, hogy összetett koncepciókat egyszerűbb koncepciók tetszőleges hierarchiájával
+is képesek vagyunk modellezni. Deep learningről tipikusan neurális hálók kapcsán beszélhetünk. Ilyenkor azt értjük alatta,
 hogy több egyrétegű neuronhálót egymás mellé helyezünk, az egyik  réteg kimenete a következő réteg bemenete.
-Több réteg, egymás utáni nemlinearitás segítségével erőteljesebb modellt kapunk, mintha egyetlen, több neuronból álló
-réteggel dolgoznánk.[@book_deeplearning]
+Több rétegnyi nemlinearitás segítségével erőteljesebb modellt kapunk, mintha egyetlen, ámbátor nagyságrendekkel több 
+neuronból álló réteggel dolgoznánk.[@book_deeplearning]
 
 ### Fully connected réteg
-Fully connected réteg alatt egy klasszikus neuronháló réteget értjük, melynél minden előző réteg beli neuron össze van kötve
-minden rákövetkező réteg beli neuronnal.
+Fully connected réteg alatt egy klasszikus neuronháló réteget értünk, melynél minden előző rétegbeli neuron össze van kötve
+minden rákövetkező rétegbeli neuronnal.
 
 ### Konvolúciós neuronháló
 Konvolúciós neuronhálókat főleg kép, illetve hangfeldolgozásnál használnak.
-Egy konvolúciós háló tipikusan konvolúciós, pooling, majd pedig végül fully connected rétegekből épül fel.
+Egy konvolúciós háló tipikusan konvolúciós, pooling, végül pedig fully connected rétegekből épül fel.
  
 #### Konvolúciós réteg
 A konvolúciós réteg neuronjai, a megszokott, klasszikus neuronhálókéval ellentétben, egy 3 dimenziós térben helyezkednek el
 egymáshoz képest, szélesség, magasság és mélység szerint. Ennek megfelelően a konvolúciós réteg bemenete is 3 dimenziós
-kell legyen. Egy 800*600-as fekete-fehér, RGB és RGBA csatornákkal rendelkező bemeneti kép mérete rendre 800*600*1, 800*600*3, illetve
-800*600*4.
+kell legyen. Egy 800×600-as fekete-fehér, RGB és RGBA csatornákkal rendelkező bemeneti kép mérete rendre 800×600×1, 800×600×3, illetve
+800×600×4.
 
-Konvolúciós rétegnél egy fix méretű kernelt (kerneleket) csúsztatunk végig a bemeneten $s$ stride-dal (lépésközzel). A kernelt
-szokás még filternek is nevezni. Egy konvolúciós réteg 4 dimenziós: kernel szélesség * kernelmagasság 
-* bemeneti csatornák száma * kimeneti csatornák száma.[@cs231n]
+Konvolúciós rétegnél egy, vagy több fix méretű kernelt csúsztatunk végig a bemeneten $s$ stride-dal (lépésközzel). A kernelt
+szokás még filternek is nevezni. Egy konvolúciós kernel 4 dimenziós: kernel szélesség × kernelmagasság 
+× bemeneti csatornák száma × kimeneti csatornák száma.[@cs231n]
 
 #### Konvolúció stride
-A stride segítségével definiáljuk, hogy mekkora ugrásokkal csúsztatjuk a kernelünket a bemeneten. Ha a stride 1, akkor
-a kernelt mindig egy egységgel toljuk el.[@cs231n]
+A stride segítségével definiáljuk, hogy mekkora lépésközzel csúsztatjuk a kernelünket a bemeneten. $m$×$n$-es stride esetén
+a kernelt $m$ egységgel léptetjük vertikálisan és $n$ egységgel horizontálisan.[@cs231n]
 
 #### Konvolúció padding
-2 dimenziós esetben, egy 10*10-es képen végigcsúsztatva egy 2*2-es kernelt 2*2es stride-dal, a kimenetünk mérete 
-5*5-ös lesz. Sokszor előnyös számunkra, ha az adat mérete nem változik a konvolúció során. Padding használata esetén
-a kimenet körvonalát annyi nullával rakjuk körbe, hogy megőrizzük az eredeti méretét.[@cs231n]
+2 dimenziós esetben, egy 10×10-es képen egy 2×2-es kernelt 2×2es stride-dal végigléptetve, a kimenetünk mérete 
+5×5-ös lesz. Sokszor előnyös számunkra, ha az adat mérete ne változzon a konvolúció során. Padding használata esetén
+a kimenetet annyi nullával rakjuk körbe, hogy visszakapjuk az eredeti méretét.[@cs231n]
 
 #### Pooling réteg
 A pooling rétegek használata gyakori konvolúciós hálókban. Segítségükkel a konvolúciós réteg aktivációjának méretét tudjuk csökkenteni.
-A pooling réteg tipikusan egy 2*2 filter, 2*2 stride-dal.
-Max pooling esetén a filter kimenete a 2*2-es terület maximuma, míg Average pooling esetén a terület átlaga.
-A pooling a csatornák számát nem csökkenti, csupán csatornánként a szélességet, magasságot.
-
-
-Pooling réteg használatával, ugyanúgy csúszóablakos módon, csökkenteni tudjuk a neuronhálón áthaladó adat méretét. Pooling
-Nagy méretű bemenet esetén szükséges lehet a bemeneti adat méretén csökkenteni, ahogyan haladunk rétegről rétegre. A pooling
-réteg, a konvolúciós réteghez hasonlóan.[@cs231n]
+A pooling réteg tipikusan egy 2×2 filter, 2×2 stride-dal.
+Max pooling esetén a filter kimenete a 2×2-es terület maximuma, míg average pooling esetén a terület átlaga.
+A pooling a csatornák számát nem csökkenti, csupán csatornánként a szélességet, magasságot.[@cs231n]
 
 ### Autoencoder
-Az autoencoderek a neuronhálók egy speciális csoportját alkotják. Egy autoencoderrel az egységfüggvényt próbáljuk meg approximálni.
-Ezt önmagában triviális feladatot azzal a megszorítással nehezítjük, hogy az autoencoder belső, rejtett rétegeinek dimenziója 
-kisebb kell legyen a bemenet dimenziójánál. Ezáltal a háló egyik fele egyfajta tömörítést, dimenzió csökkentést hajt
+Az autoencoderek a neuronhálók egy speciális csoportját alkotják. Egy autoencoderrel az egységfüggvényt próbáljuk approximálni.
+Ezt az önmagában triviális feladatot azzal a megszorítással végezzük, hogy az autoencoder belső, rejtett rétegeinek dimenziója 
+kisebb kell legyen a bemenet dimenziójánál. Ezáltal a háló első fele egyfajta tömörítést, dimenzió csökkentést hajt
 végre a bemeneti adaton, s a háló másik felének a feladata, hogy ebből a csökkentett méretű köztes reprezentációból
 visszaállítsa az eredeti bemenetet. Az adat köztes reprezentációját szokás encoding-nak, illetve code-nak is nevezni.
-Ezzel a tömörítéssel-visszaállítással a célunk, hogy az autoencoder megtanuljon egy szemantikailag értelmes 
-reprezentációt az adatról, amit más célokra felhasználhatunk, például klaszterezésre.[@hinton_semantic_hashing][@hinton_autoencoder_image_retrieval] 
+Ezzel a tömörítéssel-visszaállítással a célunk, hogy az autoencoder egy szemantikailag értelmes 
+reprezentációt tanuljon meg az adatról, amit a továbbiakban más célokra felhasználhatunk, például klaszterezésre.[@hinton_semantic_hashing][@hinton_autoencoder_image_retrieval] 
 
 ![Példa egy egyszerű autoencoder-re. Forrás:[@stanford_autoencoders]](src/images/autoencoder.png){height=50%}
 
@@ -397,8 +394,8 @@ a láncszabály alkalmazásával a hibafüggvény parciális deriváltjai határ
 A parciális deriváltak alapján pedig a súlyokat, bias-okat oly módon tudjuk módosítani, 
 hogy adott bemenetre a hibafüggvény értéke csökkenjen.
 
-Első lépésben definiáljuk a kimeneti $L$-edik réteg $j$-edik neuronjához tartozó hibát:
-\begin{equation}
+Első lépésben definiáljuk a kimeneti, $L$-edik réteg $j$-edik neuronjához tartozó hibát:
+\begin{equation}\label{BP1}
   \delta_j^L = \frac{\partial C}{\partial a_j^L} * \sigma '(z_j^L)
 \end{equation}
 
@@ -414,6 +411,7 @@ Második lépésben definiáljuk egy tetszőleges $l$-edik réteg hibáját a r�
 \end{equation}
 
 (\ref{BP1}) és (\ref{BP2}) kombinálásával a neuronháló minden rétegének a hibáját ki tudjuk számítani.
+Ezt követően definiálhatjuk a paraméterek szerinti parciális deriváltakat.
 
 A hibafüggvény parciális deriváltja adott $l$ réteg $j$-edik neuronjának bias-a szerint:
 \begin{equation}\label{BP3}
