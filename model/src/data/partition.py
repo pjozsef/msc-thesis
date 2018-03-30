@@ -55,12 +55,12 @@ def export_partition(partitionDict):
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--source', required=True)
+parser.add_argument('--output-file', required=True)
 parser.add_argument('--seed', type=int, default=0)
 parser.add_argument('--train', type=float, default=0.6)
 parser.add_argument('--cv', type=int, default=0.2)
 parser.add_argument('--test', type=int, default=0.2)
 parser.add_argument('--output-dir', default=".")
-parser.add_argument('--output-file', required=True)
 args = parser.parse_args()
 
 ratio_sum = args.train + args.cv + args.test
