@@ -66,7 +66,7 @@ parser.add_argument('--input', required=True)
 parser.add_argument('--percentiles')
 parser.add_argument('--title', required=True)
 parser.add_argument('--save')
-parser.add_argument('--retries', type=int)
+parser.add_argument('--retries', type=int, default=1)
 args = parser.parse_args()
 if args.percentiles:
     all_percentiles = []
