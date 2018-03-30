@@ -14,6 +14,7 @@ args = parser.parse_args()
 if args.percentiles:
     args.percentiles = percentile_parser.parse_percentiles(args.percentiles)
 print(args)
+args.topk = args.topk + 1
 
 codes, infos = csv_parser.parse(args.input, args.percentiles)
 tree_kd = neighbors.KDTree(codes, leaf_size=32)
