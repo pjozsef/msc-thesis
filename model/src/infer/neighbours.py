@@ -22,9 +22,17 @@ low = 0
 high = len(codes) - 1
 random_index = np.random.randint(0, high)
 distances, indices = tree_kd.query([codes[random_index]], k=args.topk)
-print(indices)
-print(distances)
-for i in indices[0]:
-    print(i)
-    t = tuple(codes[i])
-    print(infos[i])
+
+for i, index in enumerate(indices[0]):
+    if i == 0:
+        print("Starting point")
+    else:
+        print("{}. neighbour".format(i))
+        print("Distance", distances[0][i])
+    print("Index:", index)
+    print("Style:", infos[index]['style'])
+    print("Artist:", infos[index]['artist'])
+    print("Album:", infos[index]['album'])
+    print("Song:", infos[index]['song'])
+    print("Percentile:", infos[index]['percentile'])
+    print()
