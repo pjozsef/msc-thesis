@@ -12,6 +12,7 @@ ggplot = "*"
 matplotlib = "*"
 pandas = "*"
 requests = "*"
+tabulate = "*"
 
 
 [dev-packages]
