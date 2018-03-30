@@ -32,6 +32,18 @@ def matches(song1, song2):
     return song1["artist"] == song2["artist"] and song1["album"] == song2["album"] and song1["song"] == song2["song"]
 
 
+def remove_current_song(codes, infos, current_info):
+    delete_indices = []
+
+    for info_index, info in enumerate(infos):
+        if matches(current_info, info):
+            delete_indices.append(info_index)
+
+    for j in delete_indices[::-1]:
+        del infos[j]
+        del codes[j]
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--input', required=True)
@@ -45,28 +57,22 @@ def main():
     print(args)
 
     codes, infos = csv_parser.parse(args.input, args.percentiles)
-    tree = neighbors.KDTree(codes, leaf_size=32)
-    high = len(codes) - 1
-    current_index = np.random.randint(0, high)
+    max_index = len(codes) - 1
+    current_index = np.random.randint(0, max_index)
     current_code = codes[current_index]
 
     header = ["style", "artist", "album", "song", "percentile"]
     values = [song_info(current_index, infos)]
+    remove_current_song(codes, infos, infos[current_index])
+    tree = neighbors.KDTree(codes, leaf_size=32)
+
     for i in range(args.length):
         current_index = find_next_song(current_code, tree, args.topk)
         current_code = codes[current_index]
         current_info = infos[current_index]
         values.append(song_info(current_index, infos))
 
-        delete_indices = []
-
-        for info_index, info in enumerate(infos):
-            if matches(current_info, info):
-                delete_indices.append(info_index)
-
-        for j in delete_indices[::-1]:
-            del infos[j]
-            del codes[j]
+        remove_current_song(codes, infos, current_info)
         tree = neighbors.KDTree(codes, leaf_size=32)
     print(tabulate(values, headers=header))
 
