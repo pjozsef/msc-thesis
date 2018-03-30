@@ -103,6 +103,11 @@ class ExportCommand(customPercentiles: List<Int>? = null) : Command() {
             field = value.absoluteFile.normalize()
         }
 
+    @Parameter(
+            names = ["--style"],
+            description = "<style of mp3 file>")
+    var style: String = ""
+
     val chunkSize = 8192
     val height = 800
     val windowSize = 20
@@ -125,6 +130,12 @@ class ExportListCommand : Command() {
         set(value) {
             field = value.absoluteFile.normalize()
         }
+
+    @Parameter(
+            names = ["--style"],
+            required = true,
+            description = "<style of mp3 files>")
+    lateinit var style: String
 
     val currentProgress: File by lazy {
         outputDirectory.resolve("previousProgress")

@@ -113,6 +113,7 @@ private fun exportList(exportListCommand: ExportListCommand) {
                         val exportCommand = ExportCommand(customPercentiles).apply {
                             files = listOf(it)
                             outputDirectory = exportListCommand.outputDirectory
+                            style = exportListCommand.style
                         }
                         exportData(exportCommand)
 
@@ -148,7 +149,8 @@ private fun exportData(exportCommand: ExportCommand) {
             exportCommand.output,
             exportCommand.export,
             exportCommand.outputDirectory,
-            true)
+            true,
+            exportCommand.style)
 
     if (isMp3) {
         time("deleting temporary wav file") {
@@ -167,7 +169,8 @@ private fun export(
         output: Boolean,
         export: Boolean,
         outputDirectory: File? = null,
-        fileNameFromTags: Boolean = false
+        fileNameFromTags: Boolean = false,
+        style: String = ""
 ) {
     val magnitudes = fftMagnitudesFrom(wavPath, chunkSize, height)
 
@@ -181,7 +184,8 @@ private fun export(
             println("${percentile}th percentile -> [${start.toPrettyString()}..${end.toPrettyString()}]")
         }
         if (export) {
-            val fileName = outputPath(wavPath, outputDirectory, postfix = "__$percentile", fileNameFromTags = fileNameFromTags)
+            val prefix = if (style.isBlank()) "" else "${style}__"
+            val fileName = outputPath(wavPath, outputDirectory, prefix = prefix, postfix = "__$percentile", fileNameFromTags = fileNameFromTags)
             println(fileName)
             saveImageMeasured(section.asImage(magnitudes).asBlackAndWhite(), fileName)
         }
