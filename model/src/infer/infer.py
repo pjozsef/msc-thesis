@@ -34,7 +34,7 @@ paths = [p for p in glob_input]
 images = [mpimg.imread(p) for p in glob_input]
 
 info_labels = ['style', 'artist', 'album', 'song', 'percentile']
-encoded_dimensions = [str(i) for i in range(33)]
+encoded_dimensions = [str(i) for i in range(32)]
 fieldnames = info_labels + encoded_dimensions
 
 with tf.Session(graph=tf.Graph()) as sess:
