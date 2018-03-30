@@ -64,7 +64,7 @@ parser.add_argument('--output-file', required=True)
 args = parser.parse_args()
 
 ratio_sum = args.train + args.cv + args.test
-assert ratio_sum == 1.0, "Train, CV and test data ratio must equal to 1.0, but was {}.".format(ratio_sum)
+assert ratio_sum == 1.0, "Train, CV and test data ratio must add up to 1.0, but was {}.".format(ratio_sum)
 print(args)
 
 np.random.seed(args.seed)
