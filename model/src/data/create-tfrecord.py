@@ -1,9 +1,19 @@
 import argparse
 import glob
+import os.path
 
 import matplotlib.image as mpimg
 import pandas as pd
 import tensorflow as tf
+
+
+def get_paths(source):
+    if os.path.isfile(source):
+        with open(source) as f:
+            content = f.readlines()
+        return [x.strip() for x in content]
+    else:
+        return glob.glob(source)
 
 
 def int_feature(value):
@@ -67,7 +77,7 @@ if __name__ == '__main__':
     parser.add_argument('--validate', action='store_true')
     args = parser.parse_args()
 
-    paths = glob.glob(args.source)
+    paths = get_paths(args.source)
 
     images = to_images(paths)
 
