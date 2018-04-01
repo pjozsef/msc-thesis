@@ -52,7 +52,7 @@ CD formátum esetén a mintavételezési frekvencia 44100 Hz, azaz 44.1 kHz.
 A bitmélység, angolul bit depth adja meg, hogy hány biten ábrázoljuk az adott mintát. A bitmélység tipikusan 8,
 16, 32 bit szokott lenni. 
 
-### Nyquist-Shannon-féle mintavételezési tétel
+### Nyquist--Shannon-féle mintavételezési tétel
 A Nyquist-Shannon tétel kimondja, az analóg jel maximális frekvenciájának legalább kétszeresével
 kell a mintavételezést másodpercenként elvégeznünk annak érdekében, hogy a digitális jel veszteségmentesen visszaalakítható
 legyen analóg jellé.[@nyquist]
