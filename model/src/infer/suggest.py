@@ -56,9 +56,13 @@ def main():
     parser.add_argument('--length', type=int, default=10)
     parser.add_argument('--topk', type=int, default=3)
     parser.add_argument('--percentiles')
+    parser.add_argument('--start-index', type=int)
+    parser.add_argument('--random-seed', type=int)
     args = parser.parse_args()
     if args.percentiles:
         args.percentiles = percentile_parser.parse_percentiles(args.percentiles)
+    if args.random_seed:
+        np.random.seed(args.random_seed)
     args.topk += 1
     print(args)
 
