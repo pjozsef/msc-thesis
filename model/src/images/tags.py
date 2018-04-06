@@ -10,11 +10,11 @@ def select_style(df, style):
 
 
 def sum(df, style):
-    return select_style(df, style)["count"].sum()
+    return df["count"].sum()
 
 
 def max(df, style):
-    return select_style(df, style)["count"].max()
+    return df["count"].max()
 
 
 def color_for(row, m):
@@ -62,11 +62,11 @@ total_classical = sum(df, "classical")
 total_electronic = sum(df, "electronic")
 total_metal = sum(df, "metal")
 
-plt.pie(
+pie = plt.pie(
     [total_classical, total_electronic, total_metal],
-    labels=["classical", "electronic", "metal"],
     colors=["blue", "orange", "black"])
 plt.title("Zenei stílusok eloszlása")
+plt.legend(["Klasszikus", "Elektronikus", "Metál"], loc=2, prop={'size': 9})
 plt.show()
 
 ########################################
