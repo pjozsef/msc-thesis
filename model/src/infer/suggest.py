@@ -8,11 +8,17 @@ import src.infer.csv_parser as csv_parser
 import src.infer.percentile_parser as percentile_parser
 
 
+def get_percentages(distances):
+    reciprocal = np.reciprocal(distances)
+    return reciprocal / np.sum(reciprocal)
+
+
 def find_next_song(current_code, tree, topk):
     distances, indices = tree.query([current_code], k=topk)
     distances = distances[0][1:]
     indices = indices[0][1:]
-    percentages = np.divide(distances, np.sum(distances))
+
+    percentages = get_percentages(distances)
 
     next = np.random.choice(len(distances), p=percentages)
     return indices[next]
