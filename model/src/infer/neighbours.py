@@ -11,6 +11,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--input', required=True)
 parser.add_argument('--topk', type=int, default=3)
 parser.add_argument('--percentiles')
+parser.add_argument('--start-index', type=int)
 args = parser.parse_args()
 if args.percentiles:
     args.percentiles = percentile_parser.parse_percentiles(args.percentiles)
@@ -22,8 +23,12 @@ codes, infos = csv_parser.parse(args.input, args.percentiles)
 tree_kd = neighbors.KDTree(codes, leaf_size=32)
 low = 0
 high = len(codes) - 1
-random_index = np.random.randint(0, high)
-distances, indices = tree_kd.query([codes[random_index]], k=args.topk)
+if args.start_index:
+    start_index = args.start_index
+else:
+    start_index = np.random.randint(0, high)
+
+distances, indices = tree_kd.query([codes[start_index]], k=args.topk)
 
 values = []
 for i, index in enumerate(indices[0]):

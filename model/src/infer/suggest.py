@@ -24,8 +24,10 @@ def find_next_song(current_code, tree, topk):
     return indices[next]
 
 
-def song_info(index, infos):
+def song_info(index, infos, row):
     return [
+        row,
+        index,
         infos[index]["style"],
         infos[index]["artist"],
         infos[index]["album"],
@@ -57,22 +59,26 @@ def main():
     parser.add_argument('--topk', type=int, default=3)
     parser.add_argument('--percentiles')
     parser.add_argument('--start-index', type=int)
-    parser.add_argument('--random-seed', type=int)
+    parser.add_argument('--seed', type=int)
     args = parser.parse_args()
     if args.percentiles:
         args.percentiles = percentile_parser.parse_percentiles(args.percentiles)
-    if args.random_seed:
-        np.random.seed(args.random_seed)
+    if args.seed:
+        np.random.seed(args.seed)
     args.topk += 1
     print(args)
 
     codes, infos = csv_parser.parse(args.input, args.percentiles)
     max_index = len(codes) - 1
-    current_index = np.random.randint(0, max_index)
+    if args.start_index:
+        current_index = args.start_index
+    else:
+        current_index = np.random.randint(0, max_index)
     current_code = codes[current_index]
 
-    header = ["style", "artist", "album", "song", "percentile"]
-    values = [song_info(current_index, infos)]
+    row = 0
+    header = ["Row", "Index", "Style", "Artist", "Album", "Song", "Percentile"]
+    values = [song_info(current_index, infos, row)]
     remove_current_song(codes, infos, infos[current_index])
     tree = neighbors.KDTree(codes, leaf_size=32)
 
@@ -80,10 +86,11 @@ def main():
         current_index = find_next_song(current_code, tree, args.topk)
         current_code = codes[current_index]
         current_info = infos[current_index]
-        values.append(song_info(current_index, infos))
+        values.append(song_info(current_index, infos, row))
 
         remove_current_song(codes, infos, current_info)
         tree = neighbors.KDTree(codes, leaf_size=32)
+        row += 1
     print(tabulate(values, headers=header))
 
 
