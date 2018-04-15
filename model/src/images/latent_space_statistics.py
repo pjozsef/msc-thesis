@@ -58,6 +58,24 @@ def area(df, style=None, artist=None, song=None, percentile=None, sort=None):
     area.set_title(array_as_string([style, artist, song, percentile]))
 
 
+def pie_song(df, style=None, artist=None, song=None, percentile=None, sort=None):
+    plt.figure()
+    if percentile:
+        df = filter_percentile(df, percentile)
+    if style:
+        df = filter_style(df, style)
+    if artist:
+        df = df.loc[df[ARTIST] == artist]
+    if song:
+        df = df.loc[df[SONG] == song]
+    if sort:
+        df = df.sort_values(by=sort).reset_index()
+    dimension_sums = latent_dimensions(df).sum()
+    dimension_sums = dimension_sums - dimension_sums.min()
+    pie = dimension_sums.plot.pie()
+    pie.set_title(array_as_string([style, artist, song, percentile]))
+
+
 def main():
     pd.set_option('display.expand_frame_repr', False)
 
@@ -67,14 +85,7 @@ def main():
 
     df = pd.read_csv(args.input_csv)
 
-    # describe = df.describe()
-    # print(describe)
-    # print()
-    # print(describe.transpose())
-    # plt.imshow(describe, cmap='hot', interpolation='none')
-    # plt.yticks(np.arange(0.5, len(describe.index), 1), describe.index)
-    # plt.xticks(np.arange(0.5, len(describe.columns), 1), describe.columns)
-    # plt.show()
+    latent = latent_dimensions(df)
 
     # boxplot(latent_dimensions(df), "Teljes látens tér")
     # boxplot(latent_dimensions(filter_style(df, CLASSICAL)), "Látens tér klasszikus része")
@@ -86,6 +97,12 @@ def main():
     # area(df, artist="Arch Enemy", song="Nemesis")
     # area(df, artist="Christophe Beck", song="Let It Go")
     # area(df, artist="Juno Reactor", song="Navras")
+
+    pie_song(df, artist="Arch Enemy", song="The Day You Died", percentile=50)
+    pie_song(df, artist="Arch Enemy", song="Taking Back My Soul", percentile=50)
+    pie_song(df, artist="Arch Enemy", song="Nemesis", percentile=50)
+    pie_song(df, artist="Christophe Beck", song="Let It Go", percentile=50)
+    pie_song(df, artist="Juno Reactor", song="Navras", percentile=50)
 
     # plt.matshow(latent_dimensions(filter_percentile(df, 50)).corr())
 

@@ -1,0 +1,7 @@
+Réteg, Rétegek száma, Encoder/Decoder, Súly paraméterek, Bias paraméterek
+Konvolúció, 5, Encoder, 57 232, 128
+Pooling, 3, Encoder, 0, 0
+Fully conn., 5, Encoder, 1 746 944, 992
+Fully conn., 5, Decoder, 0, 4 032
+Upsampling, 3, Decoder, 0, 0
+Dekonvolúció, 5, Decoder, 0, 97

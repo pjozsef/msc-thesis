@@ -92,7 +92,7 @@ A Fourier Transzformáltat a következőképp kapjuk:
     & W^j_n=e^{-j2\pi/n}
 \end{split}
 \end{equation}
-Gyakorlati alkalmazáskor a Gyors Fourier Transzformáltat használjuk, melynek futási ideje O($n^2$) helyett csupán O(n log n)
+Gyakorlati alkalmazáskor a Gyors Fourier Transzformáltat (FFT) használjuk, melynek futási ideje O($n^2$) helyett csupán O(n log n)
 [@guide_to_digital_signal_processing][@algterv]
 
 ## Gépi tanulás
@@ -156,6 +156,24 @@ Angolul crossvalidation set. Tanítás során ezt az adathalmazt használjuk arr
 hiperparamétereit finomhangoljuk. Azért használunk erre a célra egy külön halmazt, nem pedig az 
 ellenőrző halmazt, mert ahogy a modell paraméterei túlilleszkedhetnek a tanulóhalmazra, 
 úgy a hiperparaméterei is túlilleszkedhetnek az ellenőrző halmaz elemeire.
+
+### t-SNE
+A t-SNE (t-Distributed Stochastic Neighbor Embedding) egy dimenziócsökkentő algoritmus, mely segítségével 2 illetve
+3 dimenzióban tudunk magas dimenziójú adatokat vizualizálni. Az algoritmus oly módon csökkenti a bemeneti adathalmaz dimenzióját,
+hogy eközben az adatpontok közötti távolsági relációkat a lehető legjobb módon megőrzi. Két pont, melyek az eredeti adathalmazban
+távol álltak egymástól, dimenziócsökkentés után is távol fognak elhelyezkedni, míg két közeli pont az algoritmus futtatása
+után is közel lesz egymáshoz.[@tsne][@tsne_github]
+
+### Tenzor
+A tenzor nem más, mint a vektorok és mátrixok általánosítása. A tenzor rendje az egymástól függetelen dimeziók számát jelöli.
+Nulladrendű tenzorok a skalárok, elsőrendűek a vektorok, másodrendűek a mátrixok. Fejlesztés során a tenzorokat n-dimenziós
+tömbökként kezeljük.[@tensor_definition]
+
+\begin{figure}[H]
+\centering
+\includegraphics{src/images/tensor.png}
+\caption{Példa egy nullad-, első-, másod- és harmadrangú tenzorra.}
+\end{figure}
 
 ## Neuronhálók
 
@@ -332,7 +350,7 @@ kell legyen. Egy 800×600-as fekete-fehér, RGB és RGBA csatornákkal rendelkez
 800×600×4.
 
 Konvolúciós rétegnél egy, vagy több fix méretű kernelt csúsztatunk végig a bemeneten $s$ stride-dal (lépésközzel). A kernelt
-szokás még filternek is nevezni. Egy konvolúciós kernel 4 dimenziós: kernel szélesség × kernelmagasság 
+szokás még filternek is nevezni. Egy konvolúciós kernel negyedrangú tenzor: kernel magasság × kernel szélesség 
 × bemeneti csatornák száma × kimeneti csatornák száma.[@cs231n]
 
 #### Konvolúció stride
@@ -341,8 +359,9 @@ a kernelt $m$ egységgel léptetjük vertikálisan és $n$ egységgel horizontá
 
 #### Konvolúció padding
 2 dimenziós esetben, egy 10×10-es képen egy 2×2-es kernelt 2×2es stride-dal végigléptetve, a kimenetünk mérete 
-5×5-ös lesz. Sokszor előnyös számunkra, ha az adat mérete ne változzon a konvolúció során. Padding használata esetén
-a kimenetet annyi nullával rakjuk körbe, hogy visszakapjuk az eredeti méretét.[@cs231n]
+5×5-ös lesz, ezt "Valid padding"-nek nevezzük. Sokszor előnyös számunkra, ha az adat mérete nem változik a konvolúció során. 
+Padding használata esetén a kimenetet annyi nullával rakjuk körbe, hogy visszakapjuk az eredeti méretet. 
+Ezt "Same padding"-nak nevezzük [@cs231n]
 
 #### Pooling réteg
 A pooling rétegek használata gyakori konvolúciós hálókban. Segítségükkel a konvolúciós réteg aktivációjának méretét tudjuk csökkenteni.
@@ -357,7 +376,7 @@ kisebb kell legyen a bemenet dimenziójánál. Ezáltal a háló első fele egyf
 végre a bemeneti adaton, s a háló másik felének a feladata, hogy ebből a csökkentett méretű köztes reprezentációból
 visszaállítsa az eredeti bemenetet. Az adat köztes reprezentációját szokás encoding-nak, illetve code-nak is nevezni.
 Ezzel a tömörítéssel-visszaállítással a célunk, hogy az autoencoder egy szemantikailag értelmes 
-reprezentációt tanuljon meg az adatról, amit a továbbiakban más célokra felhasználhatunk, például klaszterezésre.[@hinton_semantic_hashing][@hinton_autoencoder_image_retrieval] 
+reprezentációt tanuljon meg az adatról, amit a továbbiakban más célokra felhasználhatunk, például klaszterezésre.[@coursera_hinton_neural_networks] 
 
 ![Példa egy egyszerű autoencoder-re. Forrás:[@stanford_autoencoders]](src/images/autoencoder.png){height=50%}
 
