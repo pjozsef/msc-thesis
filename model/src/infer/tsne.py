@@ -1,11 +1,30 @@
 import argparse
-import csv
 import time
 
 import matplotlib.colors
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 from sklearn.manifold import TSNE
+
+
+def parse_data(args):
+    info_labels = ['style', 'artist', 'album', 'song', 'percentile']
+    encoded_dimensions = [str(j) for j in range(32)]
+
+    df = pd.read_csv(args.input)
+    print("Dataframe original size:", df.shape[0])
+    if args.percentiles:
+        df = df[df['percentile'].isin(args.percentiles)]
+        print("Dataframe size after percentile filtering:", df.shape[0])
+    if args.sample:
+        classical = df[df['style'] == 'classical'].sample(n=args.sample, random_state=args.seed)
+        electronic = df[df['style'] == 'electronic'].sample(n=args.sample, random_state=args.seed)
+        metal = df[df['style'] == 'metal'].sample(n=args.sample, random_state=args.seed)
+        df = pd.concat([classical, electronic, metal])
+        print("Dataframe size after sampling:", df.shape[0])
+
+    return df[info_labels].values.tolist(), df[encoded_dimensions].values.tolist()
 
 
 def create_embeddings(codes, perplexites=None, retries=3):
@@ -67,7 +86,11 @@ parser.add_argument('--percentiles')
 parser.add_argument('--title', required=True)
 parser.add_argument('--save')
 parser.add_argument('--retries', type=int, default=1)
+parser.add_argument('--sample', type=int)
+parser.add_argument('--seed', type=int)
 args = parser.parse_args()
+if args.seed:
+    np.random.seed(args.seed)
 if args.percentiles:
     all_percentiles = []
     for percentile in args.percentiles.split(","):
@@ -82,21 +105,7 @@ if args.percentiles:
     args.percentiles = all_percentiles
 print(args)
 
-header = None
-infos = []
-codes = []
-with open(args.input, 'r') as csvfile:
-    reader = csv.reader(csvfile)
-    header = next(reader)
-    for row in reader:
-        if args.percentiles:
-            percentile = row[4]
-            if percentile in args.percentiles:
-                infos.append(row[0:5])
-                codes.append(row[5:37])
-        else:
-            infos.append(row[0:5])
-            codes.append(row[5:37])
+infos, codes = parse_data(args)
 
 label = []
 labelMapping = {
