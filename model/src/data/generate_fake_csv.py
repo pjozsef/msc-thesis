@@ -24,14 +24,13 @@ def main():
     args = parser.parse_args()
 
     df = pd.read_csv(args.input_csv)
-    df = latent_dimensions(df)
-    mins = df.min().values
-    maxs = df.max().values
+    latent = latent_dimensions(df)
+    mins = latent.min().values
+    maxs = latent.max().values
 
-    style_count = int(df.size / 3)
-    update_step = int(style_count / 10)
-    print("Original csv size:", df.size)
-    print("Size per styles:", df.size / 3)
+    row_count = df.shape[0]
+    update_step = int(row_count / 10)
+    print("Original csv size:", row_count)
     output = args.output_folder + "/fake_" + args.input_csv.split("/")[-1]
     print("Output file:", output)
 
@@ -43,16 +42,14 @@ def main():
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
 
-        for style in ["classical", "electronic", "metal"]:
-            print("Starting", style)
-            for i in range(style_count):
-                if i % update_step == 0:
-                    print("{:.2f}%".format(i / style_count * 100))
-                meta_data = [style, "fake_artist", "fake_album", "fake_song", 100]
-                latent_data = next_random(mins, maxs).tolist()
-                data = meta_data + latent_data
-                csv_row = dict(zip(fieldnames, data))
-                writer.writerow(csv_row)
+        for i in range(row_count):
+            if i % update_step == 0:
+                print("{:.2f}%".format(i / row_count * 100))
+            meta_data = df.iloc[[i]][info_labels].values.tolist()[0]
+            latent_data = next_random(mins, maxs).tolist()
+            data = meta_data + latent_data
+            csv_row = dict(zip(fieldnames, data))
+            writer.writerow(csv_row)
 
 
 if __name__ == '__main__':
