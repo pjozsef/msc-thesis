@@ -1,6 +1,8 @@
 import argparse
+from math import pi
 
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 
 PERCENTILE = 'percentile'
@@ -39,7 +41,7 @@ def boxplot(df, title=None):
         bp.set_title(title)
 
 
-def area(df, style=None, artist=None, song=None, percentile=None, sort=None):
+def prefilter(df, style=None, artist=None, song=None, percentile=None, sort=None):
     if percentile:
         df = filter_percentile(df, percentile)
     if style:
@@ -50,6 +52,11 @@ def area(df, style=None, artist=None, song=None, percentile=None, sort=None):
         df = df.loc[df[SONG] == song]
     if sort:
         df = df.sort_values(by=sort).reset_index()
+    return df
+
+
+def area(df, style=None, artist=None, song=None, percentile=None, sort=None):
+    df = prefilter(df, style, artist, song, percentile, sort)
     df = latent_dimensions(df)
     df = df - df.min()
     df = df.divide(df.sum(axis=1), axis=0)
@@ -60,20 +67,38 @@ def area(df, style=None, artist=None, song=None, percentile=None, sort=None):
 
 def pie_song(df, style=None, artist=None, song=None, percentile=None, sort=None):
     plt.figure()
-    if percentile:
-        df = filter_percentile(df, percentile)
-    if style:
-        df = filter_style(df, style)
-    if artist:
-        df = df.loc[df[ARTIST] == artist]
-    if song:
-        df = df.loc[df[SONG] == song]
-    if sort:
-        df = df.sort_values(by=sort).reset_index()
+    df = prefilter(df, style, artist, song, percentile, sort)
     dimension_sums = latent_dimensions(df).sum()
     dimension_sums = dimension_sums - dimension_sums.min()
     pie = dimension_sums.plot.pie()
     pie.set_title(array_as_string([style, artist, song, percentile]))
+
+
+def radar_song(df, style=None, artist=None, song=None, percentile=None, sort=None):
+    plt.figure()
+    df = prefilter(df, style, artist, song, percentile, sort)
+    df = latent_dimensions(df)
+    dimension_sums = latent_dimensions(df).sum()
+    dimension_sums = dimension_sums - dimension_sums.min()
+
+    categories = list(df)
+    N = len(categories)
+    values = dimension_sums.tolist()
+    values += values[:1]
+    values = np.array(values)
+    values = np.divide(values, values.max()).tolist()
+
+    angles = [n / float(N) * 2 * pi for n in range(N)]
+    angles += angles[:1]
+
+    ax = plt.subplot(111, polar=True)
+    plt.xticks(angles[:-1], categories, color='grey', size=8)
+
+    ax.set_rlabel_position(0)
+    plt.yticks([0.2, 0.4, 0.6, 0.8], [], color="grey", size=7)
+    ax.plot(angles, values, linewidth=1, linestyle='solid')
+    ax.fill(angles, values, 'b', alpha=0.1)
+    ax.set_title(array_as_string([style, artist, song, str(percentile) + "-100"]))
 
 
 def main():
@@ -88,9 +113,9 @@ def main():
     latent = latent_dimensions(df)
 
     # boxplot(latent_dimensions(df), "Teljes látens tér")
-    # boxplot(latent_dimensions(filter_style(df, CLASSICAL)), "Látens tér klasszikus része")
-    # boxplot(latent_dimensions(filter_style(df, ELECTRONIC)), "Látens tér elektronikus része")
-    # boxplot(latent_dimensions(filter_style(df, METAL)), "Látens tér metál része")
+    # boxplot(latent_dimensions(filter_style(df, CLASSICAL)), "Látens tér klasszikus stílushoz tartozó altere")
+    # boxplot(latent_dimensions(filter_style(df, ELECTRONIC)), "Látens tér elektronikus stílushoz tartozó altere")
+    # boxplot(latent_dimensions(filter_style(df, METAL)), "Látens tér metál stílushoz tartozó altere")
 
     # area(df, artist="Arch Enemy", song="The Day You Died")
     # area(df, artist="Arch Enemy", song="Taking Back My Soul")
@@ -98,11 +123,18 @@ def main():
     # area(df, artist="Christophe Beck", song="Let It Go")
     # area(df, artist="Juno Reactor", song="Navras")
 
-    pie_song(df, artist="Arch Enemy", song="The Day You Died", percentile=50)
-    pie_song(df, artist="Arch Enemy", song="Taking Back My Soul", percentile=50)
-    pie_song(df, artist="Arch Enemy", song="Nemesis", percentile=50)
-    pie_song(df, artist="Christophe Beck", song="Let It Go", percentile=50)
-    pie_song(df, artist="Juno Reactor", song="Navras", percentile=50)
+    # pie_song(df, artist="Arch Enemy", song="The Day You Died", percentile=50)
+    # pie_song(df, artist="Arch Enemy", song="Taking Back My Soul", percentile=50)
+    # pie_song(df, artist="Arch Enemy", song="Nemesis", percentile=50)
+    # pie_song(df, artist="Christophe Beck", song="Let It Go", percentile=50)
+    # pie_song(df, artist="Juno Reactor", song="Navras", percentile=50)
+
+    # radar_song(df, artist="Arch Enemy", song="The Day You Died", percentile=50)
+    # radar_song(df, artist="Arch Enemy", song="Taking Back My Soul", percentile=50)
+    # radar_song(df, artist="Arch Enemy", song="Nemesis", percentile=50)
+    # radar_song(df, artist="Christophe Beck", song="Let It Go", percentile=50)
+    # radar_song(df, artist="Rammstein", song="Feuer Frei!", percentile=50)
+    # radar_song(df, artist="Juno Reactor", song="Navras", percentile=50)
 
     # plt.matshow(latent_dimensions(filter_percentile(df, 50)).corr())
 
@@ -110,7 +142,7 @@ def main():
     #     latent_dimensions(filter_percentile(df, 75))
     #     , alpha=0.2, figsize=(32, 32), diagonal='kde')
 
-    # columns = ["style"] + [str(i) for i in range(32)]
+    columns = ["style"] + [str(i) for i in range(32)]
     # base_df = filter_percentile(df, 75)[columns]
     # classical_df = base_df.loc[base_df[STYLE] == CLASSICAL].sample(SAMPLE_SIZE)
     # electronic_df = base_df.loc[base_df[STYLE] == ELECTRONIC].sample(SAMPLE_SIZE)
