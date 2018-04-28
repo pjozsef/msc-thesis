@@ -15,7 +15,18 @@ def next_random(mins, maxs):
     return (uniform * range) + mins
 
 
+def store_min_max(df, mins_dict, maxs_dict, style):
+    latent = df[df["style"] == style]
+    latent = latent_dimensions(latent)
+    mins_dict[style] = latent.min().values
+    maxs_dict[style] = latent.max().values
+
+
 def main():
+    CLASSICAL = "classical"
+    ELECTRONIC = "electronic"
+    METAL = "metal"
+
     pd.set_option('display.expand_frame_repr', False)
 
     parser = argparse.ArgumentParser()
@@ -24,9 +35,12 @@ def main():
     args = parser.parse_args()
 
     df = pd.read_csv(args.input_csv)
-    latent = latent_dimensions(df)
-    mins = latent.min().values
-    maxs = latent.max().values
+    min_dict = {}
+    max_dict = {}
+    for style in [CLASSICAL, ELECTRONIC, METAL]:
+        store_min_max(df, min_dict, max_dict, style)
+        print(style, "min:", min_dict[style])
+        print(style, "max:", max_dict[style])
 
     row_count = df.shape[0]
     update_step = int(row_count / 10)
@@ -45,8 +59,9 @@ def main():
         for i in range(row_count):
             if i % update_step == 0:
                 print("{:.2f}%".format(i / row_count * 100))
+            style = df.iloc[[i]]["style"].values[0]
             meta_data = df.iloc[[i]][info_labels].values.tolist()[0]
-            latent_data = next_random(mins, maxs).tolist()
+            latent_data = next_random(min_dict[style], max_dict[style]).tolist()
             data = meta_data + latent_data
             csv_row = dict(zip(fieldnames, data))
             writer.writerow(csv_row)
