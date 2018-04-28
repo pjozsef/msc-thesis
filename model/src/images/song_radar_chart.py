@@ -54,7 +54,7 @@ def radar_song(df, export_folder, style=None, artist=None, song=None, percentile
     plt.yticks([0.2, 0.4, 0.6, 0.8], [], color="grey", size=7)
     ax.plot(angles, values, linewidth=1, linestyle='solid')
     ax.fill(angles, values, 'b', alpha=0.1)
-    title = "{} - {} - {} - {}-100 percentilisek".format(style, artist, song, percentile)
+    title = "{} - {} - {}".format(style, artist, song)
     ax.set_title(title)
     plt.savefig(export_folder + "/" + title.replace(" ", "_") + '.png')
     plt.close()
@@ -63,21 +63,28 @@ def radar_song(df, export_folder, style=None, artist=None, song=None, percentile
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--input-csv', required=True)
-    parser.add_argument('--artists', required=True)
+    parser.add_argument('--artists')
+    parser.add_argument('--all', action='store_true')
     parser.add_argument('--export-folder', required=True)
     args = parser.parse_args()
-    args.artists = [a.strip() for a in args.artists.split(",")]
-    print(args.artists)
+
+    if not (args.artists or args.all):
+        raise Exception('Either --artists or --all must be specified!')
+
+    if args.artists:
+        args.artists = [a.strip() for a in args.artists.split(",")]
+        print(args.artists)
 
     df = pd.read_csv(args.input_csv)
-    df = df[df[ARTIST].isin(args.artists)]
+    if not args.all:
+        df = df[df[ARTIST].isin(args.artists)]
 
     artist_songs = df[[ARTIST, SONG]]
     artist_songs = artist_songs.drop_duplicates()
 
     for i in artist_songs.values:
         print(i)
-        radar_song(df, args.export_folder, artist=i[0], song=i[1], percentile=15)
+        radar_song(df, args.export_folder, artist=i[0], song=i[1], percentile=50)
 
 
 if __name__ == '__main__':
