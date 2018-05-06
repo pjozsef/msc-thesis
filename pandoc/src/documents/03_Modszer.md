@@ -78,6 +78,14 @@ zenei adatbázist hívtam segítségül. A lekérdezéseket követően
 48 különböző stílust sikerült összegyűjtenem. Mivel ez a szám túl nagy, a könnyebb kezelhetőség érdekében a stílusokat
 besoroltam 3 gyűjtőstílus alá, melyek rendre klasszikus, elektronikus és metál stílusok lettek.
 
+Fontosnak tartom megemlíteni, hogy a dalok 3 osztályba sorolása nagy mértékű általánosítással jár. A "klasszikus" kategória
+alá például nem csak komolyzenei klasszikusok (Mozart, Beethoven, stb) kerültek, hanem kortárs film-, illetve videójátékzeneszerzők, 
+neoklasszikus, instrumentális és akusztikus előadók is besorolásra kerültek. Az elektronikus és metál gyűjtőstílus esetén is több, egymástól
+különböző stílusról beszélhetünk, melyek alapvetően mind mégis az adott gyűjtőstílusba sorolhatóak.
+Legjobb próbálkozásom ellenére, a gyűjtőstílusok között találhatóak átfedések, például szimfonikus elemeket alkalmazó metál zene, 
+vagy olyan elektronikus zene mely metálosabb, nyersebb hangzásra épít. Ilyen esetekben az adott előadót a számára legrelevánsabb
+stílusba soroltam.
+
 \csvautolongtable[
   table head={
     \hline \rowcolor{black!15} \# & Klasszikus & Elektronikus & Metál \\\hline
@@ -95,6 +103,11 @@ Az adathalmaz elkészítéséhez összesen 262 előadó 639 albumának 6192 zene
 Mivel dalonként 18 kép került exportálásra, az adathalmaz összesen $6192*18=111 456$ db képből áll.
 A képek önmagukban 1.23 GB tárhelyet foglalnak, a belőlük készített tfrecords fájlok pedig 3.68 GB-ot.
 Ez a mennyiségű adat $111456*3,714$, azaz 413 947 másodpercnyi zenét takar, ami 4,79 napnak felel meg.
+
+Az adathalmazban előfordulhatnak félrecímkézett stílusú dalok, mint például egy metál album akusztikus intro-ja, outro-ja. 
+Emellett, metál album esetén az albumok végén található elektronikus remixek is metál címkét kaptak. Mivel az algoritmus maga nem használja ezeket a címkéket,
+azok csupán utólagos validálásra szolgálnak, a közelítőleg 6200 dal megcímkézésének gyorsítása végett a stílusba sorolást előadónként,
+indokolt esetben albumonként végeztem, nem pedig dalonként. 
 
 \footnotesize\csvautolongtable[
   table head={
@@ -377,7 +390,7 @@ Az elkészült csv fájl az alábbi adatokat tartalmazza mindegyik frekvenciasze
 * album
 * dalcím
 * percentilis
-* látenstérbeli 32 dimenziós vektorérték (0-31)
+* látens térbeli 32 dimenziós vektorérték (0-31)
 
 #### t-SNE vizualizáció
 Az alábbi paranccsal tudjuk 2 dimenzióban vizualizálni a 32 dimenzióban elhelyezett pontjainkat:
@@ -392,7 +405,10 @@ csökkenthetjük, ha nem az összes pontot vizsgáljuk, hanem csupán bizonyos p
 például 50-100, vagy 75-100.\newline
 Mivel a t-SNE algoritmus is Gradient Descent révén tanul, ezért nem garantált, hogy első futásra a legoptimálisabb eredményt kapjuk.
 A **retry** paraméterrel megadhatjuk, hogy hányszor szeretnénk lefuttatni a ponthalmazra a t-SNE algoritmust, s ezek közül
-a legjobbat fogjuk majd megtartani.
+a legjobbat fogjuk majd megtartani.\newline
+Amennyiben túl nagy adathalmazzal van dolgunk, a t-SNE algoritmus futása napokig is eltarthat. A **sample** paraméterrel
+megadható, hogy stílusonként hány véletlenszerűen kiválasztott pontra fusson az algoritmus. Amennyiben percentilis szűrést
+is alkalmazunk, a mintavételezés a megfelelő percentilisek kiválogatása után fog megtörténni.
 
 #### Közeli szomszédok keresése
 Az alábbi paranccsal tudjuk egy véletlenszerűen kiválasztott pont szomszédait kilistázni:

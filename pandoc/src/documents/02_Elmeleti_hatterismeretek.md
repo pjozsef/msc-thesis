@@ -162,7 +162,9 @@ A t-SNE (t-Distributed Stochastic Neighbor Embedding) egy dimenziócsökkentő a
 3 dimenzióban tudunk magas dimenziójú adatokat vizualizálni. Az algoritmus oly módon csökkenti a bemeneti adathalmaz dimenzióját,
 hogy eközben az adatpontok közötti távolsági relációkat a lehető legjobb módon megőrzi. Két pont, melyek az eredeti adathalmazban
 távol álltak egymástól, dimenziócsökkentés után is távol fognak elhelyezkedni, míg két közeli pont az algoritmus futtatása
-után is közel lesz egymáshoz.[@tsne][@tsne_github]
+után is közel lesz egymáshoz. A perplexity érték a t-SNE algoritmus fontos paramétere, segítségével szabályozhatjuk, hogy
+az algoritmus a lokális, vagy inkább a globális struktúrákat vegye jobban figyelembe. Az értéke tipikusan 5 és 50 között
+mozog.[@tsne][@tsne_github]
 
 ### Tenzor
 A tenzor nem más, mint a vektorok és mátrixok általánosítása. A tenzor rendje az egymástól függetelen dimeziók számát jelöli.
