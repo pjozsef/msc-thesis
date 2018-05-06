@@ -79,6 +79,7 @@ elemzése, mind pedig a szimbolikus adatok, mint például kották értelmezése
 mely segítségével zeneszámok dúdolás alapján kereshetőek egy erre speciálisan kialakított adatbázisban.[@mir][@mir_2]
 
 ### Shazam - Audio search
+
 A Music Information Retrieval egyik legnagyobb eredményének tekinthetjük a Shazam algoritmusát, mely segítségével 
 emberek milliói azonosíthatják a rádióban szóló dalt a telefonjukon lévő alkalmazás segítésével.[@url_shazam_home]
 
@@ -91,4 +92,20 @@ ami épp szól a rádióban.[@wang2003industrial]
 
 Érdekesnek tartom, hogy csupán címke nélküli nyers adattal dolgozva is mennyire megbízható és jól működő rendszert lehet
 készíteni. Részben a Shazam példája inspirált arra, hogy saját témámon keresztül is azt vizsgáljam, mi mindent lehet 
-még címkézetlen nyers adatokból kinyerni. 
+még címkézetlen nyers adatokból kinyerni.
+
+### Geoffrey Hinton munkássága
+
+Geoffrey Hinton a mesterséges intelligencia, azon belül is a mesterséges neurális hálók kutatási területének egyik kiemelkedő alakja. 
+Pályafutása során részt vett az általános Backpropagation algoritmus ismertetésében, feltalálta a Boltzmann gépeket.
+Kutatásának jelentős részét az autoencodereknek szentelte.
+
+"Semantic hashing"[@hinton_semantic_hashing] című cikkjében, Ruslan Salakhutdinov-val megmutatták hogyan lehet dokumentumok word-count
+vektorait autoencoderekkel elkódolni, s ezt követően dokumentumokat dokumentumokkal keresni.
+
+A "Using Very Deep Autoencoders for Content-Based Image Retrieval"[@hinton_autoencoder_image_retrieval] című cikkjében,
+Alex Krizhevsky-vel közösen, autoencoderek segítségével adtak módszert színes, RGB képek elkódolására, s adott képhez
+hasonló képek keresésére a kódok között.
+
+Geoffrey Hinton munkássága nagy mértékben ösztönzött arra, hogy megnézzem, autoencoderek segítségével hasonló módszer
+zeneszámok esetén is működőképes lehet-e.
