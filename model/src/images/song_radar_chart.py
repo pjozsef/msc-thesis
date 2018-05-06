@@ -29,7 +29,7 @@ def latent_dimensions(df):
     return df[[str(i) for i in range(32)]]
 
 
-def radar_song(df, export_folder, style=None, artist=None, song=None, percentile=None, sort=None):
+def radar_song(df, export_folder, normalize, style=None, artist=None, song=None, percentile=None, sort=None):
     plt.figure()
     df = prefilter(df, style, artist, song, percentile, sort)
     style = df[STYLE].drop_duplicates().values[0]
@@ -42,7 +42,9 @@ def radar_song(df, export_folder, style=None, artist=None, song=None, percentile
     values = dimension_sums.tolist()
     values += values[:1]
     values = np.array(values)
-    values = np.divide(values, values.max()).tolist()
+    if normalize:
+        values = np.divide(values, values.max())
+    values = values.tolist()
 
     angles = [n / float(N) * 2 * pi for n in range(N)]
     angles += angles[:1]
@@ -51,7 +53,8 @@ def radar_song(df, export_folder, style=None, artist=None, song=None, percentile
     plt.xticks(angles[:-1], categories, color='grey', size=8)
 
     ax.set_rlabel_position(0)
-    plt.yticks([0.2, 0.4, 0.6, 0.8], [], color="grey", size=7)
+    if normalize:
+        plt.yticks([0.2, 0.4, 0.6, 0.8], [], color="grey", size=7)
     ax.plot(angles, values, linewidth=1, linestyle='solid')
     ax.fill(angles, values, 'b', alpha=0.1)
     title = "{} - {} - {}".format(style, artist, song)
@@ -65,6 +68,7 @@ def main():
     parser.add_argument('--input-csv', required=True)
     parser.add_argument('--artists')
     parser.add_argument('--all', action='store_true')
+    parser.add_argument('--no-normalize', action='store_true')
     parser.add_argument('--export-folder', required=True)
     args = parser.parse_args()
 
@@ -84,7 +88,7 @@ def main():
 
     for i in artist_songs.values:
         print(i)
-        radar_song(df, args.export_folder, artist=i[0], song=i[1], percentile=50)
+        radar_song(df, args.export_folder, not args.no_normalize, artist=i[0], song=i[1], percentile=50)
 
 
 if __name__ == '__main__':

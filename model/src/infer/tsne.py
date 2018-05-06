@@ -44,7 +44,7 @@ def create_embeddings(codes, perplexites=None, retries=3):
     return embeddings
 
 
-def do_tsne(codes, perplexity, iterations=15000, lr=100):
+def do_tsne(codes, perplexity, iterations=10000, lr=100):
     start = time.time()
     tsne = TSNE(learning_rate=lr, n_iter=iterations, perplexity=perplexity)
     codes_2d = tsne.fit_transform(codes)
