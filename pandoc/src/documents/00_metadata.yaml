@@ -17,7 +17,7 @@ csl: src/ieee.csl
 bibliography: src/bibliography.bib
 bibliographystyle: abbrv
 link-citations: true
-toc-depth: 2
+toc-depth: 1
 #lot: true
 #lof: true
 ---
