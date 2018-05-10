@@ -22,7 +22,7 @@ pedig magasabb hangként érzékeljük.[@url_hangtan]
 ### Alaphang, felhang
 Az általunk érzékelt hang több részhangnak az együtteséből áll. A legmélyebb részhangot nevezzük alaphangnak.
 A további részhangokat felhangoknak nevezzük. Egy tetszőleges $f$ frekvencia esetén az alaphang frekvenciája $f$,
-a rákövetkező $n$ darab felhang frekvenciái pedig rendre $i*f$, ahol $i \in [2,n]$. [@url_hangtan]
+a rákövetkező $n$ darab felhang frekvenciái pedig rendre $i×f$, ahol $i \in [2,n]$. [@url_hangtan]
 
 ### Hang amplitúdója
 A hang amplitudója, a hanghullám maximális eltérése az x tengelytől. 
@@ -57,8 +57,8 @@ A Nyquist-Shannon tétel kimondja, az analóg jel maximális frekvenciájának l
 kell a mintavételezést másodpercenként elvégeznünk annak érdekében, hogy a digitális jel veszteségmentesen visszaalakítható
 legyen analóg jellé.[@nyquist]
 
-Ezen tétel miatt lett a CD formátum mintavételezési frekvenciája 44.1 kHz, mely kicsivel több, mint az emberi hallás felső küszöbe
-(20 kHz).
+Ezen tétel miatt lett a CD formátum mintavételezési frekvenciája 44.1 kHz, mely kicsivel több, mint az emberi hallás felső küszöbének
+(20 kHz) a kétszerese.
 
 ### MP3 formátum
 Az MP3 formátum egy veszteséges tömörítés.
@@ -98,13 +98,13 @@ Gyakorlati alkalmazáskor a Gyors Fourier Transzformáltat (FFT) használjuk, me
 ## Gépi tanulás
 
 ### Felügyelt tanulás
-Angolul supervised learning. Felügyelt tanulásról akkor beszélünk, ha megcímkézett adathalmazzal dolgozunk.
+Felügyelt tanulásról (supervised learning) akkor beszélünk, ha megcímkézett adathalmazzal dolgozunk.
 Ilyen esetben tanulás során a modellnek megadjuk a bemenetet, s a modell kimenetét összevetjük a bemenő adathoz
 tartozó eredeti címkével. Célunk, hogy a modell kimenete megközelítse az elvárt kimenetet.
 Felügyelt tanulás például az osztályozás, illetve a regresszió.
 
 ### Felügyelet nélküli tanulás
-Angolul unsupervised learning. Felügyelet nélküli tanulás esetén csupán a nyers adathalmazzal dolgozunk,
+Felügyelet nélküli tanulás (unsupervised learning) esetén csupán a nyers adathalmazzal dolgozunk,
 nem áll rendelkezésünkre címke az adott elemekhez. Felügyelet nélküli tanulás körébe tartozik például a 
 klaszterezés, dimenzió csökkentés és az anomália detektálás is.
   
@@ -119,7 +119,7 @@ képezi le.
 Tanulás során a hibafüggvény minimalizálása a cél.
   
 ### Négyzetes hibafüggvény
-Angolul quadratic loss function, gyakran használt hibafüggvény:
+Egy gyakran használt hibafüggvény, angolul quadratic loss function-nek hívják.
 \begin{equation}
      C(y, \hat{y})= (y-\hat{y})^2 \text{, ahol } y \in Y, \, \hat{y} \in \hat{Y}.
 \end{equation}
@@ -132,35 +132,35 @@ hiperparaméternek tekinthetjük a döntési fák számát, illetve azok mélys�
 pedig a modell által használt kernel is hiperparaméter. 
   
 ### Alulilleszkedés
-Angolul underfitting. Egy modell alulilleszkedik, ha nem képes rendesen modellezni a tanuló halmazt,
+Egy modell alulilleszkedik (underfitting), ha nem képes rendesen modellezni a tanuló halmazt,
 illetve nem generalizál jól új adatra sem. Ilyen esetben a modell hibája nagy mind a tanuló halmazra, 
 mind az ismeretlen adatokra egyaránt. Alulilleszkedés esetén célszerű erőteljesebb gépi tanulási 
-algoritmust használni, vagy a meglévő algoritmus hiperparaméterein finomhangolni, illetve a több ideig tanítani a modellt.
+algoritmust használni, vagy a meglévő algoritmus hiperparaméterein finomhangolni, illetve több ideig tanítani a modellt.
   
 ### Túlilleszkedés
-Angolul overfitting. Egy modell túlilleszkedik, ha a tanuló halmazt nagyon jól modellezi, azaz hibája alacsony,
+Egy modell túlilleszkedik (overfitting), ha a tanuló halmazt nagyon jól modellezi, azaz hibája alacsony,
 viszont a túlilleszkedés miatt nem generalizál jól, ezért új adatok esetén nagy a hibája. Túlilleszkedés esetén
 célszerű regularizációt használni, a modell paramétereinek számát csökkenteni, illetve a tanulóhalmaz méretét növelni.
   
 ![Alulilleszkedés és túlilleszkedés szemléltetése](src/images/overfit-underfit.png)
   
 ### Tanuló halmaz
-Angolul training set. Az az adathalmaz melyen az algoritmust betanítjuk.
+Az az adathalmaz melyen az algoritmust betanítjuk. Angolul training set-nek nevezzük.
 
 ### Ellenőrző halmaz
-Angolul test set. Ezen az adathalmazon értékeljük ki a végleges modellünk teljesítményét. Ennek a halmaznak
-az elemeivel a modell nem találkozott a tanítás során.
+Ezen az adathalmazon értékeljük ki a végleges modellünk teljesítményét. Ennek a halmaznak
+az elemeivel a modell nem találkozott a tanítás során. Angolul test set-nek nevezzük.
 
 ### Keresztellenőrző halmaz
-Angolul crossvalidation set. Tanítás során ezt az adathalmazt használjuk arra, hogy a modellünk 
-hiperparamétereit finomhangoljuk. Azért használunk erre a célra egy külön halmazt, nem pedig az 
+Tanítás során ezt az adathalmazt használjuk arra, hogy a modellünk 
+hiperparamétereit finomhangoljuk. Angolul crossvalidation set-nek nevezzük. Azért használunk erre a célra egy külön halmazt, nem pedig az 
 ellenőrző halmazt, mert ahogy a modell paraméterei túlilleszkedhetnek a tanulóhalmazra, 
 úgy a hiperparaméterei is túlilleszkedhetnek az ellenőrző halmaz elemeire.
 
 ### t-SNE
-A t-SNE (t-Distributed Stochastic Neighbor Embedding) egy dimenziócsökkentő algoritmus, mely segítségével 2 illetve
-3 dimenzióban tudunk magas dimenziójú adatokat vizualizálni. Az algoritmus oly módon csökkenti a bemeneti adathalmaz dimenzióját,
-hogy eközben az adatpontok közötti távolsági relációkat a lehető legjobb módon megőrzi. Két pont, melyek az eredeti adathalmazban
+A t-SNE (t-Distributed Stochastic Neighbor Embedding) egy dimenziócsökkentő algoritmus, mely segítségével 2- illetve
+3-dimenzióban tudunk magas dimenziójú adatokat vizualizálni. Az algoritmus oly módon csökkenti a bemeneti adathalmaz dimenzióját,
+hogy eközben az adatpontok közötti távolsági relációkat megőrzi. Két pont, melyek az eredeti adathalmazban
 távol álltak egymástól, dimenziócsökkentés után is távol fognak elhelyezkedni, míg két közeli pont az algoritmus futtatása
 után is közel lesz egymáshoz. A perplexity érték a t-SNE algoritmus fontos paramétere, segítségével szabályozhatjuk, hogy
 az algoritmus a lokális, vagy inkább a globális struktúrákat vegye jobban figyelembe. Az értéke tipikusan 5 és 50 között
@@ -198,9 +198,9 @@ $t \in \mathbb{R}$ küszöbértéknél nagyobb-e vagy sem.[@nn_and_deeplearning]
 ![Példa egy három bemenettel rendelkező perceptronra. Forrás:[@nn_and_deeplearning]](src/images/perceptron.png){width=50%}
 
 ### Bias
-A \ref{perceptron1}. egyenlet könnyebb kezelhetősége érdekében vezessük be a bias fogalmát, mely definíció szerint
-$b \equiv -1 * t,\; b \in \mathbb{R}$. A bias azt jelöli, hogy a perceptron mennyire könnyen tud aktiválódni.
-Negatív, kicsi bias esetén a perceptron ritkábban; pozitív, nagy bias esetén sűrűbben aktiválódik. A \ref{perceptron1}.
+A (\ref{perceptron1}). egyenlet könnyebb kezelhetősége érdekében vezessük be a bias fogalmát, mely definíció szerint
+$b \equiv -1 × t,\; b \in \mathbb{R}$. A bias azt jelöli, hogy a perceptron mennyire könnyen tud aktiválódni.
+Negatív, kicsi bias esetén a perceptron ritkábban; pozitív, nagy bias esetén sűrűbben aktiválódik. A (\ref{perceptron1}).
 egyenletet egyszerűsítve, s a bias-t használva a következő egyenletet kapjuk:
 \begin{equation}
     a =
@@ -213,7 +213,7 @@ egyenletet egyszerűsítve, s a bias-t használva a következő egyenletet kapju
 ### Sigmoid neuron
 Egy neuronháló betanítása során a célunk, hogy a súlyokban, illetve bias-okban történő kis változás a neuronháló
 kimenetében is csupán kis változást okozzon. Perceptronok esetében ez nem teljesül, hiszen a kimenetük diszkrét érték.
-A sigmoid neuron kimenete ezzel ellentétben egy 0 és 1 közötti valós szám: $a \in \mathbb{R}|_{0 \, \leqslant \, a \, \leqslant \, 1}$.
+A sigmoid neuron kimenete ezzel ellentétben egy 0 és 1 közötti valós szám: $a \in [0,1]$.
 A perceptronhoz hasonlóan, a sigmoid neuron is rendelkezik súlyvektorokkal és bias értékkel, viszont a kimenet kiszámítása az
 alábbiak szerint változik:
 \begin{equation}\label{sigmoid-neuron}
@@ -231,29 +231,29 @@ A sigmoid neuron felfedezése óta sok előrelépés történt a neuronhálók t
 függvények terjedtek el. Ezek közül néhány:
 
 #### Tanh
-A közismert hiberbolikus tangens függvény az x tengelyre szimmetrikus, s a [-1, 1] intervallumon vesz fel értékeket. 
+A közismert tangens hiberbolikusz függvény, mely a $[-1, 1]$ intervallumon vesz fel értékeket. 
 Ez a tulajdonság azért szerencsés, mert így nagyobb eséllyel kapunk 0-hoz közeli értéket, 
 ami a rákövetkező réteg inputjaként fog szolgálni. A 0-hoz közeli input gyorsabb konvergenciához vezet.[@efficient_backprop]
 \begin{equation}
-      tanh(x) = \frac{e^{2x}-1}{e^{2x}+1}
+      \text{tanh}(x) = \frac{e^{2x}-1}{e^{2x}+1}
 \end{equation}
 
 #### RELU
-A sigmoid és tanh aktivációs függvények esetén fenn áll a probléma, hogy nagyon nagy bemenetre a derivált
+A sigmoid és tanh aktivációs függvények esetén fennáll a probléma, hogy nagyon nagy bemenetre a derivált
 értéke a 0-hoz közelít. A [[Gradient Descent]] és [[Backpropagation]] szekciónál látni fogjuk, hogy a neuronháló annál
 gyorsabban tanul, minél nagyobb a gradiens. Nullához közeli gradiens esetén a háló szinte semmit sem fog tanulni. Ezt a problémát Vanishing
 Gradient problémának nevezik.
 
 A RELU (Rectified Linear Unit) aktivációs függvény ezt a problémát hivatott megoldani:
 \begin{equation}
-  relu(x) = max(0, x)
+  \text{relu}(x) = max(0, x)
 \end{equation}
 
 #### ELU
 Az ELU (Exponential Linear Unit) aktivációs függvény a RELU továbbfejlesztése. RELU esetén, mint ahogy a sigmoid függvénynél is láttuk,
 a függvény átlagos értéke nincs közel a 0-hoz. Az ELU függvény segítségével, átlagosan nézve, a 0-hoz közelebbi értékeket kapunk.[@elu]
 \begin{equation}
-  elu(\alpha, x) =
+  \text{elu}(\alpha, x) =
   \begin{cases}
     \alpha(e^x -1) & \text{ha } x < 0 \\
     x & \text{ha } x \geqslant 0
@@ -263,7 +263,7 @@ a függvény átlagos értéke nincs közel a 0-hoz. Az ELU függvény segítsé
 ![Aktivációs függvények a [-10, +10] intervallumon ábrázolva.](src/images/activations.png)
   
 ### Súlyozott bemenet
-Angolul weighted input. A neuron súlyozott bemenete nem más, mint az (\ref{sigmoid-neuron}) egyenlet azon része, 
+A neuron súlyozott bemenete (weighted input) nem más, mint az (\ref{sigmoid-neuron}) egyenlet azon része, 
 melyet $\sigma$-nak paraméterül átadunk, azaz:
 \begin{equation}
       z \equiv x \cdot w + b
@@ -278,9 +278,9 @@ Matematikai oldalról tekintve egy neuronháló nem más, mint mátrix szorzáso
 hívások sorozata. (\ref{sigmoid-neuron}) alapján, a neuronháló $l$-edik rétegének $a^l$ aktivációja a következőképp
 számolható ki:
 \begin{equation}
-      a^l = \sigma(a^{l-1} \times W^l + b^l)
+      a^l = \sigma(a^{l-1} \times W^l + b^l),
 \end{equation}
-, ahol $a^{l-1} \in \mathbb{R}^m$, $W^l \in \mathbb{R}^{m \times n}$, $b^l \in \mathbb{R}^n$ és $a^l \in \mathbb{R}^n$
+ahol $a^{l-1} \in \mathbb{R}^m$, $W^l \in \mathbb{R}^{m \times n}$, $b^l \in \mathbb{R}^n$ és $a^l \in \mathbb{R}^n$
 
 ![Példa egy rejtett réteget tartalmazó neuronhálóra. Forrás:[@nn_and_deeplearning]](src/images/nn.png){width=75%}
 
@@ -305,16 +305,16 @@ ellenére is nagy mértékben javít a modell pontosságán.
 #### L2 regularizáció
 L2 regularizáció esetén a súlyok ($w \in \mathbb{R}$) négyzetét összegezzük. A bias-okat nem regularizáljuk.
 \begin{equation}
-      C_{reg} = C(y, \hat{y}) + \lambda \sum\limits_w w^2
+      C_{reg} = C(y, \hat{y}) + \lambda \sum\limits_w w^2,
 \end{equation}
-, ahol $\lambda \in \mathbb{R}, \lambda > 0$ a regularizációs paraméter.[@nn_and_deeplearning]
+ahol $\lambda \in \mathbb{R}, \lambda > 0$ a regularizációs paraméter.[@nn_and_deeplearning]
 
 #### L1 regularizáció
 L1 regularizáció esetén a súlyok ($w \in \mathbb{R}$) abszolútértékét összegezzük. A bias-okat nem regularizáljuk.
 \begin{equation}
-      C_{reg} = C(y, \hat{y}) + \lambda \sum\limits_w |w|
+      C_{reg} = C(y, \hat{y}) + \lambda \sum\limits_w |w|,
 \end{equation}
-, ahol $\lambda \in \mathbb{R}, \lambda > 0$ a regularizációs paraméter.[@nn_and_deeplearning]
+ahol $\lambda \in \mathbb{R}, \lambda > 0$ a regularizációs paraméter.[@nn_and_deeplearning]
 
 #### Dropout
 Dropout esetén nem a súlyokat regularizáljuk, hanem tanítás alatt magát a neuronhálót módosítjuk, pontosabban véve
@@ -360,14 +360,14 @@ A stride segítségével definiáljuk, hogy mekkora lépésközzel csúsztatjuk 
 a kernelt $m$ egységgel léptetjük vertikálisan és $n$ egységgel horizontálisan.[@cs231n]
 
 #### Konvolúció padding
-2 dimenziós esetben, egy 10×10-es képen egy 2×2-es kernelt 2×2es stride-dal végigléptetve, a kimenetünk mérete 
+2 dimenziós esetben, egy 10×10-es képen egy 2×2-es kernelt 2×2-es stride-dal végigléptetve, a kimenetünk mérete 
 5×5-ös lesz, ezt "Valid padding"-nek nevezzük. Sokszor előnyös számunkra, ha az adat mérete nem változik a konvolúció során. 
 Padding használata esetén a kimenetet annyi nullával rakjuk körbe, hogy visszakapjuk az eredeti méretet. 
 Ezt "Same padding"-nak nevezzük [@cs231n]
 
 #### Pooling réteg
 A pooling rétegek használata gyakori konvolúciós hálókban. Segítségükkel a konvolúciós réteg aktivációjának méretét tudjuk csökkenteni.
-A pooling réteg tipikusan egy 2×2 filter, 2×2 stride-dal.
+A pooling réteg tipikusan egy 2×2-es filter, 2×2-es stride-dal.
 Max pooling esetén a filter kimenete a 2×2-es terület maximuma, míg average pooling esetén a terület átlaga.
 A pooling a csatornák számát nem csökkenti, csupán csatornánként a szélességet, magasságot.[@cs231n]
 
@@ -384,13 +384,14 @@ reprezentációt tanuljon meg az adatról, amit a továbbiakban más célokra fe
 
 ### Gradient Descent
 A Gradient Descent egy iteratív optimalizáló algoritmus, mely az optimalizálandó célfüggvénynek (egy potenciálisan lokális) minimumát
-keresi meg a célfüggvény gradiensének segítségével. A step size, vagy learning rate, $\alpha \in \mathbb{R}, \alpha > 0$ 
+keresi meg a célfüggvény gradiensének segítségével. A step size, vagy learning rate, $\alpha \in \mathbb{R}^+$ 
 a Gradient Descent egy paramétere, mely azt mondja meg, hogy minden egyes iterációban mekkora lépést tegyen az 
 algoritmus a gradienssel ellentétes irányba.[@cs231n][@coursera_ng_machine_learning] Adott $\alpha$ learning rate és
 $f$ differenciálható célfüggvény esetén az algoritmus $i$-k lépése a következőképp néz ki:
 \begin{equation}
-        x_{i+1} := x_i - \alpha * \nabla f
+        x_{i+1} := x_i - \alpha * \nabla f,
 \end{equation}
+ahol $\nabla f$ fejlölje $f$ gradiensét.
 
 ### Backpropagation
 A Backpropagation algoritmus segítségével a neuronháló súlyaihoz, bias-aihoz meg tudjuk feleltetni a megfelelő
@@ -403,7 +404,7 @@ Az algoritmus ismertetése előtt két feltételezést kell tennünk a hibafügg
 1. A hibafüggvény felírható kell legyen a különálló bemenetekhez tartozó hibafüggvények értékének az átlagaként. 
 Erre azért van szükségünk, mert a backpropagation segítségével csupán a különálló $x$ bemenetekhez tartozó parciális 
 deriváltakat ($\partial C_x / \partial w, \partial C_x / \partial b$) tudjuk kiszámolni. 
-A $\partial C / \partial w$ és $\partial C / \partial b$ kiszámolásához átlagoljuk az egyes tanulóadatokhoz tartozó hibát.
+A $\partial C / \partial w$ és $\partial C / \partial b$ kiszámolásához átlagoljuk az egyes tanulóadatokhoz tartozó hibát:
 \begin{equation}
           C= \frac{1}{n}\sum\limits_{x=1}^{n}C_x\text{, ahol $n$ a tanulóadatok száma.}
 \end{equation}
@@ -417,18 +418,18 @@ hogy adott bemenetre a hibafüggvény értéke csökkenjen.
 
 Első lépésben definiáljuk a kimeneti, $L$-edik réteg $j$-edik neuronjához tartozó hibát:
 \begin{equation}\label{BP1}
-  \delta_j^L = \frac{\partial C}{\partial a_j^L} * \sigma '(z_j^L)
+  \delta_j^L = \frac{\partial C}{\partial a_j^L} * \sigma '(z_j^L).
 \end{equation}
 
 Vektorizált formában, a kimeneti $L$-edik réteg hibája:
 \begin{equation}\label{BP2}
-  \delta^L = \nabla_a C \odot \sigma '(z^L)
+  \delta^L = \nabla_a C \odot \sigma '(z^L),
 \end{equation}
-, ahol $\odot$ jelölje két vektor Hadamard-szorzatát (elemenként vett szorzatát).
+ahol $\odot$ jelölje két vektor Hadamard-szorzatát (elemenként vett szorzatát).
 
 Második lépésben definiáljuk egy tetszőleges $l$-edik réteg hibáját a rákövetkező réteg hibájának függvényében:
 \begin{equation}\label{BP2}
-  \delta^l = ((w^{l+1})^T \delta^{l+1}) \odot \sigma '(z^L)
+  \delta^l = ((w^{l+1})^T \delta^{l+1}) \odot \sigma '(z^L).
 \end{equation}
 
 (\ref{BP1}) és (\ref{BP2}) kombinálásával a neuronháló minden rétegének a hibáját ki tudjuk számítani.
@@ -436,12 +437,12 @@ Ezt követően definiálhatjuk a paraméterek szerinti parciális deriváltakat.
 
 A hibafüggvény parciális deriváltja adott $l$ réteg $j$-edik neuronjának bias-a szerint:
 \begin{equation}\label{BP3}
-  \frac{\partial C}{\partial b_j^l} = \delta_j^l
+  \frac{\partial C}{\partial b_j^l} = \delta_j^l.
 \end{equation}
 
 A hibafüggvény parciális deriváltja adott $l$ réteg $j$-edik neuronjának súlyvektorának $k$-adik eleme szerint:
 \begin{equation}\label{BP4}
-  \frac{\partial C}{\partial w_{jk}^l} = a_k^{l-1}\delta_j^l
+  \frac{\partial C}{\partial w_{jk}^l} = a_k^{l-1}\delta_j^l.
 \end{equation}
 
 A (\ref{BP3}) és (\ref{BP4}) egyenletek birtokában a neuronháló bármely paramétere szerinti parciális deriváltat fel tudjuk

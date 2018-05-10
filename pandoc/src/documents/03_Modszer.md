@@ -30,13 +30,13 @@ különböző bitrátával rendelkeznek, illetve az egyik fájl hangosabb, vagy 
 WAV fájlokká konvertálom, melyek sample rate-je 44100 Hz, bitmélysége 16 bit, s egy csatornával rendelkeznek (mono). Loudnormalization-t
 is alkalmazok, mely során minden fájl hangereje normalizálva lesz, azonos skálára kerülnek.
 
-Ezek a WAV fájlok már alkalmasak arra, hogy fourier transzformáció segítségével spektrogramot készítsünk belőlük. 
+Ezek a WAV fájlok már alkalmasak arra, hogy Fourier transzformáció segítségével spektrogramot készítsünk belőlük. 
 Eredetileg 0.2 másodperces, azaz $44100/5=8820$ mintavételt tartalmazó szeletekből terveztem a frekvencia értékeket
 elkészíteni. Mivel az általam használt FFT programcsomag $2^n$ méretű bemenetet fogad el, ezért végül $2^{13}=8192$ méretű
 szeletekkel dolgoztam, melyek $8192/44100=0.1857$ másodperces időszeleteknek felelnek meg. Amennyiben az eredeti, nyers
-mintavételeket tartalmazó tömb $N$ hosszú volt, a fourier transzformáció elvégzése után kapott spektrogram egy 
-$\lfloor N/8192\rfloor\times 8192$ méretű mátrix, mely $\lfloor N/8192\rfloor$ darab fourier transzformáltat tartalmaz.
-A fourier transzformáció eredményéül kapott tömb 4096 komplex számból áll, mely implementációs szinten egy 8196 
+mintavételeket tartalmazó tömb $N$ hosszú volt, a Fourier transzformáció elvégzése után kapott spektrogram egy 
+$\lfloor N/8192\rfloor\times 8192$ méretű mátrix, mely $\lfloor N/8192\rfloor$ darab Fourier transzformáltat tartalmaz.
+A Fourier transzformáció eredményéül kapott tömb 4096 komplex számból áll, mely implementációs szinten egy 8196 
 elemű valós--imaginárius számpárokat tartalmazó tömb. Ez a komplex tömb 4096 frekvenciasávot határoz meg.
 
 A kapott spektrogram mérete túl nagy ahhoz, hogy egy az egyben bemenete lehessen a neuronhálónak. Emellett másik probléma, 
@@ -46,7 +46,7 @@ méretű spektrogramszeletekre esett.
 
 Mindenképpen szerettem volna, ha a spektrogramszeletek 0 Hz-től legalább a zongora magas C hangjáig (C8) terjedő intervallumot lefedik.
 Mivel tudjuk, hogy az eredeti 44100 Hz-es mintavételezési ráta mellett a visszaalakítható maximális frekvencia ennek a fele, 
-azaz 22050 Hz, illetve, hogy a fourier transzformált 4096 darab frekvenciasávra osztja a bemeneti mintavételeket, kiszámítható
+azaz 22050 Hz, illetve, hogy a Fourier transzformált 4096 darab frekvenciasávra osztja a bemeneti mintavételeket, kiszámítható
 hogy egy frekvenciasáv 22050/4096 ~ 5.38 Hz-nyi tartományt fed le. A zongora C8 hangjának a frekvenciája 4186 Hz, melyből 
 adódik hogy ez a frekvencia a $4186/5.38=779.0669$, azaz közelítőleg a 779. frekvenciasávban helyezkedik el. A kettővel való
 többszörös oszthatóság érdekében választottam végül a 800-at.\newline
@@ -59,7 +59,7 @@ mint a dal közepébe ékelt fél perces halk intermezzo sem. Mivel a legalkalma
 változik, nem egy szeletet választottam a dalból, hanem többet. Első lépésként, a spektrogramon egy 20 egység széles ablakot 
 végigcsúsztva mindegyik ablakhoz kiszámoltam a benne található frekvenciasávokhoz tartozó magnitúdók összegét, mely nem más, mint a komplex számok
 hosszának az összege. Ez az érték jó indikátora az adott ablakban zajló aktivitásnak, s ez alapján az ablakokat sorbarendezve
-kiválasztottam közülük minden $k$-adik percentilishez tartozó ablakot, ahol $k \in [15..100]$ és $k \, | \, 5$. Egy dalból
+kiválasztottam közülük minden $k$-adik percentilishez tartozó ablakot, ahol $k \in [15..100]$ és $5 \, | \, k$. Egy dalból
 összesen 18 spektrogramszeletet választok ki ily módon.
 
 A percentilisekhez tartozó spektrogramszeleteket normalizáltam $[0..1]$ közé, majd kiexportáltam őket 800×20 pixel méretű 
@@ -75,7 +75,7 @@ különböző stílus alá is besorolhatják. Ebből fakadóan, egy zeneszám st
 szubjektív folyamat. Annak érdekében, hogy a lehetőségekhez mérten minél objektívabb módon határozhassam 
 meg az előadókhoz a stílus címkéket, a Last.fm[@lastfm_api] publikus REST API-ján keresztül elérhető
 zenei adatbázist hívtam segítségül. A lekérdezéseket követően 
-48 különböző stílust sikerült összegyűjtenem. Mivel ez a szám túl nagy, a könnyebb kezelhetőség érdekében a stílusokat
+48 különböző stílust sikerült összegyűjtenem. Mivel ez a szám túlságosan nagy, a könnyebb kezelhetőség érdekében a stílusokat
 besoroltam 3 gyűjtőstílus alá, melyek rendre klasszikus, elektronikus és metál stílusok lettek.
 
 Fontosnak tartom megemlíteni, hogy a dalok 3 osztályba sorolása nagy mértékű általánosítással jár. A "klasszikus" kategória
@@ -104,7 +104,7 @@ Mivel dalonként 18 kép került exportálásra, az adathalmaz összesen $6192*1
 A képek önmagukban 1.23 GB tárhelyet foglalnak, a belőlük készített tfrecords fájlok pedig 3.68 GB-ot.
 Ez a mennyiségű adat $111456*3,714$, azaz 413 947 másodpercnyi zenét takar, ami 4,79 napnak felel meg.
 
-Az adathalmazban előfordulhatnak félrecímkézett stílusú dalok, mint például egy metál album akusztikus intro-ja, outro-ja. 
+Az adathalmazban előfordulnak félrecímkézett stílusú dalok, mint például egy metál album akusztikus intro-ja, outro-ja. 
 Emellett, metál album esetén az albumok végén található elektronikus remixek is metál címkét kaptak. Mivel az algoritmus maga nem használja ezeket a címkéket,
 azok csupán utólagos validálásra szolgálnak, a közelítőleg 6200 dal megcímkézésének gyorsítása végett a stílusba sorolást előadónként,
 indokolt esetben albumonként végeztem, nem pedig dalonként. 
@@ -233,9 +233,9 @@ Az algoritmus implementációja során az aktuális pont szomszédainak kiválas
 fordítottan arányossá. $K=2$ esetén, ha az aktuális pontnak vesszük két szomszédját, melyek rendre 1 és 2 távolságra vannak tőle,
 a szomszédok kiválasztási esélye rendre 0.66 és 0.33 lesz. Formalizálva:
 \begin{equation}
-      p(x_i) = \frac{\frac{1}{x_i}}{\sum\limits_{j=1}^{n} \frac{1}{x_j}}
+      p(x_i) = \frac{\frac{1}{x_i}}{\sum\limits_{j=1}^{n} \frac{1}{x_j}},
 \end{equation}
-, ahol $x \in \mathbb{R}^n$ a szomszédok távolságai az aktuális ponttól, $p(x_i) \in \mathbb{R}$ az $i$-edik szomszéd kiválasztásának
+ahol $(x_1, x_2, ..., x_n) \in \mathbb{R}^n$ a szomszédok távolságai az aktuális ponttól, $p(x_i) \in \mathbb{R}$ az $i$-edik szomszéd kiválasztásának
 az esélye. Az algoritmus nemdeterminisztikussága változatosabb lejátszási listák készítését garantálja, azonos pontból kiindulva
 mindig más és más listát kapunk. 
 
@@ -276,11 +276,11 @@ JTransforms
   ~ Nyílt forráskódú Java programkönyvtár, mely segítségével a Gyors Fourier Transzformáltat számítottam ki a nyers WAV adatokból.
 
 NumPy
-  ~ Nyílt forráskódú Python programkönyvtár, mely segítségével könnyedén tudunk N dimenziós tömböket kezelni. Emellett rengeteg lineáris algebrai,
+  ~ Nyílt forráskódú Python programkönyvtár, mely segítségével könnyedén tudunk N-dimenziós tömböket kezelni. Emellett rengeteg lineáris algebrai,
   illetve statisztikai műveletet, függvényt is tartalmaz.
 
 Pandas
-  ~ Nyílt forráskódú Python programkönyvtár, mely 2dimenziós adattáblák létrehozását, kezelését, elemzését támogatja.
+  ~ Nyílt forráskódú Python programkönyvtár, mely 2-dimenziós adattáblák létrehozását, kezelését, elemzését támogatja.
 
 TensorFlow
   ~ Nyílt forráskódú, alacsony szintű gépi tanulási keretrendszer Python-hoz, mellyel többek között neuronháló modelleket

@@ -42,13 +42,13 @@ Célom eléréséhez a magas dimenziójú frekvenciaszeleteket egy autoencoderne
 felügyelet nélküli gépi tanulás segítségével egy alacsonyabb dimenziós térben fogom elkódolni. Ezt követően, ebben az alacsonyabb
 dimenziójú látens térben relációkat fogok keresni az adathalmazban, megvizsgálom, hogy hasonló zeneszámok közel kerülnek-e egymáshoz.
 Emellett, végső validációként a látens teret 2 dimenzióba ágyazva, a pontokat utólag visszacímkézve, stílus szerint színezve,
-grafikusan ábrázolni fogom, s megvizsgálom hogy a diagram különböző stílusú pontjai valamilen struktúra szerint helyezkednek-e el, 
+grafikusan ábrázolni fogom, s megvizsgálom hogy a diagram különböző stílusú pontjai valamilyen struktúra szerint helyezkednek-e el, 
 vagy teljesen véletlenszerűen.
 
 A vizuális megjelenítés mellett, a gyakorlatban is tesztelni szeretném a rendszert. Egy részről az alacsony dimenziós 
 adathalmaz pontjait a szomszédaival fogom összehasonlítani, másrészt a szomszédsági relációk alapján, 
 kísérleti jelleggel, egy pontból kiindulva, s annak a szomszédai mentén lépdelve, lejátszási lista
-generálásával is kísérletezni fogok
+generálásával is kísérletezni fogok.
 
 ## Kapcsolódó kutatások
 
@@ -61,13 +61,13 @@ A Spotify zeneajánló megoldása piacvezetőnek tekinthető a hasonló zenei sz
 Szolgáltatásukban ötvözik a Collaborative Filtering-et olyan modern technológiákkal, mint a nyelvfeldolgozás (Natural Language Processing), 
 illetve a gépi mély tanulás (Deep Learning). A Spotify mérnökeinek azzal az ördögi körrel kellett megküzdeniük, 
 hogy a Collaborative Filtering nem alkalmazható új, ismeretlen dalokra, viszont pont ezek azok a dalok, amiket igazán
-ajánlani szerettek volna, hogy az emberek megismerhessék. Ez egy ismert probléma, melyet Cold Start problémának hívnak.
+ajánlani szerettek volna, hogy az emberek megismerhessék. Ez egy ismert helyzet, melyet Cold Start problémának hívnak.
 
 A Cold Start problémát végül a Deep Learning segítségével orvosolták: betanítottak egy regressziós modelt, mely képes volt az adatokat
-a Collaborative Filtering model látens terébe képezni. Ezt a modellt a meglévő adatok alapján tanították be, s ezután
+a Collaborative Filtering model látens terébe képezni. Ezt a modellt a meglévő látens pontok alapján tanították be, s ezután
 sikerrel használták új, eddig ismeretlen dalok esetén is.
 
-Saját témám abban különbözik a Spotify megoldásától, hogy én felügyelet nélküli tanulással szeretném megvizsgálni,
+Saját megközelítésem abban különbözik a Spotify megoldásától, hogy én felügyelet nélküli tanulással szeretném megvizsgálni,
 hogy a modell milyen struktúrát képes felfedezni a címkézetlen adathalmazon, míg a Spotify esetében felügyelt,
 regressziós mélyhálóról beszélhetünk.[@url_spotify_deep_learning]
 
@@ -84,9 +84,9 @@ A Music Information Retrieval egyik legnagyobb eredményének tekinthetjük a Sh
 emberek milliói azonosíthatják a rádióban szóló dalt a telefonjukon lévő alkalmazás segítésével.[@url_shazam_home]
 
 Az algoritmus első lépése a nyers spektrogram szeletek legjellemzőbb pontjainak a detektálása. Ehhez szeletenként veszi az 
-előre meghatározott frekvenciasávokban lévő legnagyobb megnitúdójú frekvencia értékeket. 
+előre meghatározott frekvenciasávokban lévő legnagyobb magnitúdójú frekvencia értékeket. 
 Az ilyen módon kiválasztott értékekből kapott vektort fingerprint-nek nevezzük. 
-A zenei kereső adatbázist ilyen fingerprinteket tartalmaz. Az adatbázisban való kereséshez csupán az éppen szóló dal 
+A zenei kereső adatbázis ilyen fingerprinteket tartalmaz. Az adatbázisban való kereséshez csupán az éppen szóló dal 
 fingerprint-jeinek a sorozatát kell összevetnünk az adatbázisban lévőkkel, s nagy bizonyossággal a legtöbb egyezést mutató dal lesz az, 
 ami épp szól a rádióban.[@wang2003industrial]
 
@@ -97,7 +97,7 @@ még címkézetlen nyers adatokból kinyerni.
 ### Geoffrey Hinton munkássága
 
 Geoffrey Hinton a mesterséges intelligencia, azon belül is a mesterséges neurális hálók kutatási területének egyik kiemelkedő alakja. 
-Pályafutása során részt vett az általános Backpropagation algoritmus ismertetésében, feltalálta a Boltzmann gépeket.
+Pályafutása során részt vett az általános Backpropagation algoritmus kifejlesztésében, feltalálta a Boltzmann gépeket.
 Kutatásának jelentős részét az autoencodereknek szentelte.
 
 "Semantic hashing"[@hinton_semantic_hashing] című cikkjében, Ruslan Salakhutdinov-val megmutatták hogyan lehet dokumentumok word-count

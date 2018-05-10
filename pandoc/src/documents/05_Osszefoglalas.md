@@ -37,7 +37,7 @@ homogénebbek, alkalmasabbak lejátszási listák generálására, míg más ré
 hogy frekvenciaadatok alapján is meglepő pontossággal lehet dalokat klaszterezni, majd pedig a modell által elkódolt dalszeletekhez
 elkészítettem egy egyszerű, metaadatok használatát mellőző zenei ajánlórendszer alapjait. Ez az ajánlórendszer nem képes szofisztikált,
 különböző alstílusok közötti különbségek felismerésére, viszont alapvetően képes különbséget tenni klasszikus, elektronikus, illetve metál
-stílusú dalok között. Ez a rendszer nem alkalmas ipari használatra, ahhoz további kísérletezés, kutatás, szofisztikáltabb
+stílusú dalok között. A rendszer valós, piaci használálatához további kísérletezés, kutatás, szofisztikáltabb
 architektúrájú neuronháló és több adat lenne szükséges.
 
 ## Továbbfejlesztési lehetőségek

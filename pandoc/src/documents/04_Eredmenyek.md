@@ -30,7 +30,7 @@ közötti korrelációkról árulkodnak.
 Kettő látens változó közötti erős korreláció esetén az egyik változót, minimális hiba mellett, 
 elő tudjuk állítani a másik változó segítségével.
 A látens tér tekintetében ez azt jelenti, hogy a probléma kevesebb dimenziójú térben is modellezhető, a jelenlegi látens tér 
-redundáns, azaz a eldobható dimenziókat tartalmaz, melyek a többi dimenzó segítségével kifejezhetőek.
+redundáns, azaz eldobható dimenziókat tartalmaz, melyek a többi dimenzó segítségével kifejezhetőek.
 Nagyobb adathalmazon történő tanítás esetén ez a fajta redundancia valószínűleg nem állna fenn.
 
 \begin{figure}[H]
@@ -106,7 +106,7 @@ hasonlóságot mutat az eredetire.](src/images/img_prodigy_spitfire.png)
 
 ## t-SNE
 
-A t-SNE algoritmus alkalmas magasabb dimenziók 2-dimenziós ábrázolására. A vizualizáció segítségével átfogóbb képet kaphatunk
+A t-SNE algoritmus alkalmas magasabb dimenziójú ponthalmazok 2-dimenziós ábrázolására. A vizualizáció segítségével átfogóbb képet kaphatunk
 a 32 dimenziós tér struktúrájáról. Érdemes megemlíteni, hogy a 32-ről 2-dimenzióra történő csökkentés torzulással jár, az eredeti
 adathalmaznak csupán az "árnyékát" láthatjuk.
 Emiatt a t-SNE algoritmus eredménye sokszor félrevezető lehet, az eredmény csupán a pontok közötti relatív viszonyokat mutatja meg.
