@@ -181,13 +181,14 @@ egy ekkora dimenziójú látens tér elégéséges lehet.
 ]{src/tables/model_layer_stats.csv}\normalsize
 
 ## Modell használata
-A modell sikeres betanítását követően elsődleges dolgunk egy adatbázis feltöltése a frekvenciaszeletek encodingjaival.
+A modell sikeres betanítását követően elsődleges dolgunk a frekvenciaszeletek encodingjainak legenerálása.
 Mivel az encodingok csupán 32 darab double értékből állnak, ezért nagyságrendekkel kevesebbet foglalnak a nekik megfelelő,
-PNG képként kiexportált frekvenciaszelethez képest. Esetemben, a nagyságrendileg 100 000-es darabszámú képmennyiség esetén is
-kezelhető maradt az encoding halmaz mérete, ezért nem adatbázist használtam, csupán egy csv fájlban tároltam az adatokat. 
-A teljes adathalmaz elkódolása megközelítőleg egy 50 MB méretű csv fájlt eredményezett, mely könnyedén betölthető a
-memóriába is. Lényegesen nagyobb adathalmaz esetén célszerű olyan adatbázist választani, mely támogatást nyújt szomszédság
-alapú lekérdezésekre.
+PNG képként kiexportált frekvenciaszelethez, illetve az eredeti MP3 fájlhoz képest. Egy MP3 fájl mérete, minőségtől függően
+3-12 MB között mozog. Egy 800×20 pixel méretű frekvenciaszelet átlagos mérete 12 KB, míg a hozzá tartozó encoding $32 \times 8=256$ B, hiszen
+minden dimenzióérték egy 8 bájtos double segítségével van ábrázolva.
+A teljes adathalmaz elkódolása a megfelelő metaadatokkal együtt egy megközelítőleg 50 MB méretű csv fájlt eredményezett, mely könnyedén betölthető a
+memóriába. Az adathalmaz könnyű kezelhetőségének érdekében az adatokat célszerű olyan adatszerkezetbe tölteni, mely
+támogatást nyújt szomszédság alapú lekérdezésekre, mint például az R-fa.
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.6\textwidth]{src/images/workflow2_portrait.png}

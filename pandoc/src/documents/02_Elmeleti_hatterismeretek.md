@@ -92,6 +92,8 @@ A Fourier Transzformáltat a következőképp kapjuk:
     & W^j_n=e^{-j2\pi/n}
 \end{split}
 \end{equation}
+Hangfeldolgozás esetén a bemeneti $x$ vektor a mintavételezési értékek vektora, $X$ pedig az $N$ sávra osztott frekvenciasávok
+vektora.
 Gyakorlati alkalmazáskor a Gyors Fourier Transzformáltat (FFT) használjuk, melynek futási ideje O($n^2$) helyett csupán O(n log n)
 [@guide_to_digital_signal_processing][@algterv]
 
@@ -251,9 +253,11 @@ A RELU (Rectified Linear Unit) aktivációs függvény ezt a problémát hivatot
 
 #### ELU
 Az ELU (Exponential Linear Unit) aktivációs függvény a RELU továbbfejlesztése. RELU esetén, mint ahogy a sigmoid függvénynél is láttuk,
-a függvény átlagos értéke nincs közel a 0-hoz. Az ELU függvény segítségével, átlagosan nézve, a 0-hoz közelebbi értékeket kapunk.[@elu]
+a függvény átlagos értéke nincs közel a 0-hoz. Az ELU függvény segítségével, átlagosan nézve, 0-hoz közelebbi értékeket kapunk.
+Az $\alpha > 0$ az ELU függvény hiperparamétere. Az exponenciális függvény
+$-\alpha$-t közelíti aszimptotikusan. $\alpha$ értékét tipikusan 1-nek szokták választani.[@elu]
 \begin{equation}
-  \text{elu}(\alpha, x) =
+  \text{elu}_{\alpha}(x) =
   \begin{cases}
     \alpha(e^x -1) & \text{ha } x < 0 \\
     x & \text{ha } x \geqslant 0
