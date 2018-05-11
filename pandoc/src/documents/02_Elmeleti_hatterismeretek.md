@@ -94,7 +94,7 @@ A Fourier Transzformáltat a következőképp kapjuk:
 \end{equation}
 Hangfeldolgozás esetén a bemeneti $x$ vektor a mintavételezési értékek vektora, $X$ pedig az $N$ sávra osztott frekvenciasávok
 vektora.
-Gyakorlati alkalmazáskor a Gyors Fourier Transzformáltat (FFT) használjuk, melynek futási ideje O($n^2$) helyett csupán O(n log n)
+Gyakorlati alkalmazáskor a Gyors Fourier Transzformáltat (FFT) használjuk, melynek futási ideje $O(n^2)$ helyett csupán $O(n$ log $n)$
 [@guide_to_digital_signal_processing][@algterv]
 
 ## Gépi tanulás
