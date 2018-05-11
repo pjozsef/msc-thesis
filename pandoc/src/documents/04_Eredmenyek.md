@@ -107,7 +107,7 @@ hasonlóságot mutat az eredetire.](src/images/img_prodigy_spitfire.png)
 ## t-SNE
 
 A t-SNE algoritmus alkalmas magasabb dimenziójú ponthalmazok 2-dimenziós ábrázolására. A vizualizáció segítségével átfogóbb képet kaphatunk
-a 32 dimenziós tér struktúrájáról. Érdemes megemlíteni, hogy a 32-ről 2-dimenzióra történő csökkentés torzulással jár, az eredeti
+a 32-dimenziós tér struktúrájáról. Érdemes megemlíteni, hogy a 32-ről 2-dimenzióra történő csökkentés torzulással jár, az eredeti
 adathalmaznak csupán az "árnyékát" láthatjuk.
 Emiatt a t-SNE algoritmus eredménye sokszor félrevezető lehet, az eredmény csupán a pontok közötti relatív viszonyokat mutatja meg.
 A címkézett adatok birtokában viszont viszonyítási alapunk van arra, hogy a t-SNE eredményeképp egymáshoz közel rendelt pontok

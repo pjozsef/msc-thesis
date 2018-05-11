@@ -194,9 +194,9 @@ alapú lekérdezésekre.
 \caption{A kész modell alkalmazásai}
 \end{figure}
 
-A látens térben elhelyezett pontok könnyebb átláthatósága végett első lépésben t-SNE segítségével 2 dimenzióban vizualizáltam
+A látens térben elhelyezett pontok könnyebb átláthatósága végett első lépésben t-SNE segítségével 2-dimenzióban vizualizáltam
 az adathalmazt. A t-SNE futási ideje a pontok számától függően akár több órán keresztül is eltarthat, ezért a teljes adathalmaz
-helyett az adathalmazból csupán mintavételezett pontokra alkalmaztam a vizualizációt. Az algoritmus által kapott 2 dimenziós
+helyett az adathalmazból csupán mintavételezett pontokra alkalmaztam a vizualizációt. Az algoritmus által kapott 2-dimenziós
 pontokat utólag, a stílusadatokkal visszacímkézve scatter ploton ábrázoltam.
 \begin{figure}[H]
 \centering
@@ -204,7 +204,7 @@ pontokat utólag, a stílusadatokkal visszacímkézve scatter ploton ábrázolta
 \caption{Példa diagram a t-SNE alkalmazására az adathalmazon. A klasszikus, elektronikus és metál stílusokhoz tartozó pontok rendre kék, sárga és fekete színűek}
 \end{figure}
 
-Az adathalmaz 2 dimenziós ábrázolását követően, a globális struktúra után a lokális részletekre is kíváncsi voltam. Ehhez
+Az adathalmaz 2-dimenziós ábrázolását követően, a globális struktúra után a lokális részletekre is kíváncsi voltam. Ehhez
 véletlenszerűen kiválasztottam adatpontokat, majd azok 5-10 legközelebbi szomszédját (Nearest Neighbour) vizsgálva megnéztem, azok mennyire
 hasonlóak a kiválasztott ponthoz képest. 
 
@@ -219,7 +219,7 @@ hasonlóak a kiválasztott ponthoz képest.
   respect all
 ]{src/tables/topk_5_01.csv}\normalsize
 
-A legközelebbi szomszédok ötletét továbbvezetve, a modell által generált 32 dimenziós pontok halmazán lejátszási
+A legközelebbi szomszédok ötletét továbbvezetve, a modell által generált 32-dimenziós pontok halmazán lejátszási
 lista generálásával is megpróbálkoztam. A lista elkészítésére az alábbi nemdeterminisztikus algoritmust dolgoztam ki:
 
 1) Az algoritmus egy tetszőlegesen kiválasztott pontból indul, ez lesz a lejátszási lista első dala
@@ -289,7 +289,7 @@ TensorFlow
 scikit-learn
   ~ Nyílt forráskódú gépi tanulási programkönyvtár Python-hoz. A scikit-learn számtalan, adatbányászati, adatelemzési és 
   gépi tanulási algoritmusot tartalmaz, mint például regresszió, osztályozás, klaszterezés, dimenziócsökkentés.
-  A modellem által kapott, 32 dimenziós térben elkódolt pontok szomszédsági lekérdezéseit, illetve a t-SNE-vel történő
+  A modellem által kapott, 32-dimenziós térben elkódolt pontok szomszédsági lekérdezéseit, illetve a t-SNE-vel történő
   vizualizációt is a scikit-learn segítségével végeztem.
 
 ## Módszer alkalmazása saját adathalmazra
@@ -390,10 +390,10 @@ Az elkészült csv fájl az alábbi adatokat tartalmazza mindegyik frekvenciasze
 * album
 * dalcím
 * percentilis
-* látens térbeli 32 dimenziós vektorérték (0-31)
+* látens térbeli 32-dimenziós vektorérték (0-31)
 
 #### t-SNE vizualizáció
-Az alábbi paranccsal tudjuk 2 dimenzióban vizualizálni a 32 dimenzióban elhelyezett pontjainkat:
+Az alábbi paranccsal tudjuk 2-dimenzióban vizualizálni a 32-dimenzióban elhelyezett pontjainkat:
 \begin{verbatim}pipenv run python src/infer/tsne.py \\end{verbatim}
 \begin{verbatim}    --input [codes].csv \\end{verbatim}
 \begin{verbatim}    --title "Elkódolt zeneszámok vizualizációja t-SNE segítségével" \\end{verbatim}

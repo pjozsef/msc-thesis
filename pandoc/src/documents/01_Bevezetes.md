@@ -41,7 +41,7 @@ klaszterekbe helyezni, illetve hasonlóságokat, összefüggéseket, belső stru
 Célom eléréséhez a magas dimenziójú frekvenciaszeleteket egy autoencodernek nevezett speciális neurális háló architektúra segítségével,
 felügyelet nélküli gépi tanulás segítségével egy alacsonyabb dimenziós térben fogom elkódolni. Ezt követően, ebben az alacsonyabb
 dimenziójú látens térben relációkat fogok keresni az adathalmazban, megvizsgálom, hogy hasonló zeneszámok közel kerülnek-e egymáshoz.
-Emellett, végső validációként a látens teret 2 dimenzióba ágyazva, a pontokat utólag visszacímkézve, stílus szerint színezve,
+Emellett, végső validációként a látens teret 2-dimenzióba ágyazva, a pontokat utólag visszacímkézve, stílus szerint színezve,
 grafikusan ábrázolni fogom, s megvizsgálom hogy a diagram különböző stílusú pontjai valamilyen struktúra szerint helyezkednek-e el, 
 vagy teljesen véletlenszerűen.
 

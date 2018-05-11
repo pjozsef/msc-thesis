@@ -346,8 +346,8 @@ Konvolúciós neuronhálókat főleg kép, illetve hangfeldolgozásnál használ
 Egy konvolúciós háló tipikusan konvolúciós, pooling, végül pedig fully connected rétegekből épül fel.
  
 #### Konvolúciós réteg
-A konvolúciós réteg neuronjai, a megszokott, klasszikus neuronhálókéval ellentétben, egy 3 dimenziós térben helyezkednek el
-egymáshoz képest, szélesség, magasság és mélység szerint. Ennek megfelelően a konvolúciós réteg bemenete is 3 dimenziós
+A konvolúciós réteg neuronjai, a megszokott, klasszikus neuronhálókéval ellentétben, egy 3-dimenziós térben helyezkednek el
+egymáshoz képest, szélesség, magasság és mélység szerint. Ennek megfelelően a konvolúciós réteg bemenete is 3-dimenziós
 kell legyen. Egy 800×600-as fekete-fehér, RGB és RGBA csatornákkal rendelkező bemeneti kép mérete rendre 800×600×1, 800×600×3, illetve
 800×600×4.
 
@@ -360,7 +360,7 @@ A stride segítségével definiáljuk, hogy mekkora lépésközzel csúsztatjuk 
 a kernelt $m$ egységgel léptetjük vertikálisan és $n$ egységgel horizontálisan.[@cs231n]
 
 #### Konvolúció padding
-2 dimenziós esetben, egy 10×10-es képen egy 2×2-es kernelt 2×2-es stride-dal végigléptetve, a kimenetünk mérete 
+2-dimenziós esetben, egy 10×10-es képen egy 2×2-es kernelt 2×2-es stride-dal végigléptetve, a kimenetünk mérete 
 5×5-ös lesz, ezt "Valid padding"-nek nevezzük. Sokszor előnyös számunkra, ha az adat mérete nem változik a konvolúció során. 
 Padding használata esetén a kimenetet annyi nullával rakjuk körbe, hogy visszakapjuk az eredeti méretet. 
 Ezt "Same padding"-nak nevezzük [@cs231n]
@@ -389,7 +389,7 @@ a Gradient Descent egy paramétere, mely azt mondja meg, hogy minden egyes iter�
 algoritmus a gradienssel ellentétes irányba.[@cs231n][@coursera_ng_machine_learning] Adott $\alpha$ learning rate és
 $f$ differenciálható célfüggvény esetén az algoritmus $i$-k lépése a következőképp néz ki:
 \begin{equation}
-        x_{i+1} := x_i - \alpha * \nabla f,
+        x_{i+1} := x_i - \alpha × \nabla f,
 \end{equation}
 ahol $\nabla f$ fejlölje $f$ gradiensét.
 
@@ -418,7 +418,7 @@ hogy adott bemenetre a hibafüggvény értéke csökkenjen.
 
 Első lépésben definiáljuk a kimeneti, $L$-edik réteg $j$-edik neuronjához tartozó hibát:
 \begin{equation}\label{BP1}
-  \delta_j^L = \frac{\partial C}{\partial a_j^L} * \sigma '(z_j^L).
+  \delta_j^L = \frac{\partial C}{\partial a_j^L} × \sigma '(z_j^L).
 \end{equation}
 
 Vektorizált formában, a kimeneti $L$-edik réteg hibája:
