@@ -7,12 +7,6 @@
 
 # Módszer ismertetése
 
-\begin{wrapfigure}[25]{r}{0.3\textwidth}
-  \begin{center}
-    \includegraphics[width=0.29\textwidth]{src/images/workflow1_portrait.png}
-  \end{center}
-  \caption{Nyers MP3 fájloktól a kész modellig}
-\end{wrapfigure}
 Elgondolásomat az az intuíció vezérelte, hogy egy autoencoder segítségével oly módon lehet dimenziócsökkentést végezni
 magasabb dimenzióból alacsonyabb dimenzióba, hogy eközben a bemeneti adatok közötti szemantikai relációk, hasonlóságok a látens térben
 is megmaradjanak. Ehhez felhasználtam az autoencoderek azon tulajdonságát, hogy az egymáshoz közeli bemenetek a látens térben is
@@ -24,6 +18,13 @@ A teljes adathalmaz alapját MP3 fájlok alkotják. Pontosabban fogalmazva olyan
 **song** MP3 tag-ek ki vannak töltve. Ezek a metaadatok nem közvetlenül a neuronháló betanításához szükségesek, 
 mivel a módszer felügyelet nélküli tanuláson alapul. A metaadatok azért szükségesek, hogy az autoencoder betanítását
 követően a látens térben elkódolt bemenetek visszacímkézésével a modell teljesítményét pontosabban ki lehessen értékelni.
+
+\begin{wrapfigure}[29]{r}{0.3\textwidth}
+  \begin{center}
+    \includegraphics[width=0.29\textwidth]{src/images/workflow1_portrait.png}
+  \end{center}
+  \caption{Nyers MP3 fájloktól a kész modellig}
+\end{wrapfigure}
 
 A megfelelő MP3 fájlok kiválogatása után a fájlokat közös formátumra kell hozni, hiszen elképzelhető, hogy a fájlok
 különböző bitrátával rendelkeznek, illetve az egyik fájl hangosabb, vagy épp halkabb. FFmpeg[@url_ffmpeg_home] segítségével az MP3 fájlokat
