@@ -159,6 +159,7 @@ egy ekkora dimenziójú látens tér elégéséges lehet.
 \caption{A modell sematikus szerkezete}\label{modell_structure}
 \end{figure}
 
+\pagebreak
 \footnotesize\csvautolongtable[
   table head={
     \hline \rowcolor{black!15} \#&Réteg&Bemenet&Kernel méret&Stride&Padding&Kimenet&Paraméterek\\\hline
@@ -232,7 +233,7 @@ lista generálásával is megpróbálkoztam. A lista elkészítésére az alább
 6) Visszaugrunk a 2-es pontra mindaddig, amíg a legjátszási lista **L** hosszúságú nem lesz.
 
 Az algoritmus implementációja során az aktuális pont szomszédainak kiválasztási valószínűségét a pontok távolságával tettem
-fordítottan arányossá. $K=2$ esetén, ha az aktuális pontnak vesszük két szomszédját, melyek rendre 1 és 2 távolságra vannak tőle,
+fordítottan arányossá. $K=2$ esetén, ha az aktuális pontnak vesszük két szomszédját, melyek rendre 1 és 2 egység távolságra vannak tőle,
 a szomszédok kiválasztási esélye rendre 0.66 és 0.33 lesz. Formalizálva:
 \begin{equation}
       p(x_i) = \frac{\frac{1}{x_i}}{\sum\limits_{j=1}^{n} \frac{1}{x_j}},
@@ -271,7 +272,7 @@ FFmpeg
   WAV formátumra hozásánál használtam.
 
 mp3agic
-  ~ Nyíilt forráskódú Java programkönyvtár, MP3 tag-ek írásása, olvasására használható. Az MP3 fájlok metaadatainak (előadó, album, dalcím) 
+  ~ Nyílt forráskódú Java programkönyvtár, MP3 tag-ek írására, olvasására használható. Az MP3 fájlok metaadatainak (előadó, album, dalcím) 
   kinyerésére használtam.
 
 JTransforms
@@ -297,7 +298,7 @@ scikit-learn
 ## Módszer alkalmazása saját adathalmazra
 Az alábbi fejezetben bemutatom a szükséges technikai lépéseket, hogy a módszerem tetszőleges MP3 adathalmazzal
 megismételhető lehessen.
-A parancsok futtatáshoz az alábbiakra lesz szükség:
+A parancsok futtatásához az alábbiakra lesz szükség:
 
 * MP3 fájlok, a megfelelő artist, album, song tag-ekkel kitöltve
 * Java 8
@@ -344,7 +345,7 @@ fájl fog létrejönni: **stílusRecord_train.txt**, **stílusRecord_test.txt**,
 \begin{verbatim}pipenv run python src/data/create-tfrecord.py \\end{verbatim}
 \begin{verbatim}    --source [stílusRecord]_cv.txt \\end{verbatim}
 \begin{verbatim}    --result [tfRecordMappa]/[stílus]_cv.tfrecords\end{verbatim}
-11. A fenti lépések végrehajtása után, amennyiben 3 stílussal dolgozunk (klasszikus, elektronikus, metál), a **tfRecorddMappában** 9
+11. A fenti lépések végrehajtása után, amennyiben 3 stílussal dolgozunk (klasszikus, elektronikus, metál), a **tfRecordMappában** 9
 fájlt kell találjunk:
     * **klasszikus_train.tfrecords**
     * **klasszikus_test.tfrecords**
@@ -402,14 +403,14 @@ Az alábbi paranccsal tudjuk 2-dimenzióban vizualizálni a 32-dimenzióban elhe
 \begin{verbatim}    --retry [X] \\end{verbatim}
 \begin{verbatim}    --percentiles 50-100\end{verbatim}
 
-A vizualizáció elkészítése nagyon sok pont esetén több órát is igénybe vehet. A sebességen javíthatunk, s a zajt is
+A vizualizáció elkészítése sok pont esetén több órát/napot is igénybe vehet. A sebességen javíthatunk, s a zajt is
 csökkenthetjük, ha nem az összes pontot vizsgáljuk, hanem csupán bizonyos percentilis intervallumokhoz tartozó pontokat,
 például 50-100, vagy 75-100.\newline
 Mivel a t-SNE algoritmus is Gradient Descent révén tanul, ezért nem garantált, hogy első futásra a legoptimálisabb eredményt kapjuk.
 A **retry** paraméterrel megadhatjuk, hogy hányszor szeretnénk lefuttatni a ponthalmazra a t-SNE algoritmust, s ezek közül
 a legjobbat fogjuk majd megtartani.\newline
-Amennyiben túl nagy adathalmazzal van dolgunk, a t-SNE algoritmus futása napokig is eltarthat. A **sample** paraméterrel
-megadható, hogy stílusonként hány véletlenszerűen kiválasztott pontra fusson az algoritmus. Amennyiben percentilis szűrést
+Túl sok adatpont esetén a **sample** paraméterrel megadható, hogy stílusonként hány véletlenszerűen mintavételezett 
+pontra fusson az algoritmus, ezáltal rövidítve a futási időt. Amennyiben percentilis szűrést
 is alkalmazunk, a mintavételezés a megfelelő percentilisek kiválogatása után fog megtörténni.
 
 #### Közeli szomszédok keresése
@@ -438,4 +439,5 @@ A **percentiles** paraméterrel megadhatjuk, hogy a generáláshoz mely percenti
 A **length** paraméterrel meghatározhatjuk, hogy a generált lejátszási lista milyen hosszú legyen.\newline
 Opcionálisan megadható egy **start-index** paraméter is, ez esetben a lejátszási lista az adott indexű pontból fog kiindulni.
 Az index 0-tól kezdődik és a csv fájl megfelelő sorát jelöli.\newline
-Opcionálisan megadható egy **seed** paraméter is, amivel a véletlengenerátor seed-jét inicializálni lehet.
+Opcionálisan megadható egy **seed** paraméter is, amivel a véletlengenerátor seed-jét inicializálni lehet, így a generáló
+script kimenetét determinisztikussá tehetjük.

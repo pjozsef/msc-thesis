@@ -22,7 +22,7 @@ pedig magasabb hangként érzékeljük. [@url_hangtan]
 ### Alaphang, felhang
 Az általunk érzékelt hang több részhangnak az együtteséből áll. A legmélyebb részhangot nevezzük alaphangnak.
 A további részhangokat felhangoknak nevezzük. Egy tetszőleges $f$ frekvencia esetén az alaphang frekvenciája $f$,
-a rákövetkező $n$ darab felhang frekvenciái pedig rendre $i \times f$, ahol $i \in [2,n]$.  [@url_hangtan]
+a rákövetkező $n$ darab felhang frekvenciái pedig rendre $i \times f$, ahol $i \in [2,n]$. [@url_hangtan]
 
 ### Hang amplitúdója
 A hang amplitudója, a hanghullám maximális eltérése az x tengelytől. 
@@ -36,7 +36,7 @@ melyekben a felhangok más mértékben vannak jelen. A hang magasságát az alap
 a hangszínét pedig a felhangok erősségének a variációja határozza meg.
    
 ### Hallható hangtartomány
-Hallható hangtartomány alatt a 20Hz és 20 kHz közötti frekvenciatartományt értjük.
+Hallható hangtartomány alatt a 20 Hz és 20 kHz közötti frekvenciatartományt értjük.
 
 ## Jelfeldolgozás
 
@@ -45,7 +45,7 @@ Ahhoz, hogy a számítógépen hangfájlokkal dolgozhassunk, a folytonos analóg
 a jelből azonos időközönként mintavételezünk, s ezzel a diszkretizációval próbáljuk közelíteni az eredeti jelet.
 
 ### Mintavételezési ráta
-Mintavételezési rátának, angolul sample rate-nek  nevezzük a másodpercenkénti mintavételezések számát, mértékegysége a Hz. 
+Mintavételezési rátának, angolul sample rate-nek nevezzük a másodpercenkénti mintavételezések számát, mértékegysége a Hz. 
 CD formátum esetén a mintavételezési frekvencia 44100 Hz, azaz 44.1 kHz.
 
 ### Bitmélység
@@ -94,7 +94,7 @@ A Fourier Transzformáltat a következőképp kapjuk:
 \end{equation}
 Hangfeldolgozás esetén a bemeneti $x$ vektor a mintavételezési értékek vektora, $X$ pedig az $N$ sávra osztott frekvenciasávok
 vektora.
-Gyakorlati alkalmazáskor a Gyors Fourier Transzformáltat (FFT) használjuk, melynek futási ideje $O(n^2)$ helyett csupán $O(n$ log $n)$
+Gyakorlati alkalmazáskor a Gyors Fourier Transzformáltat (FFT) használjuk, melynek futási ideje $O(n^2)$ helyett csupán \mbox{$O(n$ log $n)$}
  [@guide_to_digital_signal_processing][@algterv]
 
 ## Gépi tanulás
@@ -127,8 +127,8 @@ Egy gyakran használt hibafüggvény, angolul quadratic loss function-nek hívj�
 \end{equation}
 
 ### Hiperparaméter
-Egy adott algoritmusnak több olyan "paramétere" lehet, mely nem közvetlenül, hanem közvetve
-befolyásola a teljesítményét. Ezen paramétereket nevezzük az algoritmus hiperparamétereinek. 
+Egy adott algoritmusnak több olyan "paramétere" lehet, melyek nem közvetlenül, hanem közvetve
+befolyásolják a teljesítményét. Ezen paramétereket nevezzük az algoritmus hiperparamétereinek. 
 Hiperparaméter például, hogy az algoritmust hány iteráción keresztül tanítjuk. Random forest esetén
 hiperparaméternek tekinthetjük a döntési fák számát, illetve azok mélységét. Support Vector Machine (SVM) esetén
 pedig a modell által használt kernel is hiperparaméter. 
@@ -176,7 +176,7 @@ tömbökként kezeljük. [@tensor_definition]
 \begin{figure}[H]
 \centering
 \includegraphics{src/images/tensor.png}
-\caption{Példa egy nullad-, első-, másod- és harmadrangú tenzorra.}
+\caption{Példa egy nullad-, első-, másod- és harmadrendű tenzorra.}
 \end{figure}
 
 ## Neuronhálók
@@ -202,7 +202,7 @@ $t \in \mathbb{R}$ küszöbértéknél nagyobb-e vagy sem. [@nn_and_deeplearning
 ### Bias
 A (\ref{perceptron1}). egyenlet könnyebb kezelhetősége érdekében vezessük be a bias fogalmát, mely definíció szerint
 $b \equiv -1 \times t,\; b \in \mathbb{R}$. A bias azt jelöli, hogy a perceptron mennyire könnyen tud aktiválódni.
-Negatív, kicsi bias esetén a perceptron ritkábban; pozitív, nagy bias esetén sűrűbben aktiválódik. A (\ref{perceptron1}).
+Negatív, kicsi bias esetén a perceptron ritkábban; pozitív, nagy bias esetén sűrűbben aktiválódik. [@nn_and_deeplearning] A (\ref{perceptron1}).
 egyenletet egyszerűsítve, s a bias-t használva a következő egyenletet kapjuk:
 \begin{equation}
     a =
@@ -215,7 +215,7 @@ egyenletet egyszerűsítve, s a bias-t használva a következő egyenletet kapju
 ### Sigmoid neuron
 Egy neuronháló betanítása során a célunk, hogy a súlyokban, illetve bias-okban történő kis változás a neuronháló
 kimenetében is csupán kis változást okozzon. Perceptronok esetében ez nem teljesül, hiszen a kimenetük diszkrét érték.
-A sigmoid neuron kimenete ezzel ellentétben egy 0 és 1 közötti valós szám: $a \in [0,1]$.
+A sigmoid neuron kimenete ezzel ellentétben egy 0 és 1 közötti valós szám: $a \in [0,1]$. [@nn_and_deeplearning]
 A perceptronhoz hasonlóan, a sigmoid neuron is rendelkezik súlyvektorokkal és bias értékkel, viszont a kimenet kiszámítása az
 alábbiak szerint változik:
 \begin{equation}\label{sigmoid-neuron}
@@ -225,7 +225,8 @@ A klasszikus sigmoid neuron esetén $\sigma$-t sigmoid függvénynek hívjuk:
 \begin{equation}
       \sigma(z) \equiv \frac{1}{1+e^{-z}}
 \end{equation}
-Megfigyelhető, hogy $\sigma$-t egy 0 és 1 közötti lépcsős függvénynek választva visszakapjuk az eredeti perceptron neuront. Az $a$ értéket
+Megfigyelhető, hogy $\sigma$-t egy 0 és 1 közötti lépcsős függvénynek választva visszakapjuk az eredeti perceptron neuront. [@nn_and_deeplearning]
+Az $a$ értéket
 kimenet mellett szokás még a neuron aktivációjának is nevezni.
 
 ### Aktivációs függvény
@@ -240,19 +241,19 @@ ami a rákövetkező réteg inputjaként fog szolgálni. A 0-hoz közeli input g
       \text{tanh}(x) = \frac{e^{2x}-1}{e^{2x}+1}
 \end{equation}
 
-#### RELU
+#### ReLU
 A sigmoid és tanh aktivációs függvények esetén fennáll a probléma, hogy nagyon nagy bemenetre a derivált
 értéke a 0-hoz közelít. A [[Gradient Descent]] és [[Backpropagation]] szekciónál látni fogjuk, hogy a neuronháló annál
 gyorsabban tanul, minél nagyobb a gradiens. Nullához közeli gradiens esetén a háló szinte semmit sem fog tanulni. Ezt a problémát Vanishing
-Gradient problémának nevezik.
+Gradient problémának nevezik. [@relu_hinton]
 
-A RELU (Rectified Linear Unit) aktivációs függvény ezt a problémát hivatott megoldani:
+A ReLU (Rectified Linear Unit) aktivációs függvény ezt a problémát hivatott megoldani:
 \begin{equation}
   \text{relu}(x) = max(0, x)
 \end{equation}
 
 #### ELU
-Az ELU (Exponential Linear Unit) aktivációs függvény a RELU továbbfejlesztése. RELU esetén, mint ahogy a sigmoid függvénynél is láttuk,
+Az ELU (Exponential Linear Unit) aktivációs függvény a ReLU továbbfejlesztése. ReLU esetén, mint ahogy a sigmoid függvénynél is láttuk,
 a függvény átlagos értéke nincs közel a 0-hoz. Az ELU függvény segítségével, átlagosan nézve, 0-hoz közelebbi értékeket kapunk.
 Az $\alpha > 0$ az ELU függvény hiperparamétere. Az exponenciális függvény
 $-\alpha$-t közelíti aszimptotikusan. $\alpha$ értékét tipikusan 1-nek szokták választani. [@elu]
@@ -284,7 +285,7 @@ számolható ki:
 \begin{equation}
       a^l = \sigma(a^{l-1} \times W^l + b^l),
 \end{equation}
-ahol $a^{l-1} \in \mathbb{R}^m$, $W^l \in \mathbb{R}^{m \times n}$, $b^l \in \mathbb{R}^n$ és $a^l \in \mathbb{R}^n$
+ahol $a^{l-1} \in \mathbb{R}^m$, $W^l \in \mathbb{R}^{m \times n}$, $b^l \in \mathbb{R}^n$ és $a^l \in \mathbb{R}^n$. [@nn_and_deeplearning]
 
 ![Példa egy rejtett réteget tartalmazó neuronhálóra. Forrás: [@nn_and_deeplearning]](src/images/nn.png){width=75%}
 
@@ -302,9 +303,9 @@ Egy neuronhálónak számos hiperparaméterrel rendelkezik:
 
 ### Regularizáció
 A regularizáció a túlilleszkedés ellen nyújt hatékony megoldást. Alkalmazásával a hibafüggvény mellé további megkötéseket 
-tehetünk a neuronhálóra, például büntethetjük a nagyon nagy súlyokat, mely segítségével a hálót a generalizálás irányába tereljük,
+tehetünk a neuronhálóra. Büntethetjük például a nagy súlyokat, mely segítségével a hálót a generalizálás irányába tereljük,
 mintsem afelé, hogy a különálló bemenetek zajaira illeszkedjen. Egy súly csak akkor tud nagyra nőni, ha a regularizációs büntetés
-ellenére is nagy mértékben javít a modell pontosságán.
+ellenére is nagy mértékben javít a modell pontosságán. [@nn_and_deeplearning]
 
 #### L2 regularizáció
 L2 regularizáció esetén a súlyok ($w \in \mathbb{R}$) négyzetét összegezzük. A bias-okat nem regularizáljuk.
@@ -337,7 +338,7 @@ kevésbé lesz számottevő. [@nn_and_deeplearning][@understanding_dropout]
 ### Deep learning
 A Deep Learning mögötti elgondolás az, hogy összetett koncepciókat egyszerűbb koncepciók tetszőleges hierarchiájával
 is képesek vagyunk modellezni. Deep learningről tipikusan neurális hálók kapcsán beszélhetünk. Ilyenkor azt értjük alatta,
-hogy több egyrétegű neuronhálót egymás mellé helyezünk, az egyik  réteg kimenete a következő réteg bemenete.
+hogy több egyrétegű neuronhálót egymás mellé helyezünk, az egyik réteg kimenete a következő réteg bemenete.
 Több rétegnyi nemlinearitás segítségével erőteljesebb modellt kapunk, mintha egyetlen, ámbátor nagyságrendekkel több 
 neuronból álló réteggel dolgoznánk. [@book_deeplearning]
 
@@ -356,7 +357,7 @@ kell legyen. Egy 800×600-as fekete-fehér, RGB és RGBA csatornákkal rendelkez
 800×600×4.
 
 Konvolúciós rétegnél egy, vagy több fix méretű kernelt csúsztatunk végig a bemeneten $s$ stride-dal (lépésközzel). A kernelt
-szokás még filternek is nevezni. Egy konvolúciós kernel negyedrangú tenzor: kernel magasság × kernel szélesség 
+szokás még filternek is nevezni. Egy konvolúciós kernel negyedrendű tenzor: kernel magasság × kernel szélesség 
 × bemeneti csatornák száma × kimeneti csatornák száma. [@cs231n]
 
 #### Konvolúció stride
@@ -367,7 +368,7 @@ a kernelt $m$ egységgel léptetjük vertikálisan és $n$ egységgel horizontá
 2-dimenziós esetben, egy 10×10-es képen egy 2×2-es kernelt 2×2-es stride-dal végigléptetve, a kimenetünk mérete 
 5×5-ös lesz, ezt "Valid padding"-nek nevezzük. Sokszor előnyös számunkra, ha az adat mérete nem változik a konvolúció során. 
 Padding használata esetén a kimenetet annyi nullával rakjuk körbe, hogy visszakapjuk az eredeti méretet. 
-Ezt "Same padding"-nak nevezzük  [@cs231n]
+Ezt "Same padding"-nak nevezzük. [@cs231n]
 
 #### Pooling réteg
 A pooling rétegek használata gyakori konvolúciós hálókban. Segítségükkel a konvolúciós réteg aktivációjának méretét tudjuk csökkenteni.
@@ -407,8 +408,8 @@ Az algoritmus ismertetése előtt két feltételezést kell tennünk a hibafügg
 
 1. A hibafüggvény felírható kell legyen a különálló bemenetekhez tartozó hibafüggvények értékének az átlagaként. 
 Erre azért van szükségünk, mert a backpropagation segítségével csupán a különálló $x$ bemenetekhez tartozó parciális 
-deriváltakat ($\partial C_x / \partial w, \partial C_x / \partial b$) tudjuk kiszámolni. 
-A $\partial C / \partial w$ és $\partial C / \partial b$ kiszámolásához átlagoljuk az egyes tanulóadatokhoz tartozó hibát:
+deriváltakat ($\frac{\partial C_x}{\partial w}, \frac{\partial C_x}{\partial b}$) tudjuk kiszámolni. 
+A $\frac{\partial C}{\partial w}$ és $\frac{\partial C}{\partial b}$ kiszámolásához átlagoljuk az egyes tanulóadatokhoz tartozó hibát:
 \begin{equation}
           C= \frac{1}{n}\sum\limits_{x=1}^{n}C_x\text{, ahol $n$ a tanulóadatok száma.}
 \end{equation}
@@ -416,7 +417,7 @@ A $\partial C / \partial w$ és $\partial C / \partial b$ kiszámolásához átl
 viszont mivel az $x$ bemenetet kötött paraméternek tekintjük, ezért az elvárt $y$ is az.
 
 Egy neuronra tekinthetünk függvényként, egy neuronhálóra pedig összetett függvényként. A Backpropagation algoritmus,
-a láncszabály alkalmazásával a hibafüggvény parciális deriváltjai határozza meg a súly/bias paraméterek szerint. 
+a láncszabály alkalmazásával a hibafüggvény parciális deriváltjait határozza meg a súly/bias paraméterek szerint. 
 A parciális deriváltak alapján pedig a súlyokat, bias-okat oly módon tudjuk módosítani, 
 hogy adott bemenetre a hibafüggvény értéke csökkenjen.
 

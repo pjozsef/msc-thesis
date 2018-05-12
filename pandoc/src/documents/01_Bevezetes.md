@@ -97,7 +97,7 @@ még címkézetlen nyers adatokból kinyerni.
 ### Geoffrey Hinton munkássága
 
 Geoffrey Hinton a mesterséges intelligencia, azon belül is a mesterséges neurális hálók kutatási területének egyik kiemelkedő alakja. 
-Pályafutása során részt vett az általános Backpropagation algoritmus kifejlesztésében, feltalálta a Boltzmann gépeket.
+Pályafutása során részt vett az általános Backpropagation algoritmus népszerűsítésében, feltalálta a Boltzmann gépeket.
 Kutatásának jelentős részét az autoencodereknek szentelte.
 
 "Semantic hashing" [@hinton_semantic_hashing] című cikkjében, Ruslan Salakhutdinov-val megmutatták hogyan lehet dokumentumok word-count

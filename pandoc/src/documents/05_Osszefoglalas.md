@@ -26,7 +26,7 @@ dimenzióját 32-ről 2-re csökkentettem. A 2-dimenziós pontokat stíluscímk�
 A kapott diagrammokon stílusokhoz tartozó klaszterek figyelhetőek meg. A klaszterek egymástól nem határolódnak el egyértelműen,
 összeérnek, a klaszterhatároknál átmenet tapasztalható.
 
-A sikeres vizualizációt követően megvizsgáltam, hogy a látens tér pontjai milyen relációban vannak szomszédaival, azoknak
+A sikeres vizualizációt követően megvizsgáltam, hogy a látens tér pontjai milyen relációban vannak szomszédaikkal, azoknak
 stílusa hasonló-e a kiválasztott pont stílusához. A szomszédsági lekérdezések segítségével kísérleti jelleggel megterveztem egy algoritmust,
 mely segítségével egy kiválasztott pontból indulva, tranzitív módon, a szomszédokon való lépegetésen keresztül lejátszási lista
 generálható. Mind a szomszédsági lekérdezések, illetve a lejátszási listák készítése során mélyrehatóbban feltérképezhettem a 32-dimenziós
@@ -34,10 +34,10 @@ látens tér felépítését. Kísérletezéseim során felfedeztem, hogy a pont
 homogénebbek, alkalmasabbak lejátszási listák generálására, míg más részei vegyesebbek, olykor kifejezetten kaotikusak.
 
 Összességében nézve úgy érzem sikerült a dolgozatomban kitűzött céljaimat teljesítenem. Egy autencoder segítségével megmutattam,
-hogy frekvenciaadatok alapján is meglepő pontossággal lehet dalokat klaszterezni, majd pedig a modell által elkódolt dalszeletekhez
-elkészítettem egy egyszerű, metaadatok használatát mellőző zenei ajánlórendszer alapjait. Ez az ajánlórendszer nem képes szofisztikált,
+hogy csupán frekvenciaadatok alapján is meglepő pontossággal lehet dalokat klaszterezni, majd pedig a modell által elkódolt dalszeletekhez
+elkészítettem egy egyszerű, metaadatok használatát mellőző zenei ajánlórendszer alapját. Ez az ajánlórendszer nem képes szofisztikált,
 különböző alstílusok közötti különbségek felismerésére, viszont alapvetően képes különbséget tenni klasszikus, elektronikus, illetve metál
-stílusú dalok között. A rendszer valós, piaci használálatához további kísérletezés, kutatás, szofisztikáltabb
+stílusú dalok között. A rendszer valós, piaci használálatához további kísérletezés, kutatás, kifinomultabb
 architektúrájú neuronháló és több adat lenne szükséges.
 
 ## Továbbfejlesztési lehetőségek

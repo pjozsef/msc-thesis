@@ -48,9 +48,9 @@ Nagyobb adathalmazon történő tanítás esetén ez a fajta redundancia valósz
 A látens tér statisztikai elemzését követően a különálló dalok vizualizációjával is foglalkoztam. Jelölje $m_{a, s, p} \in \mathbb{R}^{32}$
 látens térbeli vektor az $a$ előadó $s$ dalának $p$. percentilisét. Továbbá legyen:
 \begin{equation}
-        m_{a,s} := \sum\limits_{p=50, \; 5|p}^{100} m_{a,s,p} \in \mathbb{R}^{32},
+        m_{a,s} := \sum\limits_{p=50, \; 5|p}^{100} m_{a,s,p} \in \mathbb{R}^{32}
 \end{equation}
-$a$ előadó $s$ dalának releváns, azaz 50. és afölötti percentiliseit
+vektor az $a$ előadó $s$ dalának releváns, azaz 50. és afölötti percentiliseit
 összegző vektor. Ezen $m$ vektorokat elkészítettem minden dalhoz, majd radar chart segítségével 
 grafikusan ábrázoltam őket. Fontosnak tartom kiemelni, hogy a diagramon látható értékek normalizálva vannak 0 és 1 közé. A 
 normalizálás során a dalok között elveszik a nagysági reláció, ezáltal előfordulhat, hogy kettő dal diagrammja hasonlít egymásra,
@@ -92,8 +92,8 @@ különbséget tenni a különböző gyűjtőstílusok között.
 
 ![A teljes adathalmaz radar chartjainak átlagolása stílusok szerint\label{img_avg}](src/images/songs_average.png)
 
-A látens tér elemzését néhány érdekesebb diagrammal szeretném zárni, ahol a dalokhoz azok élő, akusztikus vagy épp remix változatát
-társítottam, hogy lássuk a különböző variánsok mennyire hasonlóak egymáshoz.
+A látens tér elemzését néhány érdekesebb diagrammal szeretném zárni, ahol a dalokhoz azok élő, akusztikus vagy épp remix változatait
+társítottam, hogy lássuk a különböző variánsok mennyire hasonlítanak egymásra.
 
 ![Apocalyptica - Bittersweet című száma különféle verziókban. Megfigyelhető a hasonlóság az
 eredeti és az akusztikus dal között. Az instrmentális dal képe különbözik, hiszen nincs benne vokál, 
@@ -233,6 +233,7 @@ A táblázatok 0. sora a kiindulási pont, $k$-adik legközelebbi szomszéda a $
   respect all
 ]{src/tables/05_classical_outliers.csv}\normalsize
 
+\pagebreak
 \footnotesize\csvautolongtable[
   table head={
     \hline \rowcolor{black!15} \# & Stílus & Előadó & Dal & Percentilis \\\hline
