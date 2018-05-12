@@ -22,7 +22,7 @@ pedig magasabb hangként érzékeljük. [@url_hangtan]
 ### Alaphang, felhang
 Az általunk érzékelt hang több részhangnak az együtteséből áll. A legmélyebb részhangot nevezzük alaphangnak.
 A további részhangokat felhangoknak nevezzük. Egy tetszőleges $f$ frekvencia esetén az alaphang frekvenciája $f$,
-a rákövetkező $n$ darab felhang frekvenciái pedig rendre $i×f$, ahol $i \in [2,n]$.  [@url_hangtan]
+a rákövetkező $n$ darab felhang frekvenciái pedig rendre $i \times f$, ahol $i \in [2,n]$.  [@url_hangtan]
 
 ### Hang amplitúdója
 A hang amplitudója, a hanghullám maximális eltérése az x tengelytől. 
@@ -201,7 +201,7 @@ $t \in \mathbb{R}$ küszöbértéknél nagyobb-e vagy sem. [@nn_and_deeplearning
 
 ### Bias
 A (\ref{perceptron1}). egyenlet könnyebb kezelhetősége érdekében vezessük be a bias fogalmát, mely definíció szerint
-$b \equiv -1 × t,\; b \in \mathbb{R}$. A bias azt jelöli, hogy a perceptron mennyire könnyen tud aktiválódni.
+$b \equiv -1 \times t,\; b \in \mathbb{R}$. A bias azt jelöli, hogy a perceptron mennyire könnyen tud aktiválódni.
 Negatív, kicsi bias esetén a perceptron ritkábban; pozitív, nagy bias esetén sűrűbben aktiválódik. A (\ref{perceptron1}).
 egyenletet egyszerűsítve, s a bias-t használva a következő egyenletet kapjuk:
 \begin{equation}
@@ -360,7 +360,7 @@ szokás még filternek is nevezni. Egy konvolúciós kernel negyedrangú tenzor:
 × bemeneti csatornák száma × kimeneti csatornák száma. [@cs231n]
 
 #### Konvolúció stride
-A stride segítségével definiáljuk, hogy mekkora lépésközzel csúsztatjuk a kernelünket a bemeneten. $m$×$n$-es stride esetén
+A stride segítségével definiáljuk, hogy mekkora lépésközzel csúsztatjuk a kernelünket a bemeneten. $m \times n$-es stride esetén
 a kernelt $m$ egységgel léptetjük vertikálisan és $n$ egységgel horizontálisan. [@cs231n]
 
 #### Konvolúció padding
@@ -393,7 +393,7 @@ a Gradient Descent egy paramétere, mely azt mondja meg, hogy minden egyes iter�
 algoritmus a gradienssel ellentétes irányba. [@cs231n][@coursera_ng_machine_learning] Adott $\alpha$ learning rate és
 $f$ differenciálható célfüggvény esetén az algoritmus $i$-k lépése a következőképp néz ki:
 \begin{equation}
-        x_{i+1} := x_i - \alpha × \nabla f,
+        x_{i+1} := x_i - \alpha \times \nabla f,
 \end{equation}
 ahol $\nabla f$ fejlölje $f$ gradiensét.
 
@@ -422,7 +422,7 @@ hogy adott bemenetre a hibafüggvény értéke csökkenjen.
 
 Első lépésben definiáljuk a kimeneti, $L$-edik réteg $j$-edik neuronjához tartozó hibát:
 \begin{equation}\label{BP1}
-  \delta_j^L = \frac{\partial C}{\partial a_j^L} × \sigma '(z_j^L).
+  \delta_j^L = \frac{\partial C}{\partial a_j^L} \times \sigma '(z_j^L).
 \end{equation}
 
 Vektorizált formában, a kimeneti $L$-edik réteg hibája:
