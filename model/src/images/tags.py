@@ -30,6 +30,7 @@ def color_for(row, m):
 
 
 def print_plot(i, df, style):
+    plt.figure()
     m = max(df, style)
     filtered = select_style(df, style)
     colors = []
@@ -40,7 +41,6 @@ def print_plot(i, df, style):
     filtered['count'].plot.pie(labels=filtered["tag"], fontsize=8, colors=colors, figsize=(6, 6), legend=None)
     plt.axis('off')
     plt.title(style.capitalize())
-    plt.show()
 
 
 parser = argparse.ArgumentParser()
@@ -67,7 +67,6 @@ pie = plt.pie(
     colors=["blue", "orange", "black"])
 plt.title("Zenei stílusok eloszlása")
 plt.legend(["Klasszikus", "Elektronikus", "Metál"], loc=2, prop={'size': 9})
-plt.show()
 
 ########################################
 # ########separate categories######### #
@@ -75,3 +74,4 @@ plt.show()
 print_plot(0, df, "classical")
 print_plot(1, df, "electronic")
 print_plot(2, df, "metal")
+plt.show()
