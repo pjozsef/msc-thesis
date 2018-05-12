@@ -188,7 +188,7 @@ A táblázatok 0. sora a kiindulási pont, $k$-adik legközelebbi szomszéda a $
 
 \footnotesize\csvautolongtable[
   table head={
-    \hline \rowcolor{black!15} \# & Stílus & Előadó & Dal & Percentilis \\\hline
+    \hline \rowcolor{black!15} \# & Stílus & Előadó & Dal & Perc. \\\hline
     \endfirsthead
     \hline
     \caption{A kiindulási dalszelet egy Bach mű (BWV Anh.125) Christfried Bickenbach előadásában.
