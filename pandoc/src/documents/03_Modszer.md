@@ -10,7 +10,7 @@
 Elgondolásomat az az intuíció vezérelte, hogy egy autoencoder segítségével oly módon lehet dimenziócsökkentést végezni
 magasabb dimenzióból alacsonyabb dimenzióba, hogy eközben a bemeneti adatok közötti szemantikai relációk, hasonlóságok a látens térben
 is megmaradjanak. Ehhez felhasználtam az autoencoderek azon tulajdonságát, hogy az egymáshoz közeli bemenetek a látens térben is
-közel kerülnek egymáshoz.[@hinton_semantic_hashing][@hinton_autoencoder_image_retrieval] Az autoencoder látens terében elhelyezett kódok
+közel kerülnek egymáshoz. [@hinton_semantic_hashing][@hinton_autoencoder_image_retrieval] Az autoencoder látens terében elhelyezett kódok
 felhasználhatóak többek között klaszterezésre, szomszédsági lekérdezésekre, melyek egy zenei ajánlórendszer alapját képezhetik.
 
 ## Adathalmaz elkészítése
@@ -27,7 +27,7 @@ követően a látens térben elkódolt bemenetek visszacímkézésével a modell
 \end{wrapfigure}
 
 A megfelelő MP3 fájlok kiválogatása után a fájlokat közös formátumra kell hozni, hiszen elképzelhető, hogy a fájlok
-különböző bitrátával rendelkeznek, illetve az egyik fájl hangosabb, vagy épp halkabb. FFmpeg[@url_ffmpeg_home] segítségével az MP3 fájlokat
+különböző bitrátával rendelkeznek, illetve az egyik fájl hangosabb, vagy épp halkabb. FFmpeg [@url_ffmpeg_home] segítségével az MP3 fájlokat
 WAV fájlokká konvertálom, melyek sample rate-je 44100 Hz, bitmélysége 16 bit, s egy csatornával rendelkeznek (mono). Loudnormalization-t
 is alkalmazok, mely során minden fájl hangereje normalizálva lesz, azonos skálára kerülnek.
 
@@ -74,7 +74,7 @@ A képek halmazát 60:20:20 arányban osztottam meg a train, test és crossvalid
 Számtalan stílusú zene létezik, egy dal több stílus alá is tartozhat, s különböző emberek ugyanazt a dalt
 különböző stílus alá is besorolhatják. Ebből fakadóan, egy zeneszám stílusának meghatározása nem egzakt, hanem 
 szubjektív folyamat. Annak érdekében, hogy a lehetőségekhez mérten minél objektívabb módon határozhassam 
-meg az előadókhoz a stílus címkéket, a Last.fm[@lastfm_api] publikus REST API-ján keresztül elérhető
+meg az előadókhoz a stílus címkéket, a Last.fm [@lastfm_api] publikus REST API-ján keresztül elérhető
 zenei adatbázist hívtam segítségül. A lekérdezéseket követően 
 48 különböző stílust sikerült összegyűjtenem. Mivel ez a szám túlságosan nagy, a könnyebb kezelhetőség érdekében a stílusokat
 besoroltam 3 gyűjtőstílus alá, melyek rendre klasszikus, elektronikus és metál stílusok lettek.
@@ -249,12 +249,12 @@ percentilisekre való szűréssel adta az algoritmus a legjobb eredményeket.
 ## Használt technológiák
 
 Kotlin
-  ~ A Kotlin[@kotlin] egy nyílt forráskódú, statikusan típusos modern JVM nyelv, melyet a JetBrains fejleszt. Széleskörűen elterjedt
-    mind backend és frontend fejlesztés körében. A 2017-es Google IO óta[@kotlin_android] a Google is hivatalosan támogatja
+  ~ A Kotlin [@kotlin] egy nyílt forráskódú, statikusan típusos modern JVM nyelv, melyet a JetBrains fejleszt. Széleskörűen elterjedt
+    mind backend és frontend fejlesztés körében. A 2017-es Google IO óta [@kotlin_android] a Google is hivatalosan támogatja
     Androidon.
 
 Python
-  ~ A Python[@python] egy dinamikusan típusos script nyelv. Kényelmes és hasznos nyelvi elemei, egyszerű szintaxisa és az
+  ~ A Python [@python] egy dinamikusan típusos script nyelv. Kényelmes és hasznos nyelvi elemei, egyszerű szintaxisa és az
    elérhető adatelemzési, gépi tanulási programcsomagok miatt az egyik legelterjedtebb nyelv Data Science, 
    illetve Machine Learning terén.
 
@@ -262,10 +262,10 @@ Google Cloud ML Engine
   ~ A Cloud Machine Learning Engine a Google Cloud egyik szolgáltatása, mely segítségével könnyedén lehet Tensorflow 
   modelleket tanítani a felhőben. A szolgáltatás révén könnyű hozzáférésünk jut a Google szerverparkjában lévő GPU-khoz,
   melyek elengedhetetlenek a valós életbeli modellek betanításához. A Google saját gépi tanulási modelljeit (Google
-  Photos, Google Cloud Speach) is ezen a platformon tanítja be.[@google_cloud_ml]
+  Photos, Google Cloud Speach) is ezen a platformon tanítja be. [@google_cloud_ml]
 
 FFmpeg
-  ~ Az FFmpeg[@url_ffmpeg_home] egy nyílt forráskódú, parancssori multimédiás keretrendszer, mely segítségével hangfájlokat,
+  ~ Az FFmpeg [@url_ffmpeg_home] egy nyílt forráskódú, parancssori multimédiás keretrendszer, mely segítségével hangfájlokat,
   videó fájlokat konvertálhatunk különböző formátumokba, különböző filtereket futtathatunk rajtuk. Az FFmpeg crossplatform,
   elérhető Linuxra, OS X-re, Windows-ra is. Az FFmpeg-et a különböző hangerővel, bitrátával rendelkező MP3 fájlok azonos
   WAV formátumra hozásánál használtam.

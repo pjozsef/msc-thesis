@@ -12,7 +12,7 @@
 Az okostelefonok és a széleskörűen elérhető mobilinternet korában szinte már elképzelhetetlen, hogy az ember ne tudjon 
 on-demand zenét hallgatni, legyen akár otthon, úton a munkahelyére, vagy épp egy külföldi országban.
 Az emberek mindennapi életének részévé vált a zeneszolgáltatások, mint például 
-a Spotify[@url_spotify_home] vagy a Google Play Music[@url_playmusic_home] használata, ahol több tízezer dal közül választhatnak.
+a Spotify [@url_spotify_home] vagy a Google Play Music [@url_playmusic_home] használata, ahol több tízezer dal közül választhatnak.
 
 Egy zeneszolgáltatás sikere nem csupán az elérhető zenekatalógus méretétől függ. Ugyanennyire fontos az is, hogy mennyire képes
 új dalokat ajánlani a felhasználóknak, amik várhatóan tetszeni is fognak neki. Ajánlórendszerek közül az egyik legelterjedtebb módszer
@@ -29,7 +29,7 @@ az még lehet teljesen irreleváns a felhasználó számára.
 
 Ezt orvosolandó, elterjedtek a hibrid ajánlórendszer megoldások, melyek a Collaborative Filteringet  más módszerekkel
 igyekeznek kiegészíteni, hogy javítsák az ajánlások minőségét. A Spotify például gépi nyelvfeldolgozással és a nyers hanganyag elemzésével igyekszik
-pontosítani az ajánlásain.[@url_spotify_discover_weekly][@url_spotify_discover_weekly_slides]
+pontosítani az ajánlásain. [@url_spotify_discover_weekly][@url_spotify_discover_weekly_slides]
 
 ## Célkitűzés 
 
@@ -69,26 +69,26 @@ sikerrel használták új, eddig ismeretlen dalok esetén is.
 
 Saját megközelítésem abban különbözik a Spotify megoldásától, hogy én felügyelet nélküli tanulással szeretném megvizsgálni,
 hogy a modell milyen struktúrát képes felfedezni a címkézetlen adathalmazon, míg a Spotify esetében felügyelt,
-regressziós mélyhálóról beszélhetünk.[@url_spotify_deep_learning]
+regressziós mélyhálóról beszélhetünk. [@url_spotify_deep_learning]
 
 ### Music Information Retrieval
 
 A Music Information Retrieval (MIR) egy feltörőben lévő kutatási terület, mely hanganyagokból, dalokból nyer ki különböző
 adatokat, például a zenei stílust, tempót, hangszereket, zenei struktúrát. A MIR témakörébe sorolható mind a nyers hanganyagok 
 elemzése, mind pedig a szimbolikus adatok, mint például kották értelmezése is. További érdekes kutatási területe a "query by humming",
-mely segítségével zeneszámok dúdolás alapján kereshetőek egy erre speciálisan kialakított adatbázisban.[@mir][@mir_2]
+mely segítségével zeneszámok dúdolás alapján kereshetőek egy erre speciálisan kialakított adatbázisban. [@mir][@mir_2]
 
 ### Shazam - Audio search
 
 A Music Information Retrieval egyik legnagyobb eredményének tekinthetjük a Shazam algoritmusát, mely segítségével 
-emberek milliói azonosíthatják a rádióban szóló dalt a telefonjukon lévő alkalmazás segítésével.[@url_shazam_home]
+emberek milliói azonosíthatják a rádióban szóló dalt a telefonjukon lévő alkalmazás segítésével. [@url_shazam_home]
 
 Az algoritmus első lépése a nyers spektrogram szeletek legjellemzőbb pontjainak a detektálása. Ehhez szeletenként veszi az 
 előre meghatározott frekvenciasávokban lévő legnagyobb magnitúdójú frekvencia értékeket. 
 Az ilyen módon kiválasztott értékekből kapott vektort fingerprint-nek nevezzük. 
 A zenei kereső adatbázis ilyen fingerprinteket tartalmaz. Az adatbázisban való kereséshez csupán az éppen szóló dal 
 fingerprint-jeinek a sorozatát kell összevetnünk az adatbázisban lévőkkel, s nagy bizonyossággal a legtöbb egyezést mutató dal lesz az, 
-ami épp szól a rádióban.[@wang2003industrial]
+ami épp szól a rádióban. [@wang2003industrial]
 
 Érdekesnek tartom, hogy csupán címke nélküli nyers adattal dolgozva is mennyire megbízható és jól működő rendszert lehet
 készíteni. Részben a Shazam példája inspirált arra, hogy saját témámon keresztül is azt vizsgáljam, mi mindent lehet 
@@ -100,10 +100,10 @@ Geoffrey Hinton a mesterséges intelligencia, azon belül is a mesterséges neur
 Pályafutása során részt vett az általános Backpropagation algoritmus kifejlesztésében, feltalálta a Boltzmann gépeket.
 Kutatásának jelentős részét az autoencodereknek szentelte.
 
-"Semantic hashing"[@hinton_semantic_hashing] című cikkjében, Ruslan Salakhutdinov-val megmutatták hogyan lehet dokumentumok word-count
+"Semantic hashing" [@hinton_semantic_hashing] című cikkjében, Ruslan Salakhutdinov-val megmutatták hogyan lehet dokumentumok word-count
 vektorait autoencoderekkel elkódolni, s ezt követően dokumentumokat dokumentumokkal keresni.
 
-A "Using Very Deep Autoencoders for Content-Based Image Retrieval"[@hinton_autoencoder_image_retrieval] című cikkjében,
+A "Using Very Deep Autoencoders for Content-Based Image Retrieval" [@hinton_autoencoder_image_retrieval] című cikkjében,
 Alex Krizhevsky-vel közösen, autoencoderek segítségével adtak módszert színes, RGB képek elkódolására, s adott képhez
 hasonló képek keresésére a kódok között.
 
