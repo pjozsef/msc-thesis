@@ -2,4 +2,4 @@
 
 # Irodalomjegyzék
 
-\thispagestyle{semifancy}
+\pagestyle{semifancy}
