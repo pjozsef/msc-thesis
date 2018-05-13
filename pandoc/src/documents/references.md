@@ -1,5 +1,5 @@
 \pagebreak
 
-# Irodalomjegyzék
+# Irodalomjegyzék {-}
 
 \pagestyle{semifancy}
