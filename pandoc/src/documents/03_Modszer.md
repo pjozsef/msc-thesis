@@ -132,7 +132,7 @@ keresztül csökkentettem tovább a dimenzióját a látens tér dimenziójáig.
 
 \begin{figure}[H]
 \centering
-\includegraphics{src/images/data_dimension_change.png}
+\includegraphics{src/images/data_dimension_change_bw.png}
 \caption{A bemeneti adat méretének transzformálása konvolúciós és poolig rétegek segítségével egy leegyszerűsített példa hálózaton.}
 \end{figure}
 

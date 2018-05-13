@@ -175,7 +175,7 @@ tömbökként kezeljük. [@tensor_definition]
 
 \begin{figure}[H]
 \centering
-\includegraphics{src/images/tensor.png}
+\includegraphics{src/images/tensorbw.png}
 \caption{Példa egy nullad-, első-, másod- és harmadrendű tenzorra.}
 \end{figure}
 
