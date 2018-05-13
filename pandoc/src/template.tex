@@ -300,10 +300,15 @@ $endif$
     \bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
     \pagebreak
 
+    %    \noindent
+    %    \vspace{0in}
+    %    \setlength{\parindent}{-0.3in}
+    %    \setlength{\leftskip}{0.3in}
+    %    \setlength{\parskip}{8pt}
+
     $endif$
     $endif$
     $if(biblatex)$
-    \bibliographystyle{abbrv}
     \printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
     $endif$
     \pagebreak
