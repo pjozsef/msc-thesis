@@ -30,7 +30,7 @@ közötti korrelációkról árulkodnak.
 Kettő látens változó közötti erős korreláció esetén az egyik változót, minimális hiba mellett, 
 elő tudjuk állítani a másik változó segítségével.
 A látens tér tekintetében ez azt jelenti, hogy a probléma kevesebb dimenziójú térben is modellezhető, a jelenlegi látens tér 
-redundáns, azaz eldobható dimenziókat tartalmaz, melyek a többi dimenzó segítségével kifejezhetőek.
+redundáns, azaz eldobható dimenziókat tartalmaz, melyek a többi dimenzió segítségével kifejezhetőek.
 Nagyobb adathalmazon történő tanítás esetén ez a fajta redundancia valószínűleg nem állna fenn.
 
 \begin{figure}[H]
@@ -96,7 +96,7 @@ A látens tér elemzését néhány érdekesebb diagrammal szeretném zárni, ah
 társítottam, hogy lássuk a különböző variánsok mennyire hasonlítanak egymásra.
 
 ![Apocalyptica - Bittersweet című száma különféle verziókban. Megfigyelhető a hasonlóság az
-eredeti és az akusztikus dal között. Az instrmentális dal képe különbözik, hiszen nincs benne vokál, 
+eredeti és az akusztikus dal között. Az instrumentális dal képe különbözik, hiszen nincs benne vokál, 
 viszont bizonyos dimenziók értéke ennek ellenére is változatlan marad.](src/images/img_apocalyptica_bittersweet.png)
 
 ![The Prodigy - Spitfire című száma különféle verziókban. Az élő és a 2005-ös verzió is
@@ -130,7 +130,7 @@ a modell tényleges hibájának, másrészről lehetséges, hogy egy félrecímk
 összes dalához egységesen rendeltem stíluscímkét, ezért előfordulhat, hogy egy metál album szimfonikus intro és outro dala is metál címkét
 kapott, miközben helyesen klasszikus címkét kellett volna kapjanak. Az algoritmus nem néz címkéket, így ezek a helytelenül metál 
 stílusúnak címkézett dalok hangzásuk alapján helyesen a klasszikus klaszterbe kerülhettek. Amennyiben egy nem klasszikusnak címkézett
-albumban találhatóak olyan dalok, melyekben tradícionális hangszerek vannak túlnyomó többségben, azok ugyanúgy a klasszikus
+albumban találhatóak olyan dalok, melyekben tradicionális hangszerek vannak túlnyomó többségben, azok ugyanúgy a klasszikus
 klaszterhez kerülhetnek a diagrammokon. Hasonlóképp, amennyiben egy nem elektronikusnak címkézett album tartalmaz remix dalokat,
 azok nagy valószínűséggel az elektronikus klaszter közelében fognak elhelyezkedni, attól függetlenül, hogy a címkéjük mást mond.
 
@@ -276,7 +276,7 @@ A generált lejátszási listák vizsgálata során is hasonlóakat tapasztaltam
 inhomogén területről indított algoritmus esetén, a generált lejátszási lista alternált a stílusok között. 
 Ez nem is meglepő, hiszen a lejátszási lista 
 készítő algoritmus szomszédsági lekérdezések révén fűzi a dalokat egymás után. Emiatt természetesen a szomszédsági lekérdezéseknél
-megfigyelt outiler-ek itt is előfordultak.
+megfigyelt outlier-ek itt is előfordultak.
 
 Másik észrevételem, hogy a modell megfelelően generalizál amennyiben
 csupán a három gyűjtőstílust vesszük figyelembe, viszont a modell nem tesz érdemi különbséget például két elektronikus

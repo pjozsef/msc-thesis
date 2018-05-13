@@ -34,7 +34,7 @@ pontosítani az ajánlásain. [@url_spotify_discover_weekly][@url_spotify_discov
 ## Célkitűzés 
 
 Célom a zeneajánlás témakörének egy másik oldalról történő megközelítése. A bevezetésben említett módszerek címkézett adatokon dolgoznak,
-dolgozatomban azt szeretném megvizsgálni, hogy címkék (előadó, album, stílus, stb.) nélkül, csupán a zeneszámok nyers bináris adatai
+dolgozatomban azt szeretném megvizsgálni, hogy címkék (előadó, album, stílus stb.) nélkül, csupán a zeneszámok nyers bináris adatai
 alkothatják-e egy ajánlórendszer alapját. Arra szeretnék választ kapni, hogy egy ilyen rendszer képes-e hasonló stílusú dalokat azonos 
 klaszterekbe helyezni, illetve hasonlóságokat, összefüggéseket, belső struktúrákat felfedezni.
 
@@ -63,8 +63,8 @@ illetve a gépi mély tanulás (Deep Learning). A Spotify mérnökeinek azzal az
 hogy a Collaborative Filtering nem alkalmazható új, ismeretlen dalokra, viszont pont ezek azok a dalok, amiket igazán
 ajánlani szerettek volna, hogy az emberek megismerhessék. Ez egy ismert helyzet, melyet Cold Start problémának hívnak.
 
-A Cold Start problémát végül a Deep Learning segítségével orvosolták: betanítottak egy regressziós modelt, mely képes volt az adatokat
-a Collaborative Filtering model látens terébe képezni. Ezt a modellt a meglévő látens pontok alapján tanították be, s ezután
+A Cold Start problémát végül a Deep Learning segítségével orvosolták: betanítottak egy regressziós modellt, mely képes volt az adatokat
+a Collaborative Filtering modell látens terébe képezni. Ezt a modellt a meglévő látens pontok alapján tanították be, s ezután
 sikerrel használták új, eddig ismeretlen dalok esetén is.
 
 Saját megközelítésem abban különbözik a Spotify megoldásától, hogy én felügyelet nélküli tanulással szeretném megvizsgálni,
@@ -81,12 +81,12 @@ mely segítségével zeneszámok dúdolás alapján kereshetőek egy erre speci�
 ### Shazam - Audio search
 
 A Music Information Retrieval egyik legnagyobb eredményének tekinthetjük a Shazam algoritmusát, mely segítségével 
-emberek milliói azonosíthatják a rádióban szóló dalt a telefonjukon lévő alkalmazás segítésével. [@url_shazam_home]
+emberek milliói azonosíthatják a rádióban szóló dalt a telefonjukon lévő alkalmazás segítségével. [@url_shazam_home]
 
 Az algoritmus első lépése a nyers spektrogram szeletek legjellemzőbb pontjainak a detektálása. Ehhez szeletenként veszi az 
 előre meghatározott frekvenciasávokban lévő legnagyobb magnitúdójú frekvencia értékeket. 
 Az ilyen módon kiválasztott értékekből kapott vektort fingerprint-nek nevezzük. 
-A zenei kereső adatbázis ilyen fingerprinteket tartalmaz. Az adatbázisban való kereséshez csupán az éppen szóló dal 
+A zenei kereső adatbázis ilyen fingerprint-eket tartalmaz. Az adatbázisban való kereséshez csupán az éppen szóló dal 
 fingerprint-jeinek a sorozatát kell összevetnünk az adatbázisban lévőkkel, s nagy bizonyossággal a legtöbb egyezést mutató dal lesz az, 
 ami épp szól a rádióban. [@wang2003industrial]
 

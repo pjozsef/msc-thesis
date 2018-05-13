@@ -58,7 +58,7 @@ A spektrogramszeletek méretének definiálása mellett azt is meg kell határoz
 válasszuk ki, hogy minél inkább releváns és reprezentatív szeletekkel dolgozhassunk. Egy halk intro/outro nem mond sokat a dalról, pont ugyanúgy
 mint a dal közepébe ékelt fél perces halk intermezzo sem. Mivel a legalkalmasabb dalszelet dalonként
 változik, nem egy szeletet választottam a dalból, hanem többet. Első lépésként, a spektrogramon egy 20 egység széles ablakot 
-végigcsúsztva mindegyik ablakhoz kiszámoltam a benne található frekvenciasávokhoz tartozó magnitúdók összegét, mely nem más, mint a komplex számok
+végigcsúsztatva mindegyik ablakhoz kiszámoltam a benne található frekvenciasávokhoz tartozó magnitúdók összegét, mely nem más, mint a komplex számok
 hosszának az összege. Ez az érték jó indikátora az adott ablakban zajló aktivitásnak, s ez alapján az ablakokat sorbarendezve
 kiválasztottam közülük minden $k$-adik percentilishez tartozó ablakot, ahol $k \in [15..100]$ és $5 \, | \, k$. Egy dalból
 összesen 18 spektrogramszeletet választok ki ily módon.
@@ -80,11 +80,11 @@ zenei adatbázist hívtam segítségül. A lekérdezéseket követően
 besoroltam 3 gyűjtőstílus alá, melyek rendre klasszikus, elektronikus és metál stílusok lettek.
 
 Fontosnak tartom megemlíteni, hogy a dalok 3 osztályba sorolása nagy mértékű általánosítással jár. A "klasszikus" kategória
-alá például nem csak komolyzenei klasszikusok (Mozart, Beethoven, stb) kerültek, hanem kortárs film-, illetve videójátékzeneszerzők, 
+alá például nem csak komolyzenei klasszikusok (Mozart, Beethoven stb.) kerültek, hanem kortárs film-, illetve videójátékzeneszerzők, 
 neoklasszikus, instrumentális és akusztikus előadók is besorolásra kerültek. Az elektronikus és metál gyűjtőstílus esetén is több, egymástól
 különböző stílusról beszélhetünk, melyek alapvetően mind mégis az adott gyűjtőstílusba sorolhatóak.
 Legjobb próbálkozásom ellenére, a gyűjtőstílusok között találhatóak átfedések, például szimfonikus elemeket alkalmazó metál zene, 
-vagy olyan elektronikus zene mely metálosabb, nyersebb hangzásra épít. Ilyen esetekben az adott előadót a számára legrelevánsabb
+vagy olyan elektronikus zene mely "metálosabb", nyersebb hangzásra épít. Ilyen esetekben az adott előadót a számára legrelevánsabb
 stílusba soroltam.
 
 \csvautolongtable[
@@ -133,7 +133,7 @@ keresztül csökkentettem tovább a dimenzióját a látens tér dimenziójáig.
 \begin{figure}[H]
 \centering
 \includegraphics{src/images/data_dimension_change_bw.png}
-\caption{A bemeneti adat méretének transzformálása konvolúciós és poolig rétegek segítségével egy leegyszerűsített példa hálózaton.}
+\caption{A bemeneti adat méretének transzformálása konvolúciós és pooling rétegek segítségével egy leegyszerűsített példa hálózaton.}
 \end{figure}
 
 A modell decoder része az encoder szemantikai tükörképe. Egy
@@ -144,14 +144,14 @@ rendelkező dekonvolúciós/transzponált konvolúciós réteg, ahol $H$ a kerne
 csatornák száma, $O$ a kimeneti csatornák száma. 
 A pooling rétegnek az upsampling réteg az inverze, 
 mely annyival növeli a bemenet méretét, amennyivel a vele megfelelő pooling réteg azt csökkentette. Az upsampling réteg
-Nearest Neighbor interpolációval végzi a bemenet felskálázását. A decoder háló az encoder háló
+Nearest Neighbour interpolációval végzi a bemenet felskálázását. A decoder háló az encoder háló
 súlytenzorainak transzponáltját használja fel, ezáltal közel megfelezve a teljes háló paraméterszámát. 
 A kevesebb paraméter előnyös, mert így csökken az esély, hogy a háló túlilleszkedjen a tanuló adathalmazra. A decoder
 háló az encoder bias változóit nem használja fel, csupán a súlyait, ezért nem beszélhetünk a paraméterek pontos felezéséről.
 
 Az encoder kimenete megegyezik a látens tér dimenziójával. Gépi tanulási problémák esetén elterjedt gyakorlat 2 hatványú dimenziókkal
 dolgozni. A választásom csupán kísérleti jelleggel esett a 32-re, az intuícióm azt súgta, hogy a feladat komplexitásához
-egy ekkora dimenziójú látens tér elégéséges lehet.
+egy ekkora dimenziójú látens tér elégséges lehet.
 
 \begin{figure}[H]
 \centering
@@ -216,7 +216,7 @@ hasonlóak a kiválasztott ponthoz képest.
     \hline \rowcolor{black!15} \#& Stílus& Előadó& Dal& Percentilis& Távolság \\\hline
     \endfirsthead
     \hline
-    \caption{Példa egy Nearest Neighbor lekérdezésre}
+    \caption{Példa egy Nearest Neighbour lekérdezésre}
     \endfoot
   },
   respect all
@@ -291,7 +291,7 @@ TensorFlow
 
 scikit-learn
   ~ Nyílt forráskódú gépi tanulási programkönyvtár Python-hoz. A scikit-learn számtalan, adatbányászati, adatelemzési és 
-  gépi tanulási algoritmusot tartalmaz, mint például regresszió, osztályozás, klaszterezés, dimenziócsökkentés.
+  gépi tanulási algoritmust tartalmaz, mint például regresszió, osztályozás, klaszterezés, dimenziócsökkentés.
   A modellem által kapott, 32-dimenziós térben elkódolt pontok szomszédsági lekérdezéseit, illetve a t-SNE-vel történő
   vizualizációt is a scikit-learn segítségével végeztem.
 

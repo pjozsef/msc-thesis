@@ -7,7 +7,7 @@
 
 # Összefoglalás
 
-Dolgozatomban azt vizsgáltam, hogy zenei dalokat lehet-e sikeresen klaszterezni mindennemű metaadatot (előadó, album, album éve, stílus, stb)
+Dolgozatomban azt vizsgáltam, hogy zenei dalokat lehet-e sikeresen klaszterezni mindennemű metaadatot (előadó, album, album éve, stílus stb.)
 nélkülözve, csupán a nyers frekvenciaadatokat felhasználva. 
 
 Ehhez először összegyűjtöttem a tanulóhalmazomat, amit MP3 fájlokból állítottam elő. A zeneszámokat azonos formátumra hozás után
@@ -33,11 +33,11 @@ generálható. Mind a szomszédsági lekérdezések, illetve a lejátszási list
 látens tér felépítését. Kísérletezéseim során felfedeztem, hogy a pontok stílusa tekintetében a látens tér bizonyos részei egybefüggőbbek, 
 homogénebbek, alkalmasabbak lejátszási listák generálására, míg más részei vegyesebbek, olykor kifejezetten kaotikusak.
 
-Összességében nézve úgy érzem sikerült a dolgozatomban kitűzött céljaimat teljesítenem. Egy autencoder segítségével megmutattam,
+Összességében nézve úgy érzem sikerült a dolgozatomban kitűzött céljaimat teljesítenem. Egy autoencoder segítségével megmutattam,
 hogy csupán frekvenciaadatok alapján is meglepő pontossággal lehet dalokat klaszterezni, majd pedig a modell által elkódolt dalszeletekhez
 elkészítettem egy egyszerű, metaadatok használatát mellőző zenei ajánlórendszer alapját. Ez az ajánlórendszer nem képes szofisztikált,
 különböző alstílusok közötti különbségek felismerésére, viszont alapvetően képes különbséget tenni klasszikus, elektronikus, illetve metál
-stílusú dalok között. A rendszer valós, piaci használálatához további kísérletezés, kutatás, kifinomultabb
+stílusú dalok között. A rendszer valós, piaci használatához további kísérletezés, kutatás, kifinomultabb
 architektúrájú neuronháló és több adat lenne szükséges.
 
 ## Továbbfejlesztési lehetőségek
@@ -57,5 +57,5 @@ Másodszor nekikezdve 2 hatvány dimenziókat választanék, mint például 512�
 
 A dalszeletek méretének szerencsésebb megválasztása mellett a percentilis szeletek aggregálásával is kísérleteznék.
 Jelenleg egy dalhoz több percentilis tartozik, melyek különböző 32-dimenziós koordinátákkal rendelkeznek, ezáltal egy dal a látens tér több részén
-is megtalálható. A dalok szétszórtsága hozzájárulhat a outlierek megjelenéséhez, ezt minimalizálandó, a pontokat
+is megtalálható. A dalok szétszórtsága hozzájárulhat a outlier-ek megjelenéséhez, ezt minimalizálandó, a pontokat
 összegezném, vagy átlagolnám, s ezáltal egy pontként kezelném őket.

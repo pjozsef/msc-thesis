@@ -25,13 +25,13 @@ A további részhangokat felhangoknak nevezzük. Egy tetszőleges $f$ frekvencia
 a rákövetkező $n$ darab felhang frekvenciái pedig rendre $i \times f$, ahol $i \in [2,n]$. [@url_hangtan]
 
 ### Hang amplitúdója
-A hang amplitudója, a hanghullám maximális eltérése az x tengelytől. 
-Az alacsony amplitudójú hanghullámot halknak, a nagyobb amplitúdójút pedig hangosabbnak halljuk. [@url_hangtan]
+A hang amplitúdója, a hanghullám maximális eltérése az x tengelytől. 
+Az alacsony amplitúdójú hanghullámot halknak, a nagyobb amplitúdójút pedig hangosabbnak halljuk. [@url_hangtan]
 
 ### Hangszín
 Ugyanazt a frekvenciájú hangot zongorán és gitáron lejátszva egyértelműen el tudjuk dönteni, 
 hogy épp melyik hangszert halljuk. A különbség a zongora és a gitár húrjainak fizikai tulajdonságában rejlik. 
-Mindkettő más jelalakú (szinusz, háromszög, fűrészfog, négyszög, stb.) hanghullámot gerjeszt, 
+Mindkettő más jelalakú (szinusz, háromszög, fűrészfog, négyszög stb.) hanghullámot gerjeszt, 
 melyekben a felhangok más mértékben vannak jelen. A hang magasságát az alaphang frekvenciája, 
 a hangszínét pedig a felhangok erősségének a variációja határozza meg.
    
@@ -80,7 +80,7 @@ MP3 tag-ek, azaz címkék segítségével metaadatokat rendelhetünk az MP3-as d
 előadója, albuma, album éve és a stílusa.
 
 ### Fourier Transzformált
-Ditigális jelfeldolgozás szemszögéből nézve a (Diszkrét) Fourier Transzformált nem más, mint egy módszer, mely segítségével a diszkretizált
+Digitális jelfeldolgozás szemszögéből nézve a (Diszkrét) Fourier Transzformált nem más, mint egy módszer, mely segítségével a diszkretizált
 mintavételeinket szétbonthatjuk alkotórészeire, különálló frekvenciákra.
 Ez a leképezés a digitális jelet az idő domain-ből a frekvencia domain-be képezi le. 
 Az Inverz Fourier Transzformált segítségével pedig fordítva, a frekvencia domain-ből idő domain-be tudjuk visszaalakítani a digitális jelet.
@@ -160,7 +160,7 @@ ellenőrző halmazt, mert ahogy a modell paraméterei túlilleszkedhetnek a tanu
 úgy a hiperparaméterei is túlilleszkedhetnek az ellenőrző halmaz elemeire.
 
 ### t-SNE
-A t-SNE (t-Distributed Stochastic Neighbor Embedding) egy dimenziócsökkentő algoritmus, mely segítségével 2- illetve
+A t-SNE (t-Distributed Stochastic Neighbour Embedding) egy dimenziócsökkentő algoritmus, mely segítségével 2- illetve
 3-dimenzióban tudunk magas dimenziójú adatokat vizualizálni. Az algoritmus oly módon csökkenti a bemeneti adathalmaz dimenzióját,
 hogy eközben az adatpontok közötti távolsági relációkat megőrzi. Két pont, melyek az eredeti adathalmazban
 távol álltak egymástól, dimenziócsökkentés után is távol fognak elhelyezkedni, míg két közeli pont az algoritmus futtatása
@@ -169,7 +169,7 @@ az algoritmus a lokális, vagy inkább a globális struktúrákat vegye jobban f
 mozog. [@tsne][@tsne_github]
 
 ### Tenzor
-A tenzor nem más, mint a vektorok és mátrixok általánosítása. A tenzor rendje az egymástól függetelen dimeziók számát jelöli.
+A tenzor nem más, mint a vektorok és mátrixok általánosítása. A tenzor rendje az egymástól független dimenziók számát jelöli.
 Nulladrendű tenzorok a skalárok, elsőrendűek a vektorok, másodrendűek a mátrixok. Fejlesztés során a tenzorokat n-dimenziós
 tömbökként kezeljük. [@tensor_definition]
 
@@ -275,8 +275,8 @@ melyet $\sigma$-nak paraméterül átadunk, azaz:
 \end{equation}
 
 ### Neuronháló
-A neuronháló, intuitív módon megfogalmazva, nem más mint egy nemlieáris függvény approximátor. A neuronháló egy bemeneti, 
-egy kimeneti és közöttük tetszőletes számú rejtett régetből áll. Egy réteg tetszőleges számú neuronból állhat. Több 
+A neuronháló, intuitív módon megfogalmazva, nem más mint egy nemlineáris függvény approximátor. A neuronháló egy bemeneti, 
+egy kimeneti és közöttük tetszőleges számú rejtett rétegből áll. Egy réteg tetszőleges számú neuronból állhat. Több 
 réteg esetén az első réteg aktivációja szolgál a rákövetkező réteg bemeneteként.
 
 Matematikai oldalról tekintve egy neuronháló nem más, mint mátrix szorzások, vektor összeadások és aktivációs függvény
@@ -396,7 +396,7 @@ $f$ differenciálható célfüggvény esetén az algoritmus $i$-k lépése a kö
 \begin{equation}
         x_{i+1} := x_i - \alpha \times \nabla f,
 \end{equation}
-ahol $\nabla f$ fejlölje $f$ gradiensét.
+ahol $\nabla f$ jelölje $f$ gradiensét.
 
 ### Backpropagation
 A Backpropagation algoritmus segítségével a neuronháló súlyaihoz, bias-aihoz meg tudjuk feleltetni a megfelelő
