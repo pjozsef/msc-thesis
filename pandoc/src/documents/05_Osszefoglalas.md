@@ -17,7 +17,7 @@ hossza összegezve közel 5 napnyi zenét tesz ki.
 
 A klaszterezés elvégzéséhez először Tensorflow segítségével megterveztem és a Google felhőszolgáltatásán betanítottam egy
 konvolúciós autoencoder-t, mely segítségével a 800×20 pixel méretű spektrogram szeleteket egy 32-dimenziós látens térben
-tudom elkódolni. A legnagyobb kihívást az autoencoder architektúrájának meghatározása, illetve a hiperparamétereinek finomhangolása
+tudtam elkódolni. A legnagyobb kihívást az autoencoder architektúrájának meghatározása, illetve a hiperparamétereinek finomhangolása
 jelentette, mely egy hetekig tartó iteratív folyamat volt.
 
 A betanított kész modell segítségével elkódoltam az adathalmazt, mely eredménye az összes dalszelet 32-dimenziós

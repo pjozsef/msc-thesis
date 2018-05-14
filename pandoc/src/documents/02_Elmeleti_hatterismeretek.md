@@ -10,7 +10,7 @@
 ## Zeneelméleti alapok
 
 ### Hanghullám
-A hang, fizikai tekintetben nézve, valamilyen közegben terjedő rezgéshullám. A hangszeren egy húrt megpendítve,
+A hang, fizikai tekintetben nézve, valamilyen közegben terjedő rezgéshullám. Egy hangszeren játszva,
 vagy amikor beszélünk, a hangszálainkkal a levegő részecskéit mozgásba hozzuk. Ezen részecskék tranzitív
 módon a velük érintkező részecskéket is mozgásba hozzák, így terjed a hang. [@url_hangtan]
 
@@ -89,7 +89,7 @@ A Fourier Transzformáltat a következőképp kapjuk:
 \begin{equation}\label{fouriertransform}
 \begin{split}
     X(k) = \sum\limits_{n=0}^{N-1}x(n)W_N^{kn}, \qquad & 0 \leqslant k \leqslant N-1 \\
-    & W^j_n=e^{-j2\pi/n}
+    & W^j_n=e^{-j2i\pi/n}
 \end{split}
 \end{equation}
 Hangfeldolgozás esetén a bemeneti $x$ vektor a mintavételezési értékek vektora, $X$ pedig az $N$ sávra osztott frekvenciasávok
@@ -184,7 +184,7 @@ tömbökként kezeljük. [@tensor_definition]
 ### Perceptron
 A perceptron egy bináris mesterséges neuron, melyet az 1950-es, 60-as években dolgozott ki Frank Rosenblatt [@perceptron_rosenblatt].
 Manapság csupán historikus jelentősége van, viszont a perceptronon keresztül könnyű szemléltetni magának
-a neuronhálónak, illetve a modern neuron típusoknak a működését is.\newline
+a neuronhálónak, illetve a fejlettebb neuron típusoknak a működését is.\newline
 A perceptron bemenetül egy tetszőleges $n$ hosszúságú bináris $x \in \mathbb{B}^n$ vektort vár. Minden perceptron 
 rendelkezik egy saját $w \in \mathbb{R}^n$ súlyvektorral, mely elemei a neuron adott bemeneteinek a "fontosságát" határozzák meg.
 A neuron $a \in \mathbb{B}$ bináris kimenete attól függően 1, vagy 0, hogy a bemeneti vektor és a súlyvektor skalárszorzata egy adott 
@@ -260,7 +260,7 @@ $-\alpha$-t közelíti aszimptotikusan. $\alpha$ értékét tipikusan 1-nek szok
 \begin{equation}
   \text{elu}_{\alpha}(x) =
   \begin{cases}
-    \alpha(e^x -1) & \text{ha } x < 0 \\
+    \alpha \times(e^x -1) & \text{ha } x < 0 \\
     x & \text{ha } x \geqslant 0
   \end{cases}
 \end{equation}
@@ -268,7 +268,7 @@ $-\alpha$-t közelíti aszimptotikusan. $\alpha$ értékét tipikusan 1-nek szok
 ![Aktivációs függvények a [-10, +10] intervallumon ábrázolva.](src/images/activations.png)
   
 ### Súlyozott bemenet
-A neuron súlyozott bemenete (weighted input) nem más, mint az (\ref{sigmoid-neuron}) egyenlet azon része, 
+A neuron súlyozott bemenete (weighted input) nem más, mint a (\ref{sigmoid-neuron}) egyenlet azon része, 
 melyet $\sigma$-nak paraméterül átadunk, azaz:
 \begin{equation}
       z \equiv x \cdot w + b
@@ -290,7 +290,7 @@ ahol $a^{l-1} \in \mathbb{R}^m$, $W^l \in \mathbb{R}^{m \times n}$, $b^l \in \ma
 ![Példa egy rejtett réteget tartalmazó neuronhálóra. Forrás: [@nn_and_deeplearning]](src/images/nn.png){width=75%}
 
 ### Neuronháló hiperparaméterei
-Egy neuronhálónak számos hiperparaméterrel rendelkezik:
+Egy neuronháló számos hiperparaméterrel rendelkezik:
 
 * Hány epoch-on keresztül tanítjuk a hálót
 * Mekkora learning rate-et használunk
@@ -312,18 +312,18 @@ L2 regularizáció esetén a súlyok ($w \in \mathbb{R}$) négyzetét összegezz
 \begin{equation}
       C_{reg} = C(y, \hat{y}) + \lambda \sum\limits_w w^2,
 \end{equation}
-ahol $\lambda \in \mathbb{R}, \lambda > 0$ a regularizációs paraméter. [@nn_and_deeplearning]
+ahol $\lambda \in \mathbb{R}^{+}$ a regularizációs paraméter. [@nn_and_deeplearning]
 
 #### L1 regularizáció
 L1 regularizáció esetén a súlyok ($w \in \mathbb{R}$) abszolútértékét összegezzük. A bias-okat nem regularizáljuk.
 \begin{equation}
       C_{reg} = C(y, \hat{y}) + \lambda \sum\limits_w |w|,
 \end{equation}
-ahol $\lambda \in \mathbb{R}, \lambda > 0$ a regularizációs paraméter. [@nn_and_deeplearning]
+ahol $\lambda \in \mathbb{R}^{+}$ a regularizációs paraméter. [@nn_and_deeplearning]
 
 #### Dropout
-Dropout esetén nem a súlyokat regularizáljuk, hanem tanítás alatt magát a neuronhálót módosítjuk, pontosabban véve
-azt, ahogyan az $\hat{y}$ kimenetet megkapjuk. A tanítás során, minden példa adat esetén véletlenszerűen "kikapcsoljuk"
+Dropout esetén a neuronháló rétegeinek az aktivációit módosítjuk nem a súlyait. A tanítás során, 
+minden példa adat esetén véletlenszerűen "kikapcsoljuk"
 a neuronháló rejtett rétegeiben lévő neuronok bizonyos részét. A 0.5 például tipikus dropout érték [@hinton_dropout], mely azt
 jelenti, hogy csupán 50% eséllyel hagyjuk "aktívan" az adott neuront. A "kikapcsolt" neuronok aktivációját 0-nak tekintjük.
 
@@ -347,7 +347,7 @@ Fully connected réteg alatt egy klasszikus neuronháló réteget értünk, mely
 minden rákövetkező rétegbeli neuronnal.
 
 ### Konvolúciós neuronháló
-Konvolúciós neuronhálókat főleg kép, illetve hangfeldolgozásnál használnak.
+Konvolúciós neuronhálókat főleg kép-, illetve hangfeldolgozásnál használnak.
 Egy konvolúciós háló tipikusan konvolúciós, pooling, végül pedig fully connected rétegekből épül fel.
  
 #### Konvolúciós réteg
@@ -391,12 +391,12 @@ reprezentációt tanuljon meg az adatról, amit a továbbiakban más célokra fe
 A Gradient Descent egy iteratív optimalizáló algoritmus, mely az optimalizálandó célfüggvénynek (egy potenciálisan lokális) minimumát
 keresi meg a célfüggvény gradiensének segítségével. A step size, vagy learning rate, $\alpha \in \mathbb{R}^+$ 
 a Gradient Descent egy paramétere, mely azt mondja meg, hogy minden egyes iterációban mekkora lépést tegyen az 
-algoritmus a gradienssel ellentétes irányba. [@cs231n][@coursera_ng_machine_learning] Adott $\alpha$ learning rate és
+algoritmus a gradienssel ellentétes irányba. Adott $\alpha$ learning rate és
 $f$ differenciálható célfüggvény esetén az algoritmus $i$-k lépése a következőképp néz ki:
 \begin{equation}
         x_{i+1} := x_i - \alpha \times \nabla f,
 \end{equation}
-ahol $\nabla f$ jelölje $f$ gradiensét.
+ahol $\nabla f$ jelölje $f$ gradiensét.[@cs231n][@coursera_ng_machine_learning]
 
 ### Backpropagation
 A Backpropagation algoritmus segítségével a neuronháló súlyaihoz, bias-aihoz meg tudjuk feleltetni a megfelelő
@@ -404,9 +404,9 @@ parciális deriváltakat, ezáltal a Gradient Descent optimalizáló algoritmust
 Eredetileg 1970-ben mutatták be, viszont igazán csak 1986-ban lett népszerű David Rumelhart, Geoffrey Hinton, és
 Ronald Williams cikkje [@article_backprop] révén.
 
-Az algoritmus ismertetése előtt két feltételezést kell tennünk a hibafüggvényről:
+Az algoritmus ismertetése előtt két előfeltételünk van a hibafüggvényre:
 
-1. A hibafüggvény felírható kell legyen a különálló bemenetekhez tartozó hibafüggvények értékének az átlagaként. 
+1. A hibafüggvény előállítható kell legyen a különálló bemenetekhez tartozó hibafüggvények értékeinek az átlagaként. 
 Erre azért van szükségünk, mert a backpropagation segítségével csupán a különálló $x$ bemenetekhez tartozó parciális 
 deriváltakat ($\frac{\partial C_x}{\partial w}, \frac{\partial C_x}{\partial b}$) tudjuk kiszámolni. 
 A $\frac{\partial C}{\partial w}$ és $\frac{\partial C}{\partial b}$ kiszámolásához átlagoljuk az egyes tanulóadatokhoz tartozó hibát:
@@ -427,7 +427,7 @@ Első lépésben definiáljuk a kimeneti, $L$-edik réteg $j$-edik neuronjához 
 \end{equation}
 
 Vektorizált formában, a kimeneti $L$-edik réteg hibája:
-\begin{equation}\label{BP2}
+\begin{equation}\label{BP1b}
   \delta^L = \nabla_a C \odot \sigma '(z^L),
 \end{equation}
 ahol $\odot$ jelölje két vektor Hadamard-szorzatát (elemenként vett szorzatát).
@@ -437,7 +437,7 @@ Második lépésben definiáljuk egy tetszőleges $l$-edik réteg hibáját a r�
   \delta^l = ((w^{l+1})^T \delta^{l+1}) \odot \sigma '(z^L).
 \end{equation}
 
-(\ref{BP1}) és (\ref{BP2}) kombinálásával a neuronháló minden rétegének a hibáját ki tudjuk számítani.
+(\ref{BP1b}) és (\ref{BP2}) segítségével a neuronháló minden rétegének a hibáját ki tudjuk számítani.
 Ezt követően definiálhatjuk a paraméterek szerinti parciális deriváltakat.
 
 A hibafüggvény parciális deriváltja adott $l$ réteg $j$-edik neuronjának bias-a szerint:
@@ -451,4 +451,4 @@ A hibafüggvény parciális deriváltja adott $l$ réteg $j$-edik neuronjának s
 \end{equation}
 
 A (\ref{BP3}) és (\ref{BP4}) egyenletek birtokában a neuronháló bármely paramétere szerinti parciális deriváltat fel tudjuk
-írni, ezáltal a Gradient Descent algoritmust tudjuk alkalmazni. [@nn_and_deeplearning]
+írni, ezáltal a Gradient Descent algoritmust tudjuk alkalmazni. [@article_backprop][@nn_and_deeplearning]

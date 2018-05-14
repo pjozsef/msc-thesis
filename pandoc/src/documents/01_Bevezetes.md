@@ -83,7 +83,7 @@ mely segítségével zeneszámok dúdolás alapján kereshetőek egy erre speci�
 A Music Information Retrieval egyik legnagyobb eredményének tekinthetjük a Shazam algoritmusát, mely segítségével 
 emberek milliói azonosíthatják a rádióban szóló dalt a telefonjukon lévő alkalmazás segítségével. [@url_shazam_home]
 
-Az algoritmus első lépése a nyers spektrogram szeletek legjellemzőbb pontjainak a detektálása. Ehhez szeletenként veszi az 
+Az algoritmus első lépése a nyers spektrogram szeletek legjellemzőbb pontjainak detektálása. Ehhez szeletenként veszi az 
 előre meghatározott frekvenciasávokban lévő legnagyobb magnitúdójú frekvencia értékeket. 
 Az ilyen módon kiválasztott értékekből kapott vektort fingerprint-nek nevezzük. 
 A zenei kereső adatbázis ilyen fingerprint-eket tartalmaz. Az adatbázisban való kereséshez csupán az éppen szóló dal 

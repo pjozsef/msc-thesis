@@ -9,14 +9,14 @@
 
 Elgondolásomat az az intuíció vezérelte, hogy egy autoencoder segítségével oly módon lehet dimenziócsökkentést végezni
 magasabb dimenzióból alacsonyabb dimenzióba, hogy eközben a bemeneti adatok közötti szemantikai relációk, hasonlóságok a látens térben
-is megmaradjanak. Ehhez felhasználtam az autoencoderek azon tulajdonságát, hogy az egymáshoz közeli bemenetek a látens térben is
+is megmaradnak. Ehhez felhasználtam az autoencoderek azon tulajdonságát, hogy az egymáshoz közeli bemenetek a látens térben is
 közel kerülnek egymáshoz. [@hinton_semantic_hashing][@hinton_autoencoder_image_retrieval] Az autoencoder látens terében elhelyezett kódok
 felhasználhatóak többek között klaszterezésre, szomszédsági lekérdezésekre, melyek egy zenei ajánlórendszer alapját képezhetik.
 
 ## Adathalmaz elkészítése
 A teljes adathalmaz alapját MP3 fájlok alkotják. Pontosabban fogalmazva olyan MP3 fájlok, melyeknél az **artist**, **album** és
 **song** MP3 tag-ek ki vannak töltve. Ezek a metaadatok nem közvetlenül a neuronháló betanításához szükségesek, 
-mivel a módszer felügyelet nélküli tanuláson alapul. A metaadatok azért szükségesek, hogy az autoencoder betanítását
+hiszen a módszer felügyelet nélküli tanuláson alapul. A metaadatok azért szükségesek, hogy az autoencoder betanítását
 követően a látens térben elkódolt bemenetek visszacímkézésével a modell teljesítményét pontosabban ki lehessen értékelni.
 
 \begin{wrapfigure}[29]{r}{0.3\textwidth}
@@ -37,7 +37,7 @@ elkészíteni. Mivel az általam használt FFT programcsomag $2^n$ méretű beme
 szeletekkel dolgoztam, melyek $8192/44100=0.1857$ másodperces időszeleteknek felelnek meg. Amennyiben az eredeti, nyers
 mintavételeket tartalmazó tömb $N$ hosszú volt, a Fourier transzformáció elvégzése után kapott spektrogram egy 
 $\lfloor N/8192\rfloor\times 8192$ méretű mátrix, mely $\lfloor N/8192\rfloor$ darab Fourier transzformáltat tartalmaz.
-A Fourier transzformáció eredményéül kapott tömb 4096 komplex számból áll, mely implementációs szinten egy 8196 
+A Fourier transzformáció eredményéül kapott tömb 4096 komplex számból áll, mely implementációs szinten egy 8192
 elemű valós--imaginárius számpárokat tartalmazó tömb. Ez a komplex tömb 4096 frekvenciasávot határoz meg.
 
 A kapott spektrogram mérete túl nagy ahhoz, hogy egy az egyben bemenete lehessen a neuronhálónak. Emellett másik probléma, 
@@ -101,7 +101,7 @@ stílusba soroltam.
 ![Az előadók, albumok és dalok számának eloszlása stílusonként](src/images/dataset_stats.png)
 
 Az adathalmaz elkészítéséhez összesen 262 előadó 639 albumának 6192 zeneszámát használtam fel.
-Mivel dalonként 18 kép került exportálásra, az adathalmaz összesen $6192*18=111 456$ db képből áll.
+Mivel dalonként 18 kép került exportálásra, az adathalmaz összesen $6192*18=$ 111 456 db képből áll.
 A képek önmagukban 1.23 GB tárhelyet foglalnak, a belőlük készített tfrecords fájlok pedig 3.68 GB-ot.
 Ez a mennyiségű adat $111456*3,714$, azaz 413 947 másodpercnyi zenét takar, ami 4,79 napnak felel meg.
 
@@ -165,7 +165,7 @@ egy ekkora dimenziójú látens tér elégséges lehet.
     \hline \rowcolor{black!15} \#&Réteg&Bemenet&Kernel méret&Stride&Padding&Kimenet&Paraméterek\\\hline
     \endfirsthead
     \hline
-    \caption{A modell rétegei. A paraméterek oszlop 'súly paraméterek+bias paraméterek' formátumú.}
+    \caption{Az encoder rétegei. A paraméterek oszlop 'súly paraméterek+bias paraméterek' formátumú.}
     \endfoot
   },
   respect all
@@ -186,7 +186,7 @@ egy ekkora dimenziójú látens tér elégséges lehet.
 A modell sikeres betanítását követően elsődleges dolgunk a frekvenciaszeletek encodingjainak legenerálása.
 Mivel az encodingok csupán 32 darab double értékből állnak, ezért nagyságrendekkel kevesebbet foglalnak a nekik megfelelő,
 PNG képként kiexportált frekvenciaszelethez, illetve az eredeti MP3 fájlhoz képest. Egy MP3 fájl mérete, minőségtől függően
-3-12 MB között mozog. Egy 800×20 pixel méretű frekvenciaszelet átlagos mérete 12 KB, míg a hozzá tartozó encoding $32 \times 8=256$ B, hiszen
+3-12 MB között mozog. Egy 800×20 pixel méretű frekvenciaszelet átlagos mérete 12 KB, míg a hozzá tartozó encoding csupán $32 \times 8=256$ B, hiszen
 minden dimenzióérték egy 8 bájtos double segítségével van ábrázolva.
 A teljes adathalmaz elkódolása a megfelelő metaadatokkal együtt egy megközelítőleg 50 MB méretű csv fájlt eredményezett, mely könnyedén betölthető a
 memóriába. Az adathalmaz könnyű kezelhetőségének érdekében az adatokat célszerű olyan adatszerkezetbe tölteni, mely
@@ -290,7 +290,7 @@ TensorFlow
   tudunk létrehozni, betanítani és a tanítást követően használni. A Tensorflow-t használva készítettem el a saját modellemet is.
 
 scikit-learn
-  ~ Nyílt forráskódú gépi tanulási programkönyvtár Python-hoz. A scikit-learn számtalan, adatbányászati, adatelemzési és 
+  ~ Nyílt forráskódú gépi tanulási programkönyvtár Python-hoz. A scikit-learn számtalan adatbányászati, adatelemzési és 
   gépi tanulási algoritmust tartalmaz, mint például regresszió, osztályozás, klaszterezés, dimenziócsökkentés.
   A modellem által kapott, 32-dimenziós térben elkódolt pontok szomszédsági lekérdezéseit, illetve a t-SNE-vel történő
   vizualizációt is a scikit-learn segítségével végeztem.
